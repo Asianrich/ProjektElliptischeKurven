@@ -6,6 +6,7 @@ public interface Point {
     public Point add(Point p, EllipticCurves e);
     public Point mul(Point p, EllipticCurves e);
     public Point sub(Point p, EllipticCurves e);
+    public Point kMul(BigInteger k, EllipticCurves e);
     public BigInteger getX();
     public BigInteger getY();
     public BigInteger getZ();

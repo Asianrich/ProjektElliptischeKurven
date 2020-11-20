@@ -31,6 +31,11 @@ public class ProjectivePoint implements Point {
     }
 
     @Override
+    public Point kMul(BigInteger k, EllipticCurves e) {
+        return null;
+    }
+
+    @Override
     public BigInteger getX() {
         return this.x;
     }
