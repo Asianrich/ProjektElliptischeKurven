@@ -8,6 +8,10 @@ public class EllipticCurve implements EllipticCurves {
     private BigInteger b = BigInteger.ZERO;
     private BigInteger p = BigInteger.ZERO;
 
+    // y^2 = x^3 * Ax + B
+    // ->
+    // y^2 * z = x^3 + Axz^2 + Bz^3
+
     static final BigInteger ZERO = BigInteger.ZERO, ONE = BigInteger.ONE, TWO = BigInteger.TWO, THREE = new BigInteger("3"),
     FOUR = new BigInteger("4"), TWENTY_SEVEN = new BigInteger("27"), NEG_SIXTEEN = new BigInteger("-17");
 
@@ -29,7 +33,7 @@ public class EllipticCurve implements EllipticCurves {
 
     @Override
     public Point getInf() {
-        return null;
+        return new ProjectivePoint(BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO);
     }
 
     @Override
