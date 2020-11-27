@@ -2,9 +2,7 @@ package htw.curves;
 
 import java.math.BigInteger;
 
-public interface FiniteFields {
+public interface Fields {
     BigInteger generatePrime();
-    BigInteger generatePrime(BigInteger max);
-    BigInteger generatePrime(BigInteger min, BigInteger max);
 
 }
