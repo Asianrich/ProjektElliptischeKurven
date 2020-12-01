@@ -20,16 +20,25 @@ public class FiniteFields implements Fields {
         BigInteger rndNumber =  new BigInteger(len, rnd);
         return rndNumber;
     }
-    private boolean checkPrime(BigInteger prim){
+
+    private BigInteger generateNumberRange(BigInteger biginteger){
         Random rnd = new Random();
-
-        BigInteger rndNumber =  new BigInteger(prim.bitLength(), rnd);
-        if(rndNumber.compareTo(prim) >= 0)
+        BigInteger rndNumber =  new BigInteger(biginteger.bitLength(), rnd);
+        if(rndNumber.compareTo(biginteger) >= 0)
         {
-            rndNumber = rndNumber.mod(prim);
+            rndNumber = rndNumber.mod(biginteger);
         }
+        return rndNumber;
+    }
+    private boolean checkPrime(BigInteger prim){
+        BigInteger rndNumber;
 
-        if(ggT(rndNumber, prim) != BigInteger.valueOf(1)){
+        do {
+            rndNumber = generateNumberRange(prim);
+        } while (ggT(rndNumber, prim) != BigInteger.valueOf(1));
+
+
+        if(rndNumber.modPow(prim.subtract(BigInteger.valueOf(1)), prim) != BigInteger.valueOf(1)){
             return false;
         }
         return true;
