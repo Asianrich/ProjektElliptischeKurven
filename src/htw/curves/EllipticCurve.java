@@ -12,8 +12,10 @@ public class EllipticCurve implements EllipticCurves {
     // ->
     // y^2 * z = x^3 + Axz^2 + Bz^3
 
-    static final BigInteger ZERO = BigInteger.ZERO, ONE = BigInteger.ONE, TWO = BigInteger.TWO, THREE = new BigInteger("3"),
-    FOUR = new BigInteger("4"), TWENTY_SEVEN = new BigInteger("27"), NEG_SIXTEEN = new BigInteger("-17");
+    static final BigInteger ZERO = BigInteger.ZERO;
+    static final BigInteger FOUR = new BigInteger("4");
+    static final BigInteger TWENTY_SEVEN = new BigInteger("27");
+    static final BigInteger NEG_SIXTEEN = new BigInteger("-16");
 
     EllipticCurve(BigInteger a, BigInteger b, BigInteger p){
         this.a = a;
