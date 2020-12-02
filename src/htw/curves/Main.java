@@ -36,7 +36,7 @@ public class Main {
 		BigInteger c = basicMethod.modAddition(b1, b2, b3);
 		BigInteger d = basicMethod.modSubtraction(b1, b2, b3);
 		BigInteger e = basicMethod.modMultiplication(b1, b2, b3); 
-		BigInteger f = basicMethod.multiplicativeInverse(b4, b5); //false must give 19
+		BigInteger f = basicMethod.multiplicativeInverse(b4, b5); //19
 		BigInteger g = basicMethod.gcdExtended(b7, b6); //17
 		BigInteger h = basicMethod.modExponentiation(b8, n, b9); //6
 		BigInteger i = basicMethod.modDivision(b10, b11, b12);

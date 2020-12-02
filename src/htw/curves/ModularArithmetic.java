@@ -4,7 +4,7 @@ import java.math.BigInteger;
 public interface ModularArithmetic {
 
 	
-	//All Methods in this Interface are implicitly public and abstract
+	//All Methods are implicitly public and abstract
 	
     BigInteger modCalculation(BigInteger num, BigInteger mod);
     Boolean    isCongruent(BigInteger num_1, BigInteger num_2, BigInteger mod);

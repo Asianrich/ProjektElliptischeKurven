@@ -322,7 +322,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		//initialize result as number
 		result = num;
 		
-		//Consider every prime number of num and their multiples with gcd more than 1
+		//Consider every prime number of num and their multiples with gcd more than 1 (square)
 		
 		for (BigInteger prim = BigInteger.TWO; (prim.multiply(prim)).compareTo(num) <= 0; prim = prim.add(BigInteger.ONE) ) {
 			
