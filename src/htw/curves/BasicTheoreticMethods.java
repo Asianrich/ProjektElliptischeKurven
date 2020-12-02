@@ -73,10 +73,10 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		r2 = modCalculation(num_2, mod);
 		if (r1.equals(r2)){
 			rest = r1;
-			System.out.println(num_1 + " und " + num_2 + " sind kongruent modulo " + mod + ","
-					+ "weil die Division von a/mod und b/mod den gleichen Rest: " + rest + " haben");
+			System.out.println(num_1 + " und " + num_2 + " are congruent modulo " + mod + ","
+					+ "because the division of a/mod and b/mod have the same residue: " + rest);
 			return true;
-		} else 	System.out.println(num_1 + " und " + num_2+ " sind nicht kongruent modulo " + mod );
+		} else 	System.out.println(num_1 + " und " + num_2+ " are not congruent modulo " + mod );
 		return false;
 	
 	}
@@ -133,7 +133,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * */
 	public BigInteger modMultiplication(BigInteger num_1, BigInteger num_2, BigInteger mod){
 		
-		if (num_1.equals(BigInteger.ZERO) || num_2.equals(BigInteger.ZERO)){
+		if (num_1.equals(BigInteger.ZERO) || (num_2.equals(BigInteger.ZERO))){
 			return BigInteger.ZERO;
 		}
 		
@@ -143,17 +143,19 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		return result;
 	}
 	
-	/*extended Euclidean Algorithm to compute integers x, y so that the greatest common divisor gcd(a,b)= ax+by
+	/*Using extended Euclidean Algorithm to compute integers x, y so that the greatest common divisor gcd(a,b)= ax+by
 	 * @param num_1 number
 	 * @param num_2 number
 	 * @param x , y coefficients 
 	 * @result gcd the last non-zero remainder 
 	 * */
 	
+	   BigInteger x, y;
+	   
 	public BigInteger gcdExtended(BigInteger num_1, BigInteger num_2) {
 		
-		BigInteger x, y;
 		// Base case : if the first number is zero return second number 
+		
 		if (num_1.equals(BigInteger.ZERO)){
 			x = BigInteger.ZERO;
 			y = BigInteger.ONE;
@@ -166,10 +168,11 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 			return num_1;
 		}
 		//yet we've to store the results of recursive call
+		//we will divide the divisor by the remainder until the remainder is zero
+		
 		BigInteger x1 = BigInteger.ONE;
 		BigInteger y1 = BigInteger.ONE;
 		
-		//we will divide the divisor by the remainder until the remainder is zero
 		BigInteger gcd = gcdExtended(modCalculation(num_2, num_1), num_1);
 		
 		// we now update x and y, with x = y1 - (b/a) * x1 
@@ -183,9 +186,11 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	public Boolean hasInverse (BigInteger num, BigInteger mod){
 		
 		if (gcdExtended(num,mod).equals(BigInteger.ONE)){
+			
 			return true;
 			
 		}else
+			System.out.println("The number" + num + "does'nt have a modular inverse");
 			return false;
 		
 	}
@@ -193,7 +198,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	/* Iterative Modular Multiplicative Inverse a modulo m with extended Euclidean algorithm 1= a.x + m.y
 	 * @param num number
 	 * @param mod  modulo 
-	 * @param x = 0, y = 1  gcd at the beginning , last_x = 1 gcd at end, last_y = 0
+	 * @param x = 0, y = 1 at the beginning , last_x = 1 gcd at end, last_y = 0
 	 * @param m0 = mod , temp temporary values
 	 * @param q quotient
 	 * @return x: result from the Division between x and p (divisor) or the multiplicative Inverse
@@ -218,25 +223,22 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 //		inverse exists only if num and mod are relatively prime, i. e. gcdExtended = 1
 		
 		if (hasInverse(num,mod) == false){
-			return null;
+			return null; // not the good answer but only to check
 		}
 	    while (mod.compareTo(BigInteger.ONE) > 0){
 			     q = num.divide(mod);
 			     temp = num;
 			     num = mod;
 			     mod = modCalculation(temp, mod);
-			System.out.println(q + ","+ temp +","+ num + ","+ mod);
+			
 			     //update x and y
 			     temp = x;
 			     x = last_x.subtract(q.multiply(x));
 			     last_x = temp;
-			System.out.println(temp + ","+ x+","+ last_x + ","+ mod);
+			
 			     temp = y;
 		         y = last_y.subtract(q.multiply(x));
-		         last_y = temp;
-					
-		    System.out.println(temp+ ","+ y + "," + last_y);
-		
+		         last_y = temp;		
 		
 	    }     
 		 //Check if x is positive,if not add with the modulo
@@ -257,8 +259,12 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * @return result,the result by the multiplication of num_1 with the inverse of num_2 modulo mod
 	 * */
 	
-	public BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod) {
-		//base case needed
+	public BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod) throws ArithmeticException {
+		
+		//base case
+		if(num_1.equals(BigInteger.ZERO)) {
+			return BigInteger.ZERO;
+		}
 		
 		BigInteger inverseNum_2 = multiplicativeInverse (num_2, mod);
 		
@@ -269,34 +275,77 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 
 
 	
-	public BigInteger modExponentiation(BigInteger num, int exp, BigInteger mod) {
+	public BigInteger modExponentiation(BigInteger num, BigInteger exp, BigInteger mod) {
 		
-		// Initialize result 
+		// Initialize the result 
         BigInteger pow = BigInteger.ONE; 
         
-        //if the exponent is zero, then the power or if the number is zero return zero
-        if (exp == 0)
+        //if the exponent is zero, then return power or if the number is zero return zero
+        
+        if (exp.equals(BigInteger.ZERO))
 			return pow;
         if(num.equals(BigInteger.ZERO)){
         	return BigInteger.ZERO;
         }
                 
         // Update the number num if it is more than or equal to mod 
+        
         num = modCalculation(num, mod);       
-        while (exp > 0) 
+        while (exp.compareTo(BigInteger.ZERO) > 0) 
         { 
-            // If n is odd, multiply x with result 
-            if((exp & 1)==1) 
+            // If exponent is odd, multiply number with result 
+        	
+            if((exp.and(BigInteger.ONE).equals(BigInteger.ONE))) 
                 pow = modCalculation((pow.multiply(num)), mod); 
       
-            // n must be even now  n = n / 2 
-            exp = exp >> 1;  
+            // exponent must be even now  n = n / 2 
+            
+            exp = exp.shiftRight(1);  
             num = modCalculation((num.multiply(num)), mod);  
         } 
         return pow; 
 	}
 
+	/*Method to calculate the Euler'sche function for a natural number n
+	 * It correspond to the count of numbers x in {1, 2, 3, …, n} that are relatively 
+	 * prime to n, i.e., the numbers whose gcd(x,n) are 1.
+	 * Using the product formula we multiply n by product of (1 – 1/p) for all prime factors p of n.
+	 * @param number num
+	 * @param prim prime number
+	 * We count all prime numbers and their multiples and subtract this count from num to get the result
+	 * Prime factors and multiples of prime factors won’t have gcd as 1
+	 * return result
+	 * */
 
-	
+	public BigInteger phiFunction(BigInteger num) {
+		
+		//initialize result as number
+		result = num;
+		
+		//Consider every prime number of num and their multiples with gcd more than 1
+		
+		for (BigInteger prim = BigInteger.TWO; (prim.multiply(prim)).compareTo(num) <= 0; prim = prim.add(BigInteger.ONE) ) {
+			
+		// Check if prim divides num (==0), i.e. prim is a prime factor
+			
+			if (modCalculation(num,prim).equals(BigInteger.ZERO)) {
+				
+				//update num and result as long as prim divides num
+				
+				while(modCalculation(num,prim).equals(BigInteger.ZERO)) {
+					
+					num = num.divide(prim);
+					result = result.subtract((result.divide(prim)));
+				}
+			}		 
+		}
+		// If the reduced number is greater than 1, then remove all multiples of num from result.
+ 
+		if (num.compareTo(BigInteger.ONE) > 0) {
+			
+			result = result.subtract((result.divide(num)));
+		}
+		return result;
+	}
 	
 }
