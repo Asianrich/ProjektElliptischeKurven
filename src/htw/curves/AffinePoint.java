@@ -44,19 +44,24 @@ public class AffinePoint implements Point {
                     if(this.getX() == p.getX()){
                         return new AffinePoint(BigInteger.ZERO, BigInteger.ONE); //inf
                     }
-                    BigInteger mo = p.getY().subtract(this.getY());
+                    BigInteger mo = (p.getY().subtract(this.getY())).mod(e.getP());
                     BigInteger mu = p.getX().subtract(this.getX());
+                    if(mu.compareTo(BigInteger.ZERO) == -1){
+                        mu = mu.multiply(BigInteger.valueOf(-1));
+                        mo = mo.multiply(BigInteger.valueOf(-1));
+                    }
+                    BigInteger m = BigInteger.ZERO;
                     if(mo.mod(mu).equals(BigInteger.ZERO)){
-                        BigInteger m = mo.divide(mu);
+                        m = (mo.divide(mu)).mod(e.getP());
                     } else {
-                        for(BigInteger i = BigInteger.ZERO; i.compareTo(e.getP()) > 0; i.add(BigInteger.ONE)){
-
+                        for(BigInteger i = BigInteger.ZERO; i.compareTo(e.getP()) <= 0; i = i.add(BigInteger.ONE)){
+                            BigInteger tmp = (mu.multiply(i)).mod(e.getP());
+                            if(tmp.equals(BigInteger.ONE)){
+                                m = (i.multiply(mo)).mod(e.getP());
+                                break;
+                            }
                         }
                     }
-
-
-                    BigInteger m = mo.divide(mu);
-                    m = m.mod(e.getP());
                     BigInteger x = m.multiply(m).subtract(this.getX()).subtract(p.getX());
                     x = x.mod(e.getP());
                     BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());

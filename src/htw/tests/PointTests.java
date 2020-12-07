@@ -12,6 +12,8 @@ import static org.junit.Assert.assertTrue;
 
 public class PointTests {
 
+    // ##### AFFFINE ####
+
     EllipticCurve curve = new EllipticCurve(BigInteger.valueOf(1),BigInteger.valueOf(4),BigInteger.valueOf(7));
     AffinePoint p1 = new AffinePoint(BigInteger.valueOf(4), BigInteger.valueOf(3));
     AffinePoint p2 = new AffinePoint(BigInteger.valueOf(5), BigInteger.valueOf(6));
@@ -20,6 +22,11 @@ public class PointTests {
     AffinePoint p3 = new AffinePoint(BigInteger.valueOf(6), BigInteger.valueOf(1));
     AffinePoint p4 = new AffinePoint(BigInteger.valueOf(1), BigInteger.valueOf(4));
 
+    // ##### PROJECTIVE ####
+
+
+
+    // ##### AFFFINE ####
 
     @Test
     public void testAdd1(){
@@ -37,14 +44,14 @@ public class PointTests {
 
     @Test
     public void testAdd3(){
-        Point erg = p1.add(p2, curve);
+        Point erg = p3.add(p4, curve);
         BigInteger x = erg.getX();
-        assertTrue(x.equals(BigInteger.TWO));
+        assertTrue(x.equals(BigInteger.valueOf(4)));
     }
 
     @Test
     public void testAdd4(){
-        Point erg = p1.add(p2, curve);
+        Point erg = p3.add(p4, curve);
         BigInteger y = erg.getY();
         assertTrue(y.equals(BigInteger.TWO));
     }
@@ -66,4 +73,16 @@ public class PointTests {
         Point erg = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO);
         assertFalse(curve.onCurve(erg));
     }
+
+    @Test
+    public void notOnCurve2(){
+        Point erg = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO);
+        assertFalse(curve1.onCurve(erg));
+    }
+
+
+    // ##### PROJECTIVE ####
+
+
+
 }
