@@ -7,7 +7,7 @@ public class AffinePoint implements Point {
     BigInteger x = BigInteger.ZERO;
     BigInteger y = BigInteger.ZERO;
 
-    AffinePoint(BigInteger x, BigInteger y){
+    public AffinePoint(BigInteger x, BigInteger y){
         this.x = x;
         this.y = y;
     }
@@ -44,7 +44,18 @@ public class AffinePoint implements Point {
                     if(this.getX() == p.getX()){
                         return new AffinePoint(BigInteger.ZERO, BigInteger.ONE); //inf
                     }
-                    BigInteger m = (p.getY().subtract(this.getY())).divide(p.getX().subtract(this.getX()));
+                    BigInteger mo = p.getY().subtract(this.getY());
+                    BigInteger mu = p.getX().subtract(this.getX());
+                    if(mo.mod(mu).equals(BigInteger.ZERO)){
+                        BigInteger m = mo.divide(mu);
+                    } else {
+                        for(BigInteger i = BigInteger.ZERO; i.compareTo(e.getP()) > 0; i.add(BigInteger.ONE)){
+
+                        }
+                    }
+
+
+                    BigInteger m = mo.divide(mu);
                     m = m.mod(e.getP());
                     BigInteger x = m.multiply(m).subtract(this.getX()).subtract(p.getX());
                     x = x.mod(e.getP());

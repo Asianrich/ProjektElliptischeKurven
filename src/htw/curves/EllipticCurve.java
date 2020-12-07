@@ -1,6 +1,7 @@
 package htw.curves;
 
 import java.math.BigInteger;
+import java.util.LinkedList;
 
 public class EllipticCurve implements EllipticCurves {
 
@@ -17,7 +18,7 @@ public class EllipticCurve implements EllipticCurves {
     static final BigInteger TWENTY_SEVEN = new BigInteger("27");
     static final BigInteger NEG_SIXTEEN = new BigInteger("-16");
 
-    EllipticCurve(BigInteger a, BigInteger b, BigInteger p){
+    public EllipticCurve(BigInteger a, BigInteger b, BigInteger p){
         this.a = a;
         this.b = b;
         this.p = p;
@@ -46,5 +47,12 @@ public class EllipticCurve implements EllipticCurves {
     @Override
     public boolean isNonSingular(BigInteger a, BigInteger b) {
         return !NEG_SIXTEEN.multiply((FOUR.multiply(a.multiply(a).multiply(a)).add((TWENTY_SEVEN.multiply(b.multiply(b)))))).equals(ZERO);
+    }
+
+    public boolean onCurve(Point p){
+        if(p instanceof AffinePoint){
+            return p.getY().multiply(p.getY()).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX())).add(this.b)).mod(this.p));
+        }
+        return false;
     }
 }
