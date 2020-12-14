@@ -18,7 +18,7 @@ public class ProjectivePoint implements Point {
     @Override
     public Point add(Point p, EllipticCurves e) {
         if(p instanceof AffinePoint){
-            return p.toProjective().add(p, e);
+            return this.add(p.toProjective(), e);
         }
         if(this.equals(p)){
             BigInteger t = e.getA().multiply(this.getZ().multiply(this.getZ())).add(new BigInteger("3").multiply(this.getX().multiply(this.getX())));
@@ -79,7 +79,7 @@ public class ProjectivePoint implements Point {
         BigInteger a = k;
         Point b = e.getInf();
         while(a.compareTo(BigInteger.ZERO) > 0){
-            if(a.mod(BigInteger.TWO) == BigInteger.ZERO){
+            if(a.mod(BigInteger.TWO).equals(BigInteger.ZERO)){
                 a = a.divide(BigInteger.TWO);
                 c = c.add(c, e);
             } else {
@@ -107,7 +107,7 @@ public class ProjectivePoint implements Point {
 
     @Override
     public boolean isInf() {
-        return this.z == BigInteger.ZERO && this.x == BigInteger.ZERO;
+        return this.z.equals(BigInteger.ZERO) && this.x.equals(BigInteger.ZERO);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ProjectivePoint implements Point {
         if(this.isInf() && p.isInf())
             return true;
         if(p instanceof ProjectivePoint){
-            return this.x == p.getX() && this.y == p.getY() && this.z == p.getZ();
+            return this.x.equals(p.getX()) && this.y.equals(p.getY()) && this.z.equals(p.getZ());
         } else {
             return false;
         }

@@ -20,6 +20,10 @@ public class AffinePoint implements Point {
             //return this.toProjective().add(p.toProjective(), e);
 
             if(this.equals(p)){
+                if(this.getY().equals(BigInteger.ZERO)){
+                    return this;
+                    // inf is not there... I have issues with that. Can someone give me inf!?!??!
+                }
                 BigInteger m = BigInteger.valueOf(3).multiply(this.getX().multiply(this.getX())).add(e.getA()).divide(BigInteger.TWO.multiply(this.getY()));
                 m = m.mod(e.getP());
                 //m = 3x^2+A / 2y
@@ -41,7 +45,7 @@ public class AffinePoint implements Point {
                             return this;
                     }
                 } else {
-                    if(this.getX() == p.getX()){
+                    if(this.getX().equals(p.getX())){
                         return new AffinePoint(BigInteger.ZERO, BigInteger.ONE); //inf
                     }
                     BigInteger mo = (p.getY().subtract(this.getY())).mod(e.getP());
@@ -88,7 +92,7 @@ public class AffinePoint implements Point {
         BigInteger a = k;
         Point b = e.getInf();
         while(a.compareTo(BigInteger.ZERO) > 0){
-            if(a.mod(BigInteger.TWO) == BigInteger.ZERO){
+            if(a.mod(BigInteger.TWO).equals(BigInteger.ZERO)){
                 a = a.divide(BigInteger.TWO);
                 c = c.add(c, e);
             } else {
@@ -125,7 +129,7 @@ public class AffinePoint implements Point {
         if(this.isInf() && p.isInf())
             return true;
         if(p instanceof AffinePoint){
-            return this.x == p.getX() && this.y == p.getY();
+            return this.x.equals(p.getX()) && this.y.equals(p.getY());
         } else {
             return false;
         }
@@ -137,6 +141,7 @@ public class AffinePoint implements Point {
     }
 
     public Point toProjective(){
-        return new ProjectivePoint(this.getX(), this.getY(), BigInteger.ONE);
+        ProjectivePoint tmp = new ProjectivePoint(this.getX(), this.getY(), BigInteger.ONE);
+        return tmp;
     }
 }
