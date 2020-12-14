@@ -8,7 +8,7 @@ public class ProjectivePoint implements Point {
     BigInteger y = BigInteger.ZERO;
     BigInteger z = BigInteger.ZERO;
 
-    ProjectivePoint(BigInteger x, BigInteger y, BigInteger z){
+    public ProjectivePoint(BigInteger x, BigInteger y, BigInteger z){
         this.x = x;
         this.y = y;
         this.z = z;

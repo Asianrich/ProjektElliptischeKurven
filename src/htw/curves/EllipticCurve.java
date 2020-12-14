@@ -12,6 +12,8 @@ public class EllipticCurve implements EllipticCurves {
     // y^2 = x^3 * Ax + B
     // ->
     // y^2 * z = x^3 + Axz^2 + Bz^3
+    // 0 4 1
+    //16 =  0 + 0 + 5
 
     static final BigInteger ZERO = BigInteger.ZERO;
     static final BigInteger FOUR = new BigInteger("4");
@@ -52,6 +54,9 @@ public class EllipticCurve implements EllipticCurves {
     public boolean onCurve(Point p){
         if(p instanceof AffinePoint){
             return p.getY().multiply(p.getY()).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX())).add(this.b)).mod(this.p));
+        }
+        if(p instanceof ProjectivePoint){
+            return p.getY().multiply(p.getY().multiply(p.getZ())).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX()).multiply(p.getZ().multiply(p.getZ()))).add(this.b.multiply(p.getZ().multiply(p.getZ().multiply(p.getZ()))))).mod(this.p));
         }
         return false;
     }
