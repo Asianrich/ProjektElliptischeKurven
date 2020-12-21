@@ -1,6 +1,8 @@
 package htw.curves;
 
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class FiniteFields implements Fields {
@@ -54,6 +56,22 @@ public class FiniteFields implements Fields {
         }
 
         return solution;
+    }
+
+    public boolean isPrimRoot(BigInteger g, BigInteger p){
+        LinkedList<BigInteger> list = new LinkedList<>();
+        for(BigInteger i = BigInteger.ZERO; i.compareTo(p.subtract(BigInteger.ONE)) > 0; i = i.add(BigInteger.ONE)){
+            BigInteger tmp = g.modPow(i, p);
+            //System.out.println(tmp);
+            list.add(tmp);
+        }
+        /*Arrays.sort(result);
+        for(int i = 0; i < p-1; i++){
+            //System.out.println(result[i]);
+            if(result[i] != i+1)
+                return false;
+        }*/
+        return true;
     }
 
 }
