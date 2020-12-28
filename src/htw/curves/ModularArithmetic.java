@@ -12,6 +12,7 @@ public interface ModularArithmetic {
     BigInteger modSubtraction(BigInteger num_1, BigInteger num_2, BigInteger mod);
 	BigInteger modMultiplication(BigInteger num_1, BigInteger num_2, BigInteger mod);
 	BigInteger gcdExtended(BigInteger num_1, BigInteger num_2);
+	Boolean    hasInverse(BigInteger num, BigInteger mod);
 	BigInteger multiplicativeInverse(BigInteger num, BigInteger mod);
 	BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod);
 	BigInteger modExponentiation(BigInteger num, BigInteger exp, BigInteger mod);
