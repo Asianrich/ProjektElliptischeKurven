@@ -3,7 +3,7 @@ import java.math.BigInteger;
 
 public class BasicTheoreticMethods implements ModularArithmetic {
      
-	BigInteger result;
+	//BigInteger result;
 	//Constructor
 	
 	public BasicTheoreticMethods (){ }
@@ -18,40 +18,46 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	
 	
 	public BigInteger modCalculation(BigInteger num, BigInteger mod){
-		BigInteger temp, value;
+		BigInteger temp, value, result;
 		
 		if (num.equals(BigInteger.ZERO)){
-			result = num;
+			result = BigInteger.ZERO;
 	    }
-		else if(mod.equals(BigInteger.ZERO)){
-			result = BigInteger.ZERO;
+		if (mod.equals(BigInteger.ZERO)) {
+			throw new ArithmeticException("We can't compute with modulo zero");
+		}
+		if (mod.compareTo(BigInteger.ZERO) < 0){
+			throw new IllegalArgumentException("We can't compute with modulo zero");
+		}
+		if (num.equals(BigInteger.ZERO) && mod.equals(BigInteger.ZERO)) {
+			throw new ArithmeticException("It's not possible to find the modulo with number zero and modulo zero");
 		}
 		
-		else if (num.equals(mod)){
+		if (num.equals(mod)){
 			result = BigInteger.ZERO;
 		}
+		//if the number is a negative number
 		
-		else //if the number is a negative number
-			
-		    if (num.compareTo(BigInteger.ZERO) < 0){
-		    	
-			  do {
-			    	
+		if (num.compareTo(BigInteger.ZERO) < 0){
+		
+		   do{			    	
 			    temp = num.add(mod);
-			    value = temp.divide(mod);
-			    result = temp.subtract(value.multiply(mod));
-			
-			  }while(result.compareTo(mod) > 0);
-		}
+			   		  
+		        value = temp.divide(mod);
+		        result = temp.subtract(value.multiply(mod));
+		        num = result;
+		         
+		    } while (result.compareTo(BigInteger.ZERO) < 0);
+		} //check if the number is a positive number smaller or greater than modulo	
 		
-		else  //check if the number is a positive number smaller or greater than modulo
-			
-			do{
-				
-			value = num.divide(mod);
-		    result = num.subtract(value.multiply(mod));
-		    
-			}while(result.compareTo(mod) > 0);
+		else
+		   do 
+			{				
+			  value = num.divide(mod);
+		      result = num.subtract(value.multiply(mod));
+		      num = result;
+		  
+			} while(result.compareTo(mod) > 0);
 			
 		return result;
 	}
@@ -70,11 +76,13 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		BigInteger rest;
 		
 		r1 = modCalculation(num_1, mod);
+			
 		r2 = modCalculation(num_2, mod);
+	
 		if (r1.equals(r2)){
 			rest = r1;
 			System.out.println(num_1 + " und " + num_2 + " are congruent modulo " + mod + ","
-					+ "because the division of a/mod and b/mod have the same residue: " + rest);
+					+ " because the division of a/mod and b/mod have the same residue: " + rest);
 			return true;
 		} else 	System.out.println(num_1 + " und " + num_2+ " are not congruent modulo " + mod );
 		return false;
@@ -89,7 +97,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * @return result
 	 * */
 	public BigInteger modAddition(BigInteger addend_1, BigInteger  addend_2, BigInteger mod){
-	    BigInteger sum;
+	    BigInteger sum, result;
 	    
 	    sum = addend_1.add(addend_2);
 	    
@@ -111,7 +119,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * @return result
 	 * */
 	public BigInteger modSubtraction(BigInteger num_1, BigInteger  num_2, BigInteger mod){
-		
+		BigInteger result;
 		BigInteger sub = num_1.subtract(num_2);
 		
 		if (sub.equals(BigInteger.ZERO)){
@@ -132,27 +140,31 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * @return result
 	 * */
 	public BigInteger modMultiplication(BigInteger num_1, BigInteger num_2, BigInteger mod){
-		
+		BigInteger mul, result;
 		if (num_1.equals(BigInteger.ZERO) || (num_2.equals(BigInteger.ZERO))){
 			return BigInteger.ZERO;
 		}
 		
-		BigInteger mul = num_1.multiply(num_2);
-		BigInteger result = modCalculation(mul,mod);
+		mul = num_1.multiply(num_2);
+		result = modCalculation(mul,mod);
 		
 		return result;
 	}
 	
 	/*Using extended Euclidean Algorithm to compute integers x, y so that the greatest common divisor gcd(a,b)= ax+by
-	 * @param num_1 number
-	 * @param num_2 number
+	 * The subset of a given number z consists of all natural numbers n, for which the following applies: n divides z.
+	 * @param num_1 positive number 
+	 * @param num_2 positive number
 	 * @param x , y coefficients 
 	 * @result gcd the last non-zero remainder 
 	 * */
-	
-	   BigInteger x, y;
 	   
+	BigInteger x, y;
 	public BigInteger gcdExtended(BigInteger num_1, BigInteger num_2) {
+		
+		// if num_1 or num_2 are negative numbers, we simply apply the absolute value
+		num_1 = num_1.abs();
+		num_2 = num_2.abs();
 		
 		// Base case : if the first number is zero return second number 
 		
@@ -161,7 +173,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 			y = BigInteger.ONE;
 			return num_2;
       	}
-//		if the second number is zero return first number
+       //	if the second number is zero return first number
 		if (num_2.equals(BigInteger.ZERO)){
 			x = BigInteger.ONE;
 			y = BigInteger.ZERO;
@@ -182,17 +194,30 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		return gcd;
 	}
       
-	
+	/*Method to check if a given number has an inverse
+	 * @param num number
+	 * @param mod modulo
+	 * return boolean
+	 * */
 	public Boolean hasInverse (BigInteger num, BigInteger mod){
-		
-		if (gcdExtended(num,mod).equals(BigInteger.ONE)){
+	
+		// gcd != 1
+		if (num.equals(BigInteger.ZERO) || mod.equals(BigInteger.ZERO)) {
+			throw new ArithmeticException("There is no modular multiplicative inverse for the number: " + num);
+		//	return false;
+		}
+		if (mod.compareTo(BigInteger.ZERO) < 0) {
+			throw new IllegalArgumentException("The BigInteger " + num + " has no multiplicative inverse mod " + mod);
+		//return false;
+		}
 			
-			return true;
+		else if (gcdExtended(num,mod).compareTo(BigInteger.ONE) != 0 ){
+		return false;
 			
-		}else
-			System.out.println("The number" + num + "does'nt have a modular inverse");
-			return false;
+		} else //gcdExtended(num,mod).equals(BigInteger.ONE)
 		
+		return true;
+
 	}
 	
 	/* Iterative Modular Multiplicative Inverse a modulo m with extended Euclidean algorithm 1= a.x + m.y
@@ -201,7 +226,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * @param x = 0, y = 1 at the beginning , last_x = 1 gcd at end, last_y = 0
 	 * @param m0 = mod , temp temporary values
 	 * @param q quotient
-	 * @return x: result from the Division between x and p (divisor) or the multiplicative Inverse
+	 * @return x: result from the division between x and p (divisor) or the multiplicative Inverse
 	 * Algorithm Assumption: a and m are coprimes, i.e., gcd(a, m) = 1 
 	 * */
 	
@@ -211,43 +236,57 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		
 		BigInteger x= BigInteger.ZERO, y = BigInteger.ONE;
 		BigInteger last_y = BigInteger.ZERO, last_x = BigInteger.ONE;
+		
+		/*try {
+			Boolean check = hasInverse(num,mod);
+			if(check.equals(false)) {
+				System.out.println("BigInteger isn't invertible !");
+			}
+			
+		}catch (ArithmeticException e) {
+			e.printStackTrace();
+		}catch (IllegalArgumentException e) {
+			e.printStackTrace(); */
 	
+	    Boolean check = hasInverse(num,mod);
+		if(check.equals(false)) {
+			 throw new ArithmeticException("BigInteger isn't invertible !");
+		}
+		
+		// continue only if the given number has an multiplicative inverse 
 		//if modulo is one return zero
-		
-		if(mod.equals(BigInteger.ONE)|| mod.equals(BigInteger.ZERO)){
-			return BigInteger.ZERO;
-		}			
+				
+		if(mod.equals(BigInteger.ONE)){
+			x = BigInteger.ZERO;
+		}
+				
 		if (num.equals(BigInteger.ONE)){
-			return BigInteger.ONE;
+			x = BigInteger.ONE;
 		}
-//		inverse exists only if num and mod are relatively prime, i. e. gcdExtended = 1
-		
-		if (hasInverse(num,mod) == false){
-			return null; // not the good answer but only to check
-		}
-	    while (mod.compareTo(BigInteger.ONE) > 0){
-			     q = num.divide(mod);
-			     temp = num;
-			     num = mod;
-			     mod = modCalculation(temp, mod);
-			
-			     //update x and y
-			     temp = x;
-			     x = last_x.subtract(q.multiply(x));
-			     last_x = temp;
-			
-			     temp = y;
-		         y = last_y.subtract(q.multiply(x));
-		         last_y = temp;		
-		
-	    }     
-		 //Check if x is positive,if not add with the modulo
-		 if(x.compareTo(BigInteger.ZERO) < 0)
-			
-			x = x.add(m0); 
-			
-		    return x ;
-		
+		// inverse exists only if num and mod are relatively prime, i. e. gcdExtended = 1
+				
+		 while (mod.compareTo(BigInteger.ONE) > 0){
+			 q = num.divide(mod);
+		     temp = num;
+			 num = mod;
+			 mod = modCalculation(temp, mod);
+					
+			//update x and y
+		     temp = x;
+			 x = last_x.subtract(q.multiply(x));
+			 last_x = temp;
+					
+			 temp = y;
+		     y = last_y.subtract(q.multiply(x));
+			 last_y = temp;		
+				
+		 }     
+	   //Check if x is positive,if not add with the modulo
+	     if(x.compareTo(BigInteger.ZERO) < 0)
+					
+		     x = x.add(m0); 
+					
+			return x ;
 	}
 
 	
@@ -259,17 +298,25 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * @return result,the result by the multiplication of num_1 with the inverse of num_2 modulo mod
 	 * */
 	
-	public BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod) throws ArithmeticException {
+	public BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod) {
 		
 		//base case
 		if(num_1.equals(BigInteger.ZERO)) {
 			return BigInteger.ZERO;
 		}
-		
+		if (num_2.equals(BigInteger.ZERO) || mod.equals(BigInteger.ZERO)) {
+		//	System.out.println("We can't calculate modular multiplicative inverse of this number");
+			throw new ArithmeticException("We can't calculate modular multiplicative inverse of this number");			
+		}
+		if (mod.compareTo(BigInteger.ZERO) < 0) {
+			//	System.out.println("We can't calculate modular multiplicative inverse of this number");
+				throw new IllegalArgumentException("Wrong arguments, change them !");			
+			}
+			
 		BigInteger inverseNum_2 = multiplicativeInverse (num_2, mod);
-		
 		BigInteger result = modMultiplication(num_1, inverseNum_2, mod);
-				
+		
+			
 		return result;
 	}
 
@@ -280,14 +327,20 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		// Initialize the result 
         BigInteger pow = BigInteger.ONE; 
         
-        //if the exponent is zero, then return power or if the number is zero return zero
+        //if the exponent is zero, then return one or if the number is zero return zero
         
         if (exp.equals(BigInteger.ZERO))
 			return pow;
         if(num.equals(BigInteger.ZERO)){
         	return BigInteger.ZERO;
         }
-                
+        if (mod.equals(BigInteger.ZERO)) {
+        	throw new ArithmeticException("Operation can't be done");
+        }
+        if (mod.compareTo(BigInteger.ZERO) < 0) {
+			//	System.out.println("We can't compute this operation");
+				throw new IllegalArgumentException("Wrong arguments, change them: mod positiv greater than zero !");			
+			}               
         // Update the number num if it is more than or equal to mod 
         
         num = modCalculation(num, mod);       
@@ -314,38 +367,56 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * @param prim prime number
 	 * We count all prime numbers and their multiples and subtract this count from num to get the result
 	 * Prime factors and multiples of prime factors won’t have gcd as 1
-	 * return result
+	 * return result, the totient at the end of the sample
 	 * */
 
 	public BigInteger phiFunction(BigInteger num) {
 		
 		//initialize result as number
-		result = num;
 		
-		//Consider every prime number of num and their multiples with gcd more than 1 (square)
+		BigInteger phiResult = num;
+		
+		// check if it's a negative number
+		
+		if (num.compareTo(BigInteger.ZERO) < 0) {
+			
+			throw new IllegalArgumentException("You need to enter a positive number");
+		}
+		// By convention, phi(0)=1, although the Wolfram Language defines EulerPhi[0] equal to 0 for consistency 
+		
+		if(num.equals(BigInteger.ONE) || num.equals(BigInteger.ZERO)) {
+			return BigInteger.ONE;
+		}
+		
+		//Check every prime number of num and their multiples with gcd more than 1
 		
 		for (BigInteger prim = BigInteger.TWO; (prim.multiply(prim)).compareTo(num) <= 0; prim = prim.add(BigInteger.ONE) ) {
 			
 		// Check if prim divides num (==0), i.e. prim is a prime factor
-			
+					
 			if (modCalculation(num,prim).equals(BigInteger.ZERO)) {
 				
-				//update num and result as long as prim divides num
+				//update result as long as prim divides num: num*(1 – 1/p) = num - (num/p)
+				// subtract multiples of prim from result
 				
+				phiResult = phiResult.subtract(phiResult.divide(prim));
+							
+				//Remove all occurrences of prim in num
 				while(modCalculation(num,prim).equals(BigInteger.ZERO)) {
 					
-					num = num.divide(prim);
-					result = result.subtract((result.divide(prim)));
+				num = num.divide(prim);
+			
 				}
 			}		 
 		}
-		// If the reduced number is greater than 1, then remove all multiples of num from result.
- 
+		// If the reduced number is greater than 1, i.e when num has a prime factor greater  
+	   // than sqrt(num), then remove all multiples of num from result.
+  
 		if (num.compareTo(BigInteger.ONE) > 0) {
 			
-			result = result.subtract((result.divide(num)));
+			phiResult = phiResult.subtract((phiResult.divide(num)));
 		}
-		return result;
+		return phiResult;
 	}
 	
 }
