@@ -8,4 +8,5 @@ public interface EllipticCurves {
     public Point getInf();
     public BigInteger getP();
     public boolean isNonSingular(BigInteger a, BigInteger b);
+    public boolean onCurve(Point p);
 }

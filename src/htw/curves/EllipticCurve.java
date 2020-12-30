@@ -51,6 +51,7 @@ public class EllipticCurve implements EllipticCurves {
         return !NEG_SIXTEEN.multiply((FOUR.multiply(a.multiply(a).multiply(a)).add((TWENTY_SEVEN.multiply(b.multiply(b)))))).equals(ZERO);
     }
 
+    @Override
     public boolean onCurve(Point p){
         if(p instanceof AffinePoint){
             return p.getY().multiply(p.getY()).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX())).add(this.b)).mod(this.p));
@@ -58,6 +59,6 @@ public class EllipticCurve implements EllipticCurves {
         if(p instanceof ProjectivePoint){
             return p.getY().multiply(p.getY().multiply(p.getZ())).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX()).multiply(p.getZ().multiply(p.getZ()))).add(this.b.multiply(p.getZ().multiply(p.getZ().multiply(p.getZ()))))).mod(this.p));
         }
-        return false;
+        return false;   //evtl modPow?
     }
 }
