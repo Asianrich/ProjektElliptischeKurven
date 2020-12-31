@@ -12,13 +12,17 @@ public class Main {
 		int choice = 1;
 		int tmp = 0;
 		String read = "";
+		String path = "dh.txt";
 		DiffieHellman dh;
 		FiniteFields Field = new FiniteFields();
 		BigInteger prim;
 		Scanner sc = new Scanner(System.in);
 		Scanner file = null;
+		if(args.length > 0){
+			path = args[0];
+		}
 		try {
-			file = new Scanner(new File("dh.txt"), "UTF-8");
+			file = new Scanner(new File(path), "UTF-8");
 			file.useLocale(Locale.GERMANY);
 		} catch (Exception e){
 			e.printStackTrace();
@@ -45,14 +49,42 @@ public class Main {
 					break;
 				case 2:
 					if(file != null){
-						read = file.nextLine();
-						BigInteger p = new BigInteger(read);
-						read = file.nextLine();
-						BigInteger g = new BigInteger(read);
-						read = file.nextLine();
-						BigInteger a = new BigInteger(read);
-						read = file.nextLine();
-						BigInteger b = new BigInteger(read);
+						BigInteger p;
+						BigInteger g;
+						BigInteger a;
+						BigInteger b;
+						if (file.hasNext()){
+							read = file.nextLine();
+							p = new BigInteger(read);
+						} else {
+							System.out.println("Geben Sie die Primzahl für DH ein:");
+							read = sc.nextLine();
+							p = new BigInteger(read);
+						}
+						if (file.hasNext()) {
+							read = file.nextLine();
+							g = new BigInteger(read);
+						} else {
+							System.out.println("Geben Sie den Erzeuger für DH ein:");
+							read = sc.nextLine();
+							g = new BigInteger(read);
+						}
+						if (file.hasNext()) {
+							read = file.nextLine();
+							a = new BigInteger(read);
+						} else {
+							System.out.println("Geben Sie Alices Schluessel für DH ein:");
+							read = sc.nextLine();
+							a = new BigInteger(read);
+						}
+						if (file.hasNext()) {
+							read = file.nextLine();
+							b = new BigInteger(read);
+						} else {
+							System.out.println("Geben Sie Bobs Schluessel für DH ein:");
+							read = sc.nextLine();
+							b = new BigInteger(read);
+						}
 						dh = new DiffieHellman(p, g);
 						dh.setBobKey(b);
 						dh.setAliceKey(a);
