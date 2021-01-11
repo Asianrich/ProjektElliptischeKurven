@@ -1,11 +1,11 @@
 package htw.curves;
 import java.math.BigInteger;
+import java.util.Random;
 
 public class BasicTheoreticMethods implements ModularArithmetic {
      
 	//BigInteger result;
 	//Constructor
-	
 	public BasicTheoreticMethods (){ }
 	
 	
@@ -360,13 +360,13 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	}
 
 	/*Method to calculate the Euler'sche function for a natural number n
-	 * It correspond to the count of numbers x in {1, 2, 3, …, n} that are relatively 
+	 * It correspond to the count of numbers x in {1, 2, 3, ï¿½, n} that are relatively 
 	 * prime to n, i.e., the numbers whose gcd(x,n) are 1.
-	 * Using the product formula we multiply n by product of (1 – 1/p) for all prime factors p of n.
+	 * Using the product formula we multiply n by product of (1 ï¿½ 1/p) for all prime factors p of n.
 	 * @param number num
 	 * @param prim prime number
 	 * We count all prime numbers and their multiples and subtract this count from num to get the result
-	 * Prime factors and multiples of prime factors won’t have gcd as 1
+	 * Prime factors and multiples of prime factors wonï¿½t have gcd as 1
 	 * return result, the totient at the end of the sample
 	 * */
 
@@ -396,7 +396,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 					
 			if (modCalculation(num,prim).equals(BigInteger.ZERO)) {
 				
-				//update result as long as prim divides num: num*(1 – 1/p) = num - (num/p)
+				//update result as long as prim divides num: num*(1 ï¿½ 1/p) = num - (num/p)
 				// subtract multiples of prim from result
 				
 				phiResult = phiResult.subtract(phiResult.divide(prim));
@@ -418,5 +418,33 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		}
 		return phiResult;
 	}
-	
+
+	@Override
+	public BigInteger random(int length) {
+		Random rnd = new Random();
+		BigInteger rndNumber;
+		do {
+			rndNumber =  new BigInteger(length, rnd);
+		}while(rndNumber.compareTo(BigInteger.valueOf(1)) < 1);
+
+		return rndNumber;
+	}
+
+	@Override
+	public BigInteger random(BigInteger range) {
+		Random rnd = new Random();
+		BigInteger rndNumber;
+
+		do {
+			rndNumber  =  new BigInteger(range.bitLength(), rnd);
+			if(rndNumber.compareTo(range) >= 0)
+			{
+				rndNumber = rndNumber.mod(range);
+			}
+		}while(rndNumber.compareTo(BigInteger.valueOf(1)) < 1);
+
+
+		return rndNumber;
+	}
+
 }

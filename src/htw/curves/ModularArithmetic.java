@@ -17,7 +17,7 @@ public interface ModularArithmetic {
 	BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod);
 	BigInteger modExponentiation(BigInteger num, BigInteger exp, BigInteger mod);
 	BigInteger phiFunction(BigInteger num);
-	
-	
+	BigInteger random(int length);
+	BigInteger random(BigInteger range);
 	
 }
