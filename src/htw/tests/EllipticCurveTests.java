@@ -31,6 +31,8 @@ public class EllipticCurveTests {
     ProjectivePoint p7 = new ProjectivePoint(BigInteger.valueOf(6), BigInteger.valueOf(1), BigInteger.ONE);
     ProjectivePoint p8 = new ProjectivePoint(BigInteger.valueOf(1), BigInteger.valueOf(4), BigInteger.ONE);
 
+    EllipticCurve curve2 = new EllipticCurve(BigInteger.valueOf(2), BigInteger.valueOf(2), BigInteger.valueOf(17));
+
     // ##### AFFFINE ####
 
     @Test
@@ -129,5 +131,25 @@ public class EllipticCurveTests {
     public void testkMulProjective8() {
         Point erg = p8.kMul(BigInteger.valueOf(10000), curve1);
         assertTrue(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testPoints() {
+        assertTrue(curve.getAllPoints().size() == 6);
+    }
+
+    @Test
+    public void testPoints1() {
+        assertTrue(curve1.getAllPoints().size() == 4);
+    }
+
+    @Test
+    public void testPoints2() {
+        assertTrue(curve2.getAllPoints().size() == 10);
+    }
+
+    @Test
+    public void testRoot() {
+        assertTrue(curve2.findRoot().equals(new AffinePoint(BigInteger.valueOf(3), BigInteger.valueOf(1))));
     }
 }

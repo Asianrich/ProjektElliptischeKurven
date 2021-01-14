@@ -61,4 +61,28 @@ public class EllipticCurve implements EllipticCurves {
         }
         return false;   //evtl modPow?
     }
+
+    public LinkedList<Point> getAllPoints(){
+        LinkedList <Point> points = new LinkedList<>();
+        for(BigInteger i = BigInteger.ZERO; i.compareTo(this.p) < 0; i = i.add(BigInteger.ONE)){
+            BigInteger ys = ((i.multiply(i.multiply(i))).add(this.a.multiply(i)).add(this.b)).mod(this.p);
+            BigInteger y = ys.sqrt();
+            if((y.multiply(y)).equals(ys)) {
+                points.add(new AffinePoint(i, y));
+                points.add(new AffinePoint(i, y.multiply(BigInteger.valueOf(-1))));
+            } //TODO else? KP Richard?
+        }
+        return points;
+    }
+
+    public Point findRoot(){
+        LinkedList<Point> points = this.getAllPoints();
+        BigInteger ml = BigInteger.valueOf(points.size() + 1);
+        BasicTheoreticMethods basic = new BasicTheoreticMethods();
+        BigInteger gcd = basic.gcdExtended(ml, BigInteger.ONE);
+        if(gcd.equals(BigInteger.ONE))
+            return points.getFirst();
+        else
+            return null; //TODO whatever - hier nur Prim, was aber sonst
+    }
 }
