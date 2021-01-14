@@ -77,7 +77,7 @@ public class EllipticCurve implements EllipticCurves {
 
     public Point findRoot(){
         LinkedList<Point> points = this.getAllPoints();
-        BigInteger ml = BigInteger.valueOf(points.size() + 1);
+        BigInteger ml = BigInteger.valueOf(points.size() + 1); //INF ist +1
         BasicTheoreticMethods basic = new BasicTheoreticMethods();
         BigInteger gcd = basic.gcdExtended(ml, BigInteger.ONE);
         if(gcd.equals(BigInteger.ONE))
