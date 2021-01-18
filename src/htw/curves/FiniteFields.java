@@ -6,15 +6,32 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class FiniteFields implements Fields {
+    private BigInteger prim;
+    private ModularArithmetic math;
+
+
+    public  FiniteFields() {
+        math = new BasicTheoreticMethods();
+    }
+
+
+    public FiniteFields(BigInteger prim) {
+        this.prim = prim;
+        math = new BasicTheoreticMethods();
+    }
 
     @Override
     public BigInteger generatePrime(int len, int trials) {
         BigInteger rndPrime = BigInteger.valueOf(4); //Irgendeine Zahl, das nicht Prim ist.
-        ModularArithmetic mA = new BasicTheoreticMethods();
         while(!checkPrime(rndPrime, trials)){
-            rndPrime = mA.random(len);
+            rndPrime = math.random(len);
         }
         return rndPrime;
+    }
+
+    @Override
+    public BigInteger squareRoot(BigInteger number) {
+        return null;
     }
 
     private boolean checkPrime(BigInteger prim, int trials){
@@ -22,12 +39,11 @@ public class FiniteFields implements Fields {
         BigInteger temp;
         int tryCounter = trials;
         int success = 0;
-        ModularArithmetic btm = new BasicTheoreticMethods();
         
         do{
             do {
-                rndNumber = btm.random(prim);
-                temp = btm.gcdExtended(rndNumber, prim); //ggT(rndNumber, prim);
+                rndNumber = math.random(prim);
+                temp = math.gcdExtended(rndNumber, prim); //ggT(rndNumber, prim);
                 //Falls eine Zahl genommen wurde, dass diese Zahl teilen kann.
                 if(temp.compareTo(rndNumber) == 0) {
                     return false;
@@ -36,7 +52,7 @@ public class FiniteFields implements Fields {
             } while (temp.compareTo(BigInteger.valueOf(1)) != 0);
 
             BigInteger primExponent = prim.subtract(BigInteger.valueOf(1));
-            rndNumber = btm.modExponentiation(rndNumber, primExponent, prim); //rndNumber.modPow(primExponent, prim);
+            rndNumber = math.modExponentiation(rndNumber, primExponent, prim); //rndNumber.modPow(primExponent, prim);
 
             if(rndNumber.compareTo(BigInteger.valueOf(1)) == 0){
                 success++;
