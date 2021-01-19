@@ -16,6 +16,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 public class FiniteFieldsTest {
 
+
+    @Test
+    public void SqrRootTest(){
+        try{
+            Fields fields = new FiniteFields(BigInteger.valueOf(17));
+            BigInteger num = fields.squareRoot(BigInteger.TWO);
+            Assert.assertTrue(num.compareTo(BigInteger.valueOf(6)) == 0);
+        }
+        catch (Exception error){
+            Assert.assertTrue(false);
+        }
+
+
+    }
+
     @Test
     public void FermatTest_4_bit() throws IOException {
 

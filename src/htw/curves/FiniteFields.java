@@ -30,8 +30,47 @@ public class FiniteFields implements Fields {
     }
 
     @Override
-    public BigInteger squareRoot(BigInteger number) {
-        return null;
+    public BigInteger squareRoot(BigInteger number) throws Exception {
+        BigInteger root[];
+        // Überprüfe, ob man so die Wurzel ziehen kann.
+        root = number.sqrtAndRemainder();
+        if(root[1].compareTo(BigInteger.ZERO) != 0) {
+            BigInteger check = prim.sqrt();
+            while(root[0].compareTo(number) != 0){
+                check = check.add(BigInteger.ONE);
+                root[0] = math.modExponentiation(check, BigInteger.TWO, prim);
+
+                if(check.compareTo(prim) == 0)
+                    throw new Exception("Something went wrong. SqrRoot is out of Fields");
+            }
+            root[0] = check;
+        }
+        return root[0];
+    }
+
+    @Override
+    public BigInteger add(BigInteger sum1, BigInteger sum2) {
+        return math.modAddition(sum1,sum2,prim);
+    }
+
+    @Override
+    public BigInteger subtract(BigInteger sum1, BigInteger sum2) {
+        return math.modSubtraction(sum1, sum2, prim);
+    }
+
+    @Override
+    public BigInteger multiply(BigInteger sum1, BigInteger sum2) {
+        return math.modMultiplication(sum1, sum2, prim);
+    }
+
+    @Override
+    public BigInteger divide(BigInteger sum1, BigInteger sum2) {
+        return math.modDivision(sum1,sum2,prim);
+    }
+
+    @Override
+    public BigInteger pow(BigInteger sum1, BigInteger sum2) {
+        return math.modExponentiation(sum1, sum2, prim);
     }
 
     private boolean checkPrime(BigInteger prim, int trials){
