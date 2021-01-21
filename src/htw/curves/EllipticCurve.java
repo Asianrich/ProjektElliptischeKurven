@@ -64,13 +64,16 @@ public class EllipticCurve implements EllipticCurves {
 
     public LinkedList<Point> getAllPoints(){
         LinkedList <Point> points = new LinkedList<>();
+        FiniteFields field = new FiniteFields(this.p);
         for(BigInteger i = BigInteger.ZERO; i.compareTo(this.p) < 0; i = i.add(BigInteger.ONE)){
             BigInteger ys = ((i.multiply(i.multiply(i))).add(this.a.multiply(i)).add(this.b)).mod(this.p);
-            BigInteger y = ys.sqrt();
-            if((y.multiply(y)).equals(ys)) {
+            BigInteger y = null;
+            try {
+                y = field.squareRoot(ys);
                 points.add(new AffinePoint(i, y));
                 points.add(new AffinePoint(i, y.multiply(BigInteger.valueOf(-1))));
-            } //TODO else? KP Richard?
+            } catch (Exception e) {
+            }
         }
         return points;
     }

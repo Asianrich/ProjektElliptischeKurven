@@ -135,21 +135,21 @@ public class EllipticCurveTests {
 
     @Test
     public void testPoints() {
-        assertTrue(curve.getAllPoints().size() == 6);
+        assertTrue(curve.getAllPoints().size() == 10);
     }
 
     @Test
     public void testPoints1() {
-        assertTrue(curve1.getAllPoints().size() == 4);
+        assertTrue(curve1.getAllPoints().size() == 6);
     }
 
     @Test
     public void testPoints2() {
-        assertTrue(curve2.getAllPoints().size() == 10);
+        assertTrue(curve2.getAllPoints().size() == 18);
     }
 
     @Test
     public void testRoot() {
-        assertTrue(curve2.findRoot().equals(new AffinePoint(BigInteger.valueOf(3), BigInteger.valueOf(1))));
+        assertTrue(curve2.findRoot().equals(new AffinePoint(BigInteger.valueOf(0), BigInteger.valueOf(6))));
     }
 }

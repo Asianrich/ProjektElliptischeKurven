@@ -53,6 +53,8 @@ public class Main {
 						BigInteger g;
 						BigInteger a;
 						BigInteger b;
+						BigInteger x;
+						BigInteger y;
 						if (file.hasNext()){
 							read = file.nextLine();
 							p = new BigInteger(read);
@@ -63,11 +65,35 @@ public class Main {
 						}
 						if (file.hasNext()) {
 							read = file.nextLine();
-							g = new BigInteger(read);
+							a = new BigInteger(read);
 						} else {
-							System.out.println("Geben Sie den Erzeuger für DH ein:");
+							System.out.println("Geben Sie den Parameter a der Kurve an:");
 							read = sc.nextLine();
-							g = new BigInteger(read);
+							a = new BigInteger(read);
+						}
+						if (file.hasNext()) {
+							read = file.nextLine();
+							b = new BigInteger(read);
+						} else {
+							System.out.println("Geben Sie den Parameter b der Kurve an:");
+							read = sc.nextLine();
+							b = new BigInteger(read);
+						}
+						if (file.hasNext()) {
+							read = file.nextLine();
+							x = new BigInteger(read);
+						} else {
+							System.out.println("Geben Sie x des Erzeuger für DH ein:");
+							read = sc.nextLine();
+							x = new BigInteger(read);
+						}
+						if (file.hasNext()) {
+							read = file.nextLine();
+							y = new BigInteger(read);
+						} else {
+							System.out.println("Geben Sie y des Erzeuger für DH ein:");
+							read = sc.nextLine();
+							y = new BigInteger(read);
 						}
 						if (file.hasNext()) {
 							read = file.nextLine();
@@ -85,7 +111,9 @@ public class Main {
 							read = sc.nextLine();
 							b = new BigInteger(read);
 						}
-						dh = new DiffieHellman(p, g);
+						EllipticCurve curve = new EllipticCurve(a, b, p);
+						Point erz = new ProjectivePoint(x, y, BigInteger.ONE);
+						dh = new DiffieHellman(curve, erz);
 						dh.setBobKey(b);
 						dh.setAliceKey(a);
 						System.out.println("Datei erfolgreich eingelesen! Sie koennen nun mit Schritt 3 - x weitermachen.");
