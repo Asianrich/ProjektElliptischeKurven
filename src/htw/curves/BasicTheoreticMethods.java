@@ -1,9 +1,10 @@
 package htw.curves;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BasicTheoreticMethods implements ModularArithmetic {
      
-	//BigInteger result;
 	//Constructor
 	
 	public BasicTheoreticMethods (){ }
@@ -160,7 +161,9 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	 * */
 	   
 	BigInteger x, y;
+	
 	public BigInteger gcdExtended(BigInteger num_1, BigInteger num_2) {
+		
 		
 		// if num_1 or num_2 are negative numbers, we simply apply the absolute value
 		num_1 = num_1.abs();
@@ -204,11 +207,9 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		// gcd != 1
 		if (num.equals(BigInteger.ZERO) || mod.equals(BigInteger.ZERO)) {
 			throw new ArithmeticException("There is no modular multiplicative inverse for the number: " + num);
-		//	return false;
 		}
 		if (mod.compareTo(BigInteger.ZERO) < 0) {
 			throw new IllegalArgumentException("The BigInteger " + num + " has no multiplicative inverse mod " + mod);
-		//return false;
 		}
 			
 		else if (gcdExtended(num,mod).compareTo(BigInteger.ONE) != 0 ){
@@ -236,18 +237,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		
 		BigInteger x= BigInteger.ZERO, y = BigInteger.ONE;
 		BigInteger last_y = BigInteger.ZERO, last_x = BigInteger.ONE;
-		
-		/*try {
-			Boolean check = hasInverse(num,mod);
-			if(check.equals(false)) {
-				System.out.println("BigInteger isn't invertible !");
-			}
 			
-		}catch (ArithmeticException e) {
-			e.printStackTrace();
-		}catch (IllegalArgumentException e) {
-			e.printStackTrace(); */
-	
 	    Boolean check = hasInverse(num,mod);
 		if(check.equals(false)) {
 			 throw new ArithmeticException("BigInteger isn't invertible !");
@@ -320,7 +310,12 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		return result;
 	}
 
-
+	/*Function implementing Modular power 
+	 * @param num number 
+	 * @param exp exponent
+	 * @param mod modulo
+	 * @return pow, the result
+	 * */
 	
 	public BigInteger modExponentiation(BigInteger num, BigInteger exp, BigInteger mod) {
 		
@@ -328,19 +323,14 @@ public class BasicTheoreticMethods implements ModularArithmetic {
         BigInteger pow = BigInteger.ONE; 
         
         //if the exponent is zero, then return one or if the number is zero return zero
-        
         if (exp.equals(BigInteger.ZERO))
 			return pow;
         if(num.equals(BigInteger.ZERO)){
         	return BigInteger.ZERO;
         }
-        if (mod.equals(BigInteger.ZERO)) {
+        if (mod.compareTo(BigInteger.ZERO) <= 0 || exp.compareTo(BigInteger.ZERO) < 0) {
         	throw new ArithmeticException("Operation can't be done");
-        }
-        if (mod.compareTo(BigInteger.ZERO) < 0) {
-			//	System.out.println("We can't compute this operation");
-				throw new IllegalArgumentException("Wrong arguments, change them: mod positiv greater than zero !");			
-			}               
+        }              
         // Update the number num if it is more than or equal to mod 
         
         num = modCalculation(num, mod);       
@@ -372,7 +362,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 
 	public BigInteger phiFunction(BigInteger num) {
 		
-		//initialize result as number
+	//  Initialize result as number
 		
 		BigInteger phiResult = num;
 		
@@ -418,5 +408,79 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		}
 		return phiResult;
 	}
+	
+	/*Function implementing the Chinese remainder theorem 
+	* @param remainderList_A contains the remainders of the equations
+	* @param modulList_N contains all the moduli, i.e positive integers n[] that are pairwise coprime (gcd for every pair is 1)
+    * @param p, tmp temporary values
+    * @param product, to store the product of all moduli
+    * @return sum, the sum of x which is also the solution after x % prod
+    * sum is the smallest number x such that: 
+    * x % n[0] = rem[0], 
+    * x % n[1] = rem[1], 
+    * .................. 
+    * x % n[k-1] = rem[k-1] 
+    * k the size of n[], rem[]     	
+    */	
+     public BigInteger chineseRemainder(ArrayList<BigInteger> remainderList_A, ArrayList<BigInteger> modulList_N) {
+    	
+	 // Initialize temporary values
+	
+		BigInteger p, tmp;
+		BigInteger product = BigInteger.ONE; 
+		BigInteger sum = BigInteger.ZERO;  
+
+	 // Compute product of all moduli  N = n[1]*...*n[k]
+		
+		for (int i = 0; i < modulList_N.size(); i++) 
+						
+			product = product.multiply(modulList_N.get(i)); 
+        
+		// For each i, the integers n[i] and N/n[i] are co-prime
+		// so divide N by current modulus to get product excluding said modulus
+		
+		for (int i = 0; i < modulList_N.size(); i++) {
+					
+			p = product.divide(modulList_N.get(i));	
+			
+		//  then calculate multiplicativeInverse x such that x*p == 1 % modulList_N.get(i)
+			
+			tmp = multiplicativeInverse(p, modulList_N.get(i)); 
+			
+			sum = sum.add(remainderList_A.get(i).multiply(tmp).multiply(p)); 
+		
+		}		
+		// compute sum modulo product to get smallest/unique BigInteger x
+		
+		return modCalculation(sum, product); 
+    }
+     
+ 	
+ 	  public BigInteger random(int length) {
+ 		Random rnd = new Random();
+ 		BigInteger rndNumber;
+ 		do {
+ 			rndNumber =  new BigInteger(length, rnd);
+ 		}while(rndNumber.compareTo(BigInteger.valueOf(1)) < 1);
+
+ 		return rndNumber;
+ 	  }
+
+ 
+ 	  public BigInteger random(BigInteger range) {
+ 		Random rnd = new Random();
+ 		BigInteger rndNumber;
+
+ 		do {
+ 			rndNumber  =  new BigInteger(range.bitLength(), rnd);
+ 			if(rndNumber.compareTo(range) >= 0)
+ 			{
+ 				rndNumber = rndNumber.mod(range);
+ 			}
+ 		}while(rndNumber.compareTo(BigInteger.valueOf(1)) < 1);
+
+
+ 		return rndNumber;
+ 	}
 	
 }

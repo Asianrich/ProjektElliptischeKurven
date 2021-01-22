@@ -1,10 +1,11 @@
 package htw.curves;
 import java.math.BigInteger;
+import java.util.ArrayList;
 
-public interface ModularArithmetic {
+  public interface ModularArithmetic {
 
 	
-	//All Methods are implicitly public and abstract
+  // All Methods are implicitly public and abstract
 	
     BigInteger modCalculation(BigInteger num, BigInteger mod);
     Boolean    isCongruent(BigInteger num_1, BigInteger num_2, BigInteger mod);
@@ -17,7 +18,8 @@ public interface ModularArithmetic {
 	BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod);
 	BigInteger modExponentiation(BigInteger num, BigInteger exp, BigInteger mod);
 	BigInteger phiFunction(BigInteger num);
-	
-	
-	
+	BigInteger chineseRemainder(ArrayList<BigInteger> remainderList_A, ArrayList<BigInteger> modulList_N);
+	BigInteger random(int length);
+	BigInteger random(BigInteger range);
+		
 }
