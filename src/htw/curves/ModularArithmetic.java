@@ -21,5 +21,5 @@ import java.util.ArrayList;
 	BigInteger chineseRemainder(ArrayList<BigInteger> remainderList_A, ArrayList<BigInteger> modulList_N);
 	BigInteger random(int length);
 	BigInteger random(BigInteger range);
-		
+
 }

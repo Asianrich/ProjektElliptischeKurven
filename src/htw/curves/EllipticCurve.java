@@ -51,6 +51,7 @@ public class EllipticCurve implements EllipticCurves {
         return !NEG_SIXTEEN.multiply((FOUR.multiply(a.multiply(a).multiply(a)).add((TWENTY_SEVEN.multiply(b.multiply(b)))))).equals(ZERO);
     }
 
+    @Override
     public boolean onCurve(Point p){
         if(p instanceof AffinePoint){
             return p.getY().multiply(p.getY()).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX())).add(this.b)).mod(this.p));
@@ -58,6 +59,33 @@ public class EllipticCurve implements EllipticCurves {
         if(p instanceof ProjectivePoint){
             return p.getY().multiply(p.getY().multiply(p.getZ())).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX()).multiply(p.getZ().multiply(p.getZ()))).add(this.b.multiply(p.getZ().multiply(p.getZ().multiply(p.getZ()))))).mod(this.p));
         }
-        return false;
+        return false;   //evtl modPow?
+    }
+
+    public LinkedList<Point> getAllPoints(){
+        LinkedList <Point> points = new LinkedList<>();
+        FiniteFields field = new FiniteFields(this.p);
+        for(BigInteger i = BigInteger.ZERO; i.compareTo(this.p) < 0; i = i.add(BigInteger.ONE)){
+            BigInteger ys = ((i.multiply(i.multiply(i))).add(this.a.multiply(i)).add(this.b)).mod(this.p);
+            BigInteger y = null;
+            try {
+                y = field.squareRoot(ys);
+                points.add(new AffinePoint(i, y));
+                points.add(new AffinePoint(i, y.multiply(BigInteger.valueOf(-1))));
+            } catch (Exception e) {
+            }
+        }
+        return points;
+    }
+
+    public Point findRoot(){
+        LinkedList<Point> points = this.getAllPoints();
+        BigInteger ml = BigInteger.valueOf(points.size() + 1); //INF ist +1
+        BasicTheoreticMethods basic = new BasicTheoreticMethods();
+        BigInteger gcd = basic.gcdExtended(ml, BigInteger.ONE);
+        if(gcd.equals(BigInteger.ONE))
+            return points.getFirst();
+        else
+            return null; //TODO whatever - hier nur Prim, was aber sonst
     }
 }

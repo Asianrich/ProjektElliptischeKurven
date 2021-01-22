@@ -24,10 +24,10 @@ public class AffinePoint implements Point {
                     return this;
                     // inf is not there... I have issues with that. Can someone give me inf!?!??!
                 }
-                BigInteger m = BigInteger.valueOf(3).multiply(this.getX().multiply(this.getX())).add(e.getA()).divide(BigInteger.TWO.multiply(this.getY()));
+                BigInteger m = BigInteger.valueOf(3).multiply(this.getX().modPow(BigInteger.TWO, e.getP())).add(e.getA()).divide(BigInteger.TWO.multiply(this.getY()));
                 m = m.mod(e.getP());
                 //m = 3x^2+A / 2y
-                BigInteger x =  m.multiply(m).subtract(BigInteger.TWO.multiply(this.getX()));
+                BigInteger x =  m.modPow(BigInteger.TWO, e.getP()).subtract(BigInteger.TWO.multiply(this.getX()));
                 x = x.mod(e.getP());
                 //m^2-2x
                 BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());
@@ -35,18 +35,18 @@ public class AffinePoint implements Point {
                 //y = m(this x - x)+y
                 return new AffinePoint(x,y);
             } else {
-                if(this.isInf() || p.isInf()){
-                    if(this.isInf() && p.isInf()){
-                        return new AffinePoint(BigInteger.ZERO, BigInteger.ONE); //inf
+                if(this.isInf(e) || p.isInf()){
+                    if(this.isInf(e) && p.isInf()){
+                        return new AffinePoint(BigInteger.valueOf(-1), BigInteger.valueOf(-1)); //inf
                     } else {
-                        if(this.isInf())
+                        if(this.isInf(e))
                             return p;
                         else
                             return this;
                     }
                 } else {
                     if(this.getX().equals(p.getX())){
-                        return new AffinePoint(BigInteger.ZERO, BigInteger.ONE); //inf
+                        return new AffinePoint(BigInteger.valueOf(-1), BigInteger.valueOf(-1)); //inf
                     }
                     BigInteger mo = (p.getY().subtract(this.getY())).mod(e.getP());
                     BigInteger mu = p.getX().subtract(this.getX());
@@ -66,7 +66,8 @@ public class AffinePoint implements Point {
                             }
                         }
                     }
-                    BigInteger x = m.multiply(m).subtract(this.getX()).subtract(p.getX());
+                    //BigInteger x = m.multiply(m).subtract(this.getX()).subtract(p.getX());
+                    BigInteger x = m.modPow(BigInteger.TWO, e.getP()).subtract(this.getX()).subtract(p.getX());
                     x = x.mod(e.getP());
                     BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());
                     y = y.mod(e.getP());
@@ -116,6 +117,10 @@ public class AffinePoint implements Point {
     @Override
     public BigInteger getZ() {
         return BigInteger.ONE;
+    }
+
+    public boolean isInf(EllipticCurves e) {
+        return !e.onCurve(this);
     }
 
     @Override

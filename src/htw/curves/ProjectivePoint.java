@@ -21,7 +21,8 @@ public class ProjectivePoint implements Point {
             return this.add(p.toProjective(), e);
         }
         if(this.equals(p)){
-            BigInteger t = e.getA().multiply(this.getZ().multiply(this.getZ())).add(new BigInteger("3").multiply(this.getX().multiply(this.getX())));
+            //BigInteger t = e.getA().multiply(this.getZ().multiply(this.getZ())).add(new BigInteger("3").multiply(this.getX().multiply(this.getX())));
+            BigInteger t = e.getA().multiply(this.getZ().modPow(BigInteger.TWO, e.getP())).add(new BigInteger("3").multiply(this.getX().modPow(BigInteger.TWO, e.getP())));
             t = t.mod(e.getP());
             // t = A * z^2 + 3 * x^2
             BigInteger u = this.getY().multiply(this.getZ());
@@ -30,16 +31,19 @@ public class ProjectivePoint implements Point {
             BigInteger v = u.multiply(this.getX().multiply(this.getY()));
             v = v.mod(e.getP());
             // v = u * x * y
-            BigInteger w = t.multiply(t).subtract(new BigInteger("8").multiply(v));
+            //BigInteger w = t.multiply(t).subtract(new BigInteger("8").multiply(v));
+            BigInteger w = t.modPow(BigInteger.TWO, e.getP()).subtract(new BigInteger("8").multiply(v));
             w = w.mod(e.getP());
             // w = t^2 - 8 * u
             BigInteger x = BigInteger.TWO.multiply(u).multiply(w);
             x = x.mod(e.getP());
             // x = 2 * u * w
-            BigInteger y = t.multiply(new BigInteger("4").multiply(v).subtract(w)).subtract(new BigInteger("8").multiply(this.getY().multiply(this.getY()).multiply(u.multiply(u))));
+            //BigInteger y = t.multiply(new BigInteger("4").multiply(v).subtract(w)).subtract(new BigInteger("8").multiply(this.getY().multiply(this.getY()).multiply(u.multiply(u))));
+            BigInteger y = t.multiply(new BigInteger("4").multiply(v).subtract(w)).subtract(new BigInteger("8").multiply(this.getY().modPow(BigInteger.TWO, e.getP()).multiply(u.modPow(BigInteger.TWO, e.getP()))));
             y = y.mod(e.getP());
             // y = t * ( 4 * u - w ) - 8 * y^2 * u^2
-            BigInteger z = new BigInteger("8").multiply(u.multiply(u).multiply(u));
+            //BigInteger z = new BigInteger("8").multiply(u.multiply(u).multiply(u));
+            BigInteger z = new BigInteger("8").multiply(u.modPow(BigInteger.valueOf(3), e.getP()));
             z = z.mod(e.getP());
             // z = 8 * u^3
             return new ProjectivePoint(x, y, z);
@@ -58,10 +62,12 @@ public class ProjectivePoint implements Point {
             BigInteger x = v.multiply(w);
             x = x.mod(e.getP());
             // x = v * w
-            BigInteger y = u.multiply(v.multiply(v.multiply(this.getX().multiply(p.getZ()))).subtract(w)).subtract(v.multiply(v.multiply(v.multiply(this.getY().multiply(p.getZ())))));
+            //BigInteger y = u.multiply(v.multiply(v.multiply(this.getX().multiply(p.getZ()))).subtract(w)).subtract(v.multiply(v.multiply(v.multiply(this.getY().multiply(p.getZ())))));
+            BigInteger y = (u.multiply(v.modPow(BigInteger.TWO, e.getP()).multiply(this.getX().multiply(p.getZ())).subtract(w))).subtract(v.modPow(BigInteger.valueOf(3), e.getP()).multiply(this.getY().multiply(p.getZ())));
             y = y.mod(e.getP());
             // y = u * (v^2 * x1 * z2 - w) - v^3 * y1 * z2
-            BigInteger z = v.multiply(v.multiply(v)).multiply(this.getZ().multiply(p.getZ()));
+            //BigInteger z = v.multiply(v.multiply(v)).multiply(this.getZ().multiply(p.getZ()));
+            BigInteger z = v.modPow(BigInteger.valueOf(3), e.getP()).multiply(this.getZ().multiply(p.getZ()));
             z = z.mod(e.getP());
             // z = v^3 * z1 * z2
             return new ProjectivePoint(x, y, z);

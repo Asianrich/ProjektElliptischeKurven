@@ -4,18 +4,21 @@ import java.math.BigInteger;
 
 public class DiffieHellman {
 
-    BigInteger g = BigInteger.ZERO; //Erzeuger
-    BigInteger p = BigInteger.ZERO; //Prime
+    Point g = null; //Erzeuger
+    EllipticCurve p = null; //Prime
     BigInteger a = BigInteger.ZERO; //Alice
     BigInteger b = BigInteger.ZERO; //Bob
     BigInteger k = BigInteger.ZERO; //Key
 
 
-    public DiffieHellman(BigInteger p, BigInteger g){
+    public DiffieHellman(BigInteger a, BigInteger b, BigInteger p, BigInteger x, BigInteger y){
+        this.p = new EllipticCurve(a,b,p);
+        this.g = new ProjectivePoint(x,y,BigInteger.ONE);
+    }
+
+    public DiffieHellman(EllipticCurve p, Point g){
         this.p = p;
         this.g = g;
-        //test if g generates p
-        //wait for Richard
     }
 
     public void setAliceKey(BigInteger a){
@@ -26,27 +29,12 @@ public class DiffieHellman {
         this.b = b;
     }
 
-    public BigInteger getAliceMessage(BigInteger aliceSecretNumber){
-        return this.g.modPow(aliceSecretNumber, this.p);
-    }
-
-    public BigInteger getBobMessage(BigInteger bobSecretNumber){
-        return this.g.modPow(bobSecretNumber, this.p);
-    }
-
-    public BigInteger aliceCalculationOfKey(BigInteger bobMessage, BigInteger aliceSecretNumber){
-        return bobMessage.modPow(aliceSecretNumber, this.p);
-    }
-
     public void commonKey(){
-        this.k = g.modPow(a.multiply(b), p);
+        this.k = a.multiply(b);
     }
 
     public BigInteger getKey(){
         return k;
     }
-
-    public BigInteger bobCalculationOfKey(BigInteger aliceMessage, BigInteger bobSecretNumber){
-        return aliceMessage.modPow(bobSecretNumber, this.p);
-    }
+    
 }

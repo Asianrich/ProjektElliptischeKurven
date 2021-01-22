@@ -6,72 +6,101 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class FiniteFields implements Fields {
+    private BigInteger prim;
+    private ModularArithmetic math;
+
+
+    public  FiniteFields() {
+        math = new BasicTheoreticMethods();
+    }
+
+
+    public FiniteFields(BigInteger prim) {
+        this.prim = prim;
+        math = new BasicTheoreticMethods();
+    }
 
     @Override
-    public BigInteger generatePrime() {
+    public BigInteger generatePrime(int len, int trials) {
         BigInteger rndPrime = BigInteger.valueOf(4); //Irgendeine Zahl, das nicht Prim ist.
-        boolean check = false;
-        while(checkPrime(rndPrime)){
-            rndPrime = generateNumber(8192);
+        while(!checkPrime(rndPrime, trials)){
+            rndPrime = math.random(len);
         }
         return rndPrime;
     }
 
-    private BigInteger generateNumber(int len){
-        Random rnd = new Random();
-        BigInteger rndNumber =  new BigInteger(len, rnd);
-        return rndNumber;
+    @Override
+    public BigInteger squareRoot(BigInteger number) throws Exception {
+        BigInteger root[];
+        // Überprüfe, ob man so die Wurzel ziehen kann.
+        root = number.sqrtAndRemainder();
+        if(root[1].compareTo(BigInteger.ZERO) != 0) {
+            BigInteger check = prim.sqrt();
+            while(root[0].compareTo(number) != 0){
+                check = check.add(BigInteger.ONE);
+                root[0] = math.modExponentiation(check, BigInteger.TWO, prim);
+
+                if(check.compareTo(prim) == 0)
+                    throw new Exception("Something went wrong. SqrRoot is out of Fields");
+            }
+            root[0] = check;
+        }
+        return root[0];
     }
 
-    private BigInteger generateNumberRange(BigInteger biginteger){
-        Random rnd = new Random();
-        BigInteger rndNumber =  new BigInteger(biginteger.bitLength(), rnd);
-        if(rndNumber.compareTo(biginteger) >= 0)
-        {
-            rndNumber = rndNumber.mod(biginteger);
-        }
-        return rndNumber;
+    @Override
+    public BigInteger add(BigInteger sum1, BigInteger sum2) {
+        return math.modAddition(sum1,sum2,prim);
     }
-    private boolean checkPrime(BigInteger prim){
+
+    @Override
+    public BigInteger subtract(BigInteger sum1, BigInteger sum2) {
+        return math.modSubtraction(sum1, sum2, prim);
+    }
+
+    @Override
+    public BigInteger multiply(BigInteger sum1, BigInteger sum2) {
+        return math.modMultiplication(sum1, sum2, prim);
+    }
+
+    @Override
+    public BigInteger divide(BigInteger sum1, BigInteger sum2) {
+        return math.modDivision(sum1,sum2,prim);
+    }
+
+    @Override
+    public BigInteger pow(BigInteger sum1, BigInteger sum2) {
+        return math.modExponentiation(sum1, sum2, prim);
+    }
+
+    private boolean checkPrime(BigInteger prim, int trials){
         BigInteger rndNumber;
+        BigInteger temp;
+        int tryCounter = trials;
+        int success = 0;
+        
+        do{
+            do {
+                rndNumber = math.random(prim);
+                temp = math.gcdExtended(rndNumber, prim); //ggT(rndNumber, prim);
+                //Falls eine Zahl genommen wurde, dass diese Zahl teilen kann.
+                if(temp.compareTo(rndNumber) == 0) {
+                    return false;
+                }
 
-        do {
-            rndNumber = generateNumberRange(prim);
-        } while (ggT(rndNumber, prim) != BigInteger.valueOf(1));
+            } while (temp.compareTo(BigInteger.valueOf(1)) != 0);
 
+            BigInteger primExponent = prim.subtract(BigInteger.valueOf(1));
+            rndNumber = math.modExponentiation(rndNumber, primExponent, prim); //rndNumber.modPow(primExponent, prim);
 
-        if(rndNumber.modPow(prim.subtract(BigInteger.valueOf(1)), prim) != BigInteger.valueOf(1)){
+            if(rndNumber.compareTo(BigInteger.valueOf(1)) == 0){
+                success++;
+            }
+        } while(tryCounter-- != 0);
+
+        if(success >= (trials/2))
+            return true;
+        else
             return false;
-        }
-        return true;
     }
-
-    private BigInteger ggT(BigInteger a, BigInteger b){
-        BigInteger solution = BigInteger.valueOf(2);
-        BigInteger n = a, r = b;
-        while(n.compareTo(BigInteger.valueOf(0)) != 0){
-            solution = r.mod(n);
-            r = n;
-            n = solution;
-        }
-
-        return solution;
-    }
-
-    public boolean isPrimRoot(BigInteger g, BigInteger p){
-        LinkedList<BigInteger> list = new LinkedList<>();
-        for(BigInteger i = BigInteger.ZERO; i.compareTo(p.subtract(BigInteger.ONE)) > 0; i = i.add(BigInteger.ONE)){
-            BigInteger tmp = g.modPow(i, p);
-            //System.out.println(tmp);
-            list.add(tmp);
-        }
-        /*Arrays.sort(result);
-        for(int i = 0; i < p-1; i++){
-            //System.out.println(result[i]);
-            if(result[i] != i+1)
-                return false;
-        }*/
-        return true;
-    }
-
 }
