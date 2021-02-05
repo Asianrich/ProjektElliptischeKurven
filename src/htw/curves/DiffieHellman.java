@@ -36,5 +36,5 @@ public class DiffieHellman {
     public BigInteger getKey(){
         return k;
     }
-    
+
 }

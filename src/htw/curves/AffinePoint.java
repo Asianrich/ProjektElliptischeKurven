@@ -14,8 +14,8 @@ public class AffinePoint implements Point {
 
     @Override
     public Point add(Point p, EllipticCurves e) {
+        FiniteFields ff = new FiniteFields(e.getP());
         if(p instanceof AffinePoint){
-
             // maybe all in Projective?
             //return this.toProjective().add(p.toProjective(), e);
 
@@ -24,14 +24,17 @@ public class AffinePoint implements Point {
                     return this;
                     // inf is not there... I have issues with that. Can someone give me inf!?!??!
                 }
-                BigInteger m = BigInteger.valueOf(3).multiply(this.getX().modPow(BigInteger.TWO, e.getP())).add(e.getA()).divide(BigInteger.TWO.multiply(this.getY()));
-                m = m.mod(e.getP());
+                BigInteger m = ff.add(ff.multiply(BigInteger.valueOf(3), ff.pow(this.getX(), BigInteger.TWO)), ff.divide(e.getA(),ff.multiply(BigInteger.TWO, this.getY())));
+                //BigInteger m = BigInteger.valueOf(3).multiply(this.getX().modPow(BigInteger.TWO, e.getP())).add(e.getA()).divide(BigInteger.TWO.multiply(this.getY()));
+                //m = m.mod(e.getP());
                 //m = 3x^2+A / 2y
-                BigInteger x =  m.modPow(BigInteger.TWO, e.getP()).subtract(BigInteger.TWO.multiply(this.getX()));
-                x = x.mod(e.getP());
+                BigInteger x = ff.subtract(ff.pow(m, BigInteger.TWO), ff.multiply(BigInteger.TWO, this.getX()));
+                //BigInteger x =  m.modPow(BigInteger.TWO, e.getP()).subtract(BigInteger.TWO.multiply(this.getX()));
+                //x = x.mod(e.getP());
                 //m^2-2x
-                BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());
-                y = y.mod(e.getP());
+                BigInteger y = ff.multiply(m, ff.subtract(this.getX(), ff.subtract(x, this.getY())));
+                //BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());
+                //y = y.mod(e.getP());
                 //y = m(this x - x)+y
                 return new AffinePoint(x,y);
             } else {
@@ -48,29 +51,37 @@ public class AffinePoint implements Point {
                     if(this.getX().equals(p.getX())){
                         return new AffinePoint(BigInteger.valueOf(-1), BigInteger.valueOf(-1)); //inf
                     }
-                    BigInteger mo = (p.getY().subtract(this.getY())).mod(e.getP());
-                    BigInteger mu = p.getX().subtract(this.getX());
+                    BigInteger mo = ff.subtract(p.getY(), this.getY());
+                    //BigInteger mo = (p.getY().subtract(this.getY())).mod(e.getP());
+                    BigInteger mu = ff.subtract(p.getX(), this.getX());
+                    //BigInteger mu = p.getX().subtract(this.getX());
                     if(mu.compareTo(BigInteger.ZERO) == -1){
-                        mu = mu.multiply(BigInteger.valueOf(-1));
-                        mo = mo.multiply(BigInteger.valueOf(-1));
+                        mu = ff.multiply(mu, BigInteger.valueOf(-1));
+                        //mu = mu.multiply(BigInteger.valueOf(-1));
+                        mo = ff.multiply(mo, BigInteger.valueOf(-1));
+                        //mo = mo.multiply(BigInteger.valueOf(-1));
                     }
                     BigInteger m = BigInteger.ZERO;
                     if(mo.mod(mu).equals(BigInteger.ZERO)){
-                        m = (mo.divide(mu)).mod(e.getP());
+                        //m = (mo.divide(mu)).mod(e.getP());
+                        m = ff.divide(mo, mu);
                     } else {
                         for(BigInteger i = BigInteger.ZERO; i.compareTo(e.getP()) <= 0; i = i.add(BigInteger.ONE)){
-                            BigInteger tmp = (mu.multiply(i)).mod(e.getP());
+                            BigInteger tmp = ff.multiply(mu, i); //(mu.multiply(i)).mod(e.getP());
                             if(tmp.equals(BigInteger.ONE)){
-                                m = (i.multiply(mo)).mod(e.getP());
+                                m = ff.multiply(i, mo);
+                                //m = (i.multiply(mo)).mod(e.getP());
                                 break;
                             }
                         }
                     }
                     //BigInteger x = m.multiply(m).subtract(this.getX()).subtract(p.getX());
-                    BigInteger x = m.modPow(BigInteger.TWO, e.getP()).subtract(this.getX()).subtract(p.getX());
-                    x = x.mod(e.getP());
-                    BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());
-                    y = y.mod(e.getP());
+                    BigInteger x = ff.subtract(ff.subtract(ff.pow(m, BigInteger.TWO), this.getX()), p.getX());
+                    //BigInteger x = m.modPow(BigInteger.TWO, e.getP()).subtract(this.getX()).subtract(p.getX());
+                    //x = x.mod(e.getP());
+                    BigInteger y = ff.subtract(ff.multiply(m, ff.subtract(this.getX(), x)), this.getY());
+                    //BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());
+                    //y = y.mod(e.getP());
                     return new AffinePoint(x,y);
                 }
             }
