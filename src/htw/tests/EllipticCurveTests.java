@@ -37,100 +37,124 @@ public class EllipticCurveTests {
 
     @Test
     public void testkMulAffine1() {
-        Point erg = p1.kMul(BigInteger.valueOf(1000), curve);
+        Point erg = p1.kMul(BigInteger.valueOf(1001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
     public void testkMulAffine2() {
-        Point erg = p1.kMul(BigInteger.valueOf(10000), curve);
+        Point erg = p1.kMul(BigInteger.valueOf(10001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
     public void testkMulAffine3() {
-        Point erg = p2.kMul(BigInteger.valueOf(1000), curve);
+        Point erg = p2.kMul(BigInteger.valueOf(1001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
+    public void testkMulAffine2f() {
+        Point erg = p1.kMul(BigInteger.valueOf(10000), curve);
+        assertFalse(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testkMulAffine3f() {
+        Point erg = p2.kMul(BigInteger.valueOf(1000), curve);
+        assertFalse(curve.onCurve(erg));
+    }
+
+    @Test
     public void testkMulAffine4() {
-        Point erg = p2.kMul(BigInteger.valueOf(10000), curve);
+        Point erg = p2.kMul(BigInteger.valueOf(10001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
     public void testkMulAffine5() {
         Point erg = p3.kMul(BigInteger.valueOf(1000), curve1);
-        assertTrue(curve.onCurve(erg));
+        assertTrue(curve1.onCurve(erg));
     }
 
     @Test
     public void testkMulAffine6() {
-        Point erg = p3.kMul(BigInteger.valueOf(10000), curve1);
-        assertTrue(curve.onCurve(erg));
+        Point erg = p3.kMul(BigInteger.valueOf(10001), curve1);
+        assertTrue(curve1.onCurve(erg));
     }
 
     @Test
     public void testkMulAffine7() {
         Point erg = p4.kMul(BigInteger.valueOf(1000), curve1);
-        assertTrue(curve.onCurve(erg));
+        assertTrue(curve1.onCurve(erg));
     }
 
     @Test
     public void testkMulAffine8() {
-        Point erg = p4.kMul(BigInteger.valueOf(10000), curve1);
-        assertTrue(curve.onCurve(erg));
+        Point erg = p4.kMul(BigInteger.valueOf(10001), curve1);
+        assertTrue(curve1.onCurve(erg));
     }
 
     // ### PROJECTIVE ###
 
     @Test
     public void testkMulProjective1() {
-        Point erg = p5.kMul(BigInteger.valueOf(1000), curve);
+        Point erg = p5.kMul(BigInteger.valueOf(1001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
     public void testkMulProjective2() {
-        Point erg = p5.kMul(BigInteger.valueOf(10000), curve);
+        Point erg = p5.kMul(BigInteger.valueOf(10001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
     public void testkMulProjective3() {
-        Point erg = p6.kMul(BigInteger.valueOf(1000), curve);
+        Point erg = p6.kMul(BigInteger.valueOf(1001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
+    public void testkMulProjective2f() {
+        Point erg = p5.kMul(BigInteger.valueOf(10000), curve);
+        assertFalse(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testkMulProjective3f() {
+        Point erg = p6.kMul(BigInteger.valueOf(1000), curve);
+        assertFalse(curve.onCurve(erg));
+    }
+
+    @Test
     public void testkMulProjective4() {
-        Point erg = p6.kMul(BigInteger.valueOf(10000), curve);
+        Point erg = p6.kMul(BigInteger.valueOf(10001), curve);
         assertTrue(curve.onCurve(erg));
     }
 
     @Test
     public void testkMulProjective5() {
         Point erg = p7.kMul(BigInteger.valueOf(1000), curve1);
-        assertTrue(curve.onCurve(erg));
+        assertTrue(curve1.onCurve(erg));
     }
 
     @Test
     public void testkMulProjective6() {
-        Point erg = p7.kMul(BigInteger.valueOf(10000), curve1);
-        assertTrue(curve.onCurve(erg));
+        Point erg = p7.kMul(BigInteger.valueOf(10001), curve1);
+        assertTrue(curve1.onCurve(erg));
     }
 
     @Test
     public void testkMulProjective7() {
         Point erg = p8.kMul(BigInteger.valueOf(1000), curve1);
-        assertTrue(curve.onCurve(erg));
+        assertTrue(curve1.onCurve(erg));
     }
 
     @Test
     public void testkMulProjective8() {
-        Point erg = p8.kMul(BigInteger.valueOf(10000), curve1);
-        assertTrue(curve.onCurve(erg));
+        Point erg = p8.kMul(BigInteger.valueOf(10001), curve1);
+        assertTrue(curve1.onCurve(erg));
     }
 
     @Test

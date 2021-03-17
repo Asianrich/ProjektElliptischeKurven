@@ -5,9 +5,11 @@ import java.math.BigInteger;
 public class DiffieHellman {
 
     Point g = null; //Erzeuger
-    EllipticCurve p = null; //Prime
+    EllipticCurve p = null; //Kurve
     BigInteger a = BigInteger.ZERO; //Alice
+    Point aliceK = null;
     BigInteger b = BigInteger.ZERO; //Bob
+    Point bobK = null;
     BigInteger k = BigInteger.ZERO; //Key
 
 
@@ -29,8 +31,29 @@ public class DiffieHellman {
         this.b = b;
     }
 
-    public void commonKey(){
-        this.k = a.multiply(b);
+    public void calcAlice(){
+        if(a == null)
+            throw new IllegalCallerException();
+        aliceK = g.kMul(a, p);
+        k = aliceK.getX();
+    }
+
+    public void calcBob(){
+        if(b == null)
+            throw new IllegalCallerException();
+        bobK = g.kMul(b, p);
+        k = bobK.getX();
+    }
+
+    public Point commonKey(){
+        if(a == null || b == null)
+            throw new IllegalCallerException();
+        Point a = aliceK.kMul(this.b, p).toAffine(p);
+        Point b = bobK.kMul(this.a, p).toAffine(p);
+        if(a.equals(b))
+            return a;
+        else
+            throw new IllegalArgumentException();
     }
 
     public BigInteger getKey(){

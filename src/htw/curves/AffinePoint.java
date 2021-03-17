@@ -24,7 +24,7 @@ public class AffinePoint implements Point {
                     return this;
                     // inf is not there... I have issues with that. Can someone give me inf!?!??!
                 }
-                BigInteger m = ff.add(ff.multiply(BigInteger.valueOf(3), ff.pow(this.getX(), BigInteger.TWO)), ff.divide(e.getA(),ff.multiply(BigInteger.TWO, this.getY())));
+                BigInteger m = ff.divide(ff.add(ff.multiply(BigInteger.valueOf(3), ff.pow(this.getX(), BigInteger.TWO)), e.getA()), ff.multiply(BigInteger.TWO, this.getY()));
                 //BigInteger m = BigInteger.valueOf(3).multiply(this.getX().modPow(BigInteger.TWO, e.getP())).add(e.getA()).divide(BigInteger.TWO.multiply(this.getY()));
                 //m = m.mod(e.getP());
                 //m = 3x^2+A / 2y
@@ -32,15 +32,19 @@ public class AffinePoint implements Point {
                 //BigInteger x =  m.modPow(BigInteger.TWO, e.getP()).subtract(BigInteger.TWO.multiply(this.getX()));
                 //x = x.mod(e.getP());
                 //m^2-2x
-                BigInteger y = ff.multiply(m, ff.subtract(this.getX(), ff.subtract(x, this.getY())));
+                BigInteger y = ff.subtract(ff.multiply(m, ff.subtract(this.getX(), x)), this.getY());
                 //BigInteger y = m.multiply(this.getX().subtract(x)).subtract(this.getY());
                 //y = y.mod(e.getP());
                 //y = m(this x - x)+y
                 return new AffinePoint(x,y);
             } else {
-                if(this.isInf(e) || p.isInf()){
-                    if(this.isInf(e) && p.isInf()){
-                        return new AffinePoint(BigInteger.valueOf(-1), BigInteger.valueOf(-1)); //inf
+                if(this.isInf(e) || p.isInf(e)){
+                    if(this.isInf(e) && p.isInf(e)){
+                        Point erg = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO); //inf
+                        while(e.onCurve(erg)){
+                            erg = new AffinePoint(erg.getX(), ff.add(erg.getY(), BigInteger.ONE));
+                        }
+                        return erg;
                     } else {
                         if(this.isInf(e))
                             return p;
@@ -49,7 +53,11 @@ public class AffinePoint implements Point {
                     }
                 } else {
                     if(this.getX().equals(p.getX())){
-                        return new AffinePoint(BigInteger.valueOf(-1), BigInteger.valueOf(-1)); //inf
+                        Point erg = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO); //inf
+                        while(e.onCurve(erg)){
+                            erg = new AffinePoint(erg.getX(), ff.add(erg.getY(), BigInteger.ONE));
+                        }
+                        return erg;
                     }
                     BigInteger mo = ff.subtract(p.getY(), this.getY());
                     //BigInteger mo = (p.getY().subtract(this.getY())).mod(e.getP());
@@ -95,18 +103,22 @@ public class AffinePoint implements Point {
     }
 
     @Override
+    public Point doubleP(EllipticCurves e){
+        return this.add(this, e);
+    }
+
+    @Override
     public Point kMul(BigInteger k, EllipticCurves e) {
-
-        // projective Points?
-        // return this.toProjective().kMul(k, e);
-
         Point c = this;
         BigInteger a = k;
-        Point b = e.getInf();
+        Point b = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO);//e.getInf();
+        while(e.onCurve(b)){
+            b = new AffinePoint(BigInteger.ZERO, b.getY().add(BigInteger.ONE));
+        }
         while(a.compareTo(BigInteger.ZERO) > 0){
             if(a.mod(BigInteger.TWO).equals(BigInteger.ZERO)){
                 a = a.divide(BigInteger.TWO);
-                c = c.add(c, e);
+                c = c.doubleP(e);
             } else {
                 a = a.subtract(BigInteger.ONE);
                 b = b.add(c, e);
@@ -152,7 +164,7 @@ public class AffinePoint implements Point {
     }
 
     @Override
-    public Point toAffine() {
+    public Point toAffine(EllipticCurves e) {
         return this;
     }
 

@@ -61,7 +61,9 @@ public class EllipticCurve implements EllipticCurves {
             //return p.getY().multiply(p.getY()).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX())).add(this.b)).mod(this.p));
         }
         if(p instanceof ProjectivePoint){
-            return ff.multiply(ff.pow(p.getY(), BigInteger.TWO), p.getZ()).equals(ff.add(ff.pow(p.getX(), BigInteger.valueOf(3)), ff.add(ff.multiply(ff.multiply(this.a, p.getX()), p.getZ()), ff.multiply(this.b, ff.pow(p.getZ(), BigInteger.valueOf(3))))));
+            if(p.getZ().equals(BigInteger.ZERO))
+                return false;
+            return ff.multiply(ff.pow(p.getY(), BigInteger.TWO), p.getZ()).equals(ff.add(ff.pow(p.getX(), BigInteger.valueOf(3)), ff.add(ff.multiply(ff.multiply(this.a, p.getX()), ff.pow(p.getZ(), BigInteger.TWO)), ff.multiply(this.b, ff.pow(p.getZ(), BigInteger.valueOf(3))))));
             //return p.getY().multiply(p.getY().multiply(p.getZ())).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX()).multiply(p.getZ().multiply(p.getZ()))).add(this.b.multiply(p.getZ().multiply(p.getZ().multiply(p.getZ()))))).mod(this.p));
         }
         return false;   //evtl modPow?
