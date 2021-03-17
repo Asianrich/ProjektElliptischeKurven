@@ -13,7 +13,7 @@ public class Main {
 		int tmp = 0;
 		String read = "";
 		String path = "dh.txt";
-		DiffieHellman dh;
+		DiffieHellman dh = new DiffieHellman(null, null);
 		FiniteFields Field = new FiniteFields();
 		BigInteger prim;
 		Scanner sc = new Scanner(System.in);
@@ -32,7 +32,10 @@ public class Main {
 			System.out.println("Willkommen im Menü!");
 			System.out.println("1. Primzahl generieren");
 			System.out.println("2. DH Datei einlesen");
-			System.out.println("3 - 9 reserviert");
+			System.out.println("3. Alice Key berechnen");
+			System.out.println("4. Bobs Key berechnen");
+			System.out.println("5. Common Key berechnen");
+			System.out.println("6 - 9 reserviert");
 			System.out.println("0. beenden");
 			choice = sc.nextInt();
 			switch (choice){
@@ -118,6 +121,21 @@ public class Main {
 						dh.setAliceKey(a);
 						System.out.println("Datei erfolgreich eingelesen! Sie koennen nun mit Schritt 3 - x weitermachen.");
 					}
+					break;
+				case 3:
+					System.out.println("Alice Key: ");
+					dh.calcAlice();
+					System.out.println(dh.aliceK.getX() + "|" + dh.aliceK.getY());
+					break;
+				case 4:
+					System.out.println("Bobs Key: ");
+					dh.calcBob();
+					System.out.println(dh.bobK.getX() + "|" + dh.bobK.getY());
+					break;
+				case 5:
+					System.out.println("Common Key: ");
+					Point com = dh.commonKey();
+					System.out.println(com.getX() + "|" + com.getY());
 					break;
 				default:
 					System.out.println("Keine oder ungültige Wahl!");

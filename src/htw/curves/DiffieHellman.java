@@ -35,6 +35,10 @@ public class DiffieHellman {
         if(a == null)
             throw new IllegalCallerException();
         aliceK = g.kMul(a, p);
+        if(!p.onCurve(aliceK)){
+            aliceK = null;
+            throw new IllegalArgumentException();
+        }
         k = aliceK.getX();
     }
 
@@ -42,6 +46,10 @@ public class DiffieHellman {
         if(b == null)
             throw new IllegalCallerException();
         bobK = g.kMul(b, p);
+        if(!p.onCurve(bobK)){
+            bobK = null;
+            throw new IllegalArgumentException();
+        }
         k = bobK.getX();
     }
 
@@ -50,8 +58,10 @@ public class DiffieHellman {
             throw new IllegalCallerException();
         Point a = aliceK.kMul(this.b, p).toAffine(p);
         Point b = bobK.kMul(this.a, p).toAffine(p);
-        if(a.equals(b))
+        if(a.equals(b)) {
+            this.k = a.getX();
             return a;
+        }
         else
             throw new IllegalArgumentException();
     }
