@@ -7,11 +7,22 @@ public class AffinePoint implements Point {
     BigInteger x = BigInteger.ZERO;
     BigInteger y = BigInteger.ZERO;
 
+    /**
+     * Standardkonstruktor
+     * @param x
+     * @param y
+     */
     public AffinePoint(BigInteger x, BigInteger y){
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Deckt alle Faelle der Addition ab
+     * @param p
+     * @param e
+     * @return
+     */
     @Override
     public Point add(Point p, EllipticCurves e) {
         FiniteFields ff = new FiniteFields(e.getP());
@@ -97,16 +108,32 @@ public class AffinePoint implements Point {
             return this.toProjective().add(p,e);
     }
 
+    /**
+     * negation des Punktes -> negation der y-Koordinate
+     * @param e
+     * @return
+     */
     @Override
     public Point negate(EllipticCurves e) {
         return new AffinePoint(this.x, new BigInteger("-1").multiply(this.y).add(e.getP()));
     }
 
+    /**
+     * Punktverdopplung ist oft am schnellsten
+     * @param e
+     * @return
+     */
     @Override
     public Point doubleP(EllipticCurves e){
         return this.add(this, e);
     }
 
+    /**
+     * intelligentes k-faches multiplizieren durch verdoppeln
+     * @param k
+     * @param e
+     * @return
+     */
     @Override
     public Point kMul(BigInteger k, EllipticCurves e) {
         Point c = this;
@@ -127,31 +154,57 @@ public class AffinePoint implements Point {
         return b;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getX() {
         return this.x;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getY() {
         return this.y;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getZ() {
         return BigInteger.ONE;
     }
 
+    /**
+     * alles was nicht auf der Kurve liegt
+     * @param e
+     * @return
+     */
     public boolean isInf(EllipticCurves e) {
         return !e.onCurve(this);
     }
 
+    /**
+     * ohne Kruve gibt es kein Unendlich
+     * @return
+     */
     @Override
     public boolean isInf() {
         return false;
         //there is no inf in this point type... https://crypto.stackexchange.com/questions/6464/how-to-represent-point-at-infinity-in-affine-coordinate
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean equals(Point p) {
         if(this.isInf() && p.isInf())
@@ -163,11 +216,20 @@ public class AffinePoint implements Point {
         }
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public Point toAffine(EllipticCurves e) {
         return this;
     }
 
+    /**
+     * z = 1 und man hat projektive Punkte
+     * @return
+     */
     public Point toProjective(){
         ProjectivePoint tmp = new ProjectivePoint(this.getX(), this.getY(), BigInteger.ONE);
         return tmp;

@@ -8,6 +8,12 @@ public class ProjectivePoint implements Point {
     BigInteger y = BigInteger.ZERO;
     BigInteger z = BigInteger.ZERO;
 
+    /**
+     * Standardkonstruktor
+     * @param x
+     * @param y
+     * @param z
+     */
     public ProjectivePoint(BigInteger x, BigInteger y, BigInteger z) {
         this.x = x;
         this.y = y;
@@ -15,6 +21,12 @@ public class ProjectivePoint implements Point {
 
     }
 
+    /**
+     * deckt alle Faelle der Addition ab
+     * @param p
+     * @param e
+     * @return
+     */
     @Override
     public Point add(Point p, EllipticCurves e) {
         if (p instanceof AffinePoint) {
@@ -100,16 +112,32 @@ public class ProjectivePoint implements Point {
         }
     }
 
+    /**
+     * einfachster Weg
+     * @param e
+     * @return
+     */
     @Override
     public Point negate(EllipticCurves e) {
         return this.toAffine(e).negate(e).toProjective();
     }
 
+    /**
+     * Punktverdopplung ist oft am schnellsten
+     * @param e
+     * @return
+     */
     @Override
     public Point doubleP(EllipticCurves e) {
         return this.add(this, e);
     }
 
+    /**
+     * intelligentes k-faches multiplizieren durch verdoppeln
+     * @param k
+     * @param e
+     * @return
+     */
     @Override
     public Point kMul(BigInteger k, EllipticCurves e) {
         Point c = this;
@@ -127,31 +155,57 @@ public class ProjectivePoint implements Point {
         return b;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getX() {
         return this.x;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getY() {
         return this.y;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getZ() {
         return this.z;
     }
 
+    /**
+     * wenn z = 0 dann ist der Punkt nie auf der Kurve -> vergleich wenn toAffine()
+     * @return
+     */
     @Override
     public boolean isInf() {
-        return this.z.equals(BigInteger.ZERO) && this.x.equals(BigInteger.ZERO);
+        return this.z.equals(BigInteger.ZERO);
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public boolean isInf(EllipticCurves e) {
         return isInf();
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean equals(Point p) {
         if (this.isInf() && p.isInf())
@@ -163,11 +217,27 @@ public class ProjectivePoint implements Point {
         }
     }
 
+    /**
+     * bei unendlich kann man nicht durch 0 teilen, also muss man einen Punkt ausserhalb der Kurve finden
+     * @param e
+     * @return
+     */
     public Point toAffine(EllipticCurves e) {
+        if(this.isInf()){
+            Point erg = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO);
+            while(e.onCurve(erg)){
+                erg = new AffinePoint(erg.getX(), erg.getY().add(BigInteger.ONE));
+            }
+            return erg;
+        }
         FiniteFields ff = new FiniteFields(e.getP());
         return new AffinePoint(ff.divide(this.getX(), this.getZ()), ff.divide(this.getY(), this.getZ()));
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Point toProjective() {
         return this;

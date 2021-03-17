@@ -21,6 +21,12 @@ public class EllipticCurve implements EllipticCurves {
     static final BigInteger NEG_SIXTEEN = new BigInteger("-16");
     FiniteFields ff;
 
+    /**
+     * Standardkonstruktor
+     * @param a
+     * @param b
+     * @param p
+     */
     public EllipticCurve(BigInteger a, BigInteger b, BigInteger p){
         this.a = a;
         this.b = b;
@@ -28,32 +34,59 @@ public class EllipticCurve implements EllipticCurves {
         ff = new FiniteFields(p);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getA() {
         return this.a;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getB() {
         return this.b;
     }
 
+    /**
+     * dieser Punkt (0|1|0) ist nie auf einer Kurve
+     * @return
+     */
     @Override
     public Point getInf() {
         return new ProjectivePoint(BigInteger.ZERO, BigInteger.ONE, BigInteger.ZERO);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public BigInteger getP() {
         return this.p;
     }
 
+    /**
+     * ist die Kurve geeignet
+     * @param a
+     * @param b
+     * @return
+     */
     @Override
     public boolean isNonSingular(BigInteger a, BigInteger b) {
         return !ff.add(ff.multiply(NEG_SIXTEEN, ff.multiply(FOUR, ff.multiply(a,a))),ff.multiply(TWENTY_SEVEN, ff.multiply(b,b))).equals(ZERO);
         //return !NEG_SIXTEEN.multiply((FOUR.multiply(a.multiply(a).multiply(a)).add((TWENTY_SEVEN.multiply(b.multiply(b)))))).equals(ZERO);
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     @Override
     public boolean onCurve(Point p){
         if(p instanceof AffinePoint){
@@ -69,6 +102,10 @@ public class EllipticCurve implements EllipticCurves {
         return false;   //evtl modPow?
     }
 
+    /**
+     * kann bei großen p lange dauern
+     * @return
+     */
     public LinkedList<Point> getAllPoints(){
         LinkedList <Point> points = new LinkedList<>();
         FiniteFields field = new FiniteFields(this.p);
@@ -85,6 +122,10 @@ public class EllipticCurve implements EllipticCurves {
         return points;
     }
 
+    /**
+     * kann bei langen Kruven dauern und funktionert nur mit p = Prim
+     * @return
+     */
     public Point findRoot(){
         LinkedList<Point> points = this.getAllPoints();
         BigInteger ml = BigInteger.valueOf(points.size() + 1); //INF ist +1
