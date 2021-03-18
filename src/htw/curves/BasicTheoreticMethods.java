@@ -29,7 +29,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 			throw new ArithmeticException("We can't compute with modulo zero");
 		}
 		if (mod.compareTo(BigInteger.ZERO) < 0){
-			throw new IllegalArgumentException("We can't compute with modulo zero");
+			throw new IllegalArgumentException("We can't compute with modulo less than zero");
 		}
 		if (num.equals(BigInteger.ZERO) && mod.equals(BigInteger.ZERO)) {
 			throw new ArithmeticException("It's not possible to find the modulo with number zero and modulo zero");
@@ -329,9 +329,19 @@ public class BasicTheoreticMethods implements ModularArithmetic {
         if(num.equals(BigInteger.ZERO)){
         	return BigInteger.ZERO;
         }
-        if (mod.compareTo(BigInteger.ZERO) <= 0 || exp.compareTo(BigInteger.ZERO) < 0) {
+        // if the modulo is zero or less than zero
+        if (mod.equals(BigInteger.ZERO)) {
         	throw new ArithmeticException("Operation can't be done");
-        }              
+        } 
+        if (mod.compareTo(BigInteger.ZERO) < 0) {
+        	throw new IllegalArgumentException("Operation can't be done");
+        } 
+        // if the exponent is less than zero, first find the modular multiplicative inverse of num modulo mod
+        if (exp.compareTo(BigInteger.ZERO) < 0) {
+        	exp = exp.abs();
+        	num = modCalculation (multiplicativeInverse(num, mod), mod) ;
+        	
+        }
         // Update the number num if it is more than or equal to mod 
         
         num = modCalculation(num, mod);       

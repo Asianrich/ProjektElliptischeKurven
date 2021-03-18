@@ -208,7 +208,7 @@ public class arithmeticsTests {
 		assertEquals(BigInteger.valueOf(3), test.modExponentiation(BigInteger.valueOf(3), BigInteger.valueOf(333), BigInteger.valueOf(15)));
 		assertEquals(BigInteger.valueOf(8), test.modExponentiation(BigInteger.valueOf(82), BigInteger.valueOf(7), BigInteger.valueOf(20)));
 		assertEquals(BigInteger.valueOf(16), test.modExponentiation(BigInteger.valueOf(-15), BigInteger.valueOf(4), BigInteger.valueOf(17)));
-		assertEquals(BigInteger.valueOf(1), test.modExponentiation(BigInteger.valueOf(15), BigInteger.valueOf(-4), BigInteger.valueOf(17)));
+		assertEquals(BigInteger.valueOf(7355), test.modExponentiation(BigInteger.valueOf(11444), BigInteger.valueOf(-357), BigInteger.valueOf(48731)));
 		
 	}
 	
