@@ -19,6 +19,8 @@
 %\hyphenation{put special hyphenation here}
 
 % ********************************************************************
+\usepackage{amsmath}
+\usepackage{nccmath}
 % GO!GO!GO! MOVE IT!
 %*******************************************************
 \begin{document}
@@ -31,12 +33,9 @@
 % Frontmatter
 %*******************************************************
 \include{FrontBackmatter/Titlepage}
-\cleardoublepage\include{FrontBackmatter/Declaration}
-%\cleardoublepage\include{FrontBackmatter/ConfidentialityClause} % <-- sollte in der Regel nicht notwendig sein und mit Betreuer/Unternehmen abgeklärt werden
-\cleardoublepage\include{FrontBackmatter/Abstract}
-\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+\let\cleardoublepage\clearpage
 \cleardoublepage\include{FrontBackmatter/Contents}
-
+\let\cleardoublepage\clearpage
 %*******************************************************
 % Mainmatter
 %*******************************************************
@@ -44,8 +43,16 @@
 \pagenumbering{arabic}
 \pagestyle{headings}
 %\pagestyle{scrheadings}
-\cleardoublepage\include{Examples/Einleitung}	 	% Diese Einbindungen werden natürlich entfernt, wenn es an die richtige
-\cleardoublepage\include{Examples/Beispiele} 		% Abschlussarbeit geht!
+\cleardoublepage\include{Chapters/Einleitung}
+\let\cleardoublepage\clearpage
+\cleardoublepage\include{Chapters/Grundlagen_ECC}
+\cleardoublepage\include{Chapters/Theorie_Grundlagen}
+\cleardoublepage\include{Chapters/Endliche_Körper}
+\cleardoublepage\include{Chapters/EC}
+\cleardoublepage\include{Chapters/ECDH}
+\cleardoublepage\include{Chapters/Fazit}
+%\cleardoublepage\include{Chapters/Handbuch}
+%\cleardoublepage\include{Examples/Beispiele} Abschlussarbeit geht!
 %\cleardoublepage\include{Chapters/KapitelBachelorarbeit} % <<< Hier alle Chapter der Abschlussarbeit (einzeln) einbinden
 
 %********************************************************************
@@ -62,11 +69,11 @@
 % ********************************************************************
 % Appendix/Anhang
 %***************************************************************
-\appendix
-\part*{Anhang}
-\cleardoublepage\include{Chapters/Anhang-A}
+%\appendix
+%\part*{Anhang}
+%\cleardoublepage\include{Chapters/Anhang-A}
 
 %*******************************************************
-\cleardoublepage\include{FrontBackmatter/Colophon}
+%\cleardoublepage\include{FrontBackmatter/Colophon}
 \end{document}
 % ********************************************************************

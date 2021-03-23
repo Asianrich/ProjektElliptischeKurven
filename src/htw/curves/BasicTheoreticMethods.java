@@ -383,6 +383,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 			
 			throw new IllegalArgumentException("You need to enter a positive number");
 		}
+		// https://mathworld.wolfram.com/TotientFunction.html
 		// By convention, phi(0)=1, although the Wolfram Language defines EulerPhi[0] equal to 0 for consistency 
 		
 		if(num.equals(BigInteger.ONE) || num.equals(BigInteger.ZERO)) {
