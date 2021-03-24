@@ -448,44 +448,50 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	}
   
 	/*Function implementing the Chinese remainder theorem 
-	* @param remainderList_A contains the remainders of the equations
-	* @param modulList_N contains all the moduli, i.e positive integers n[] that are pairwise coprime (gcd for every pair is 1)
+	* @param remainderList_R contains the remainders of the equations
+	* @param modulList_M contains all the moduli, i.e positive integers m[] that are pairwise coprime (gcd for every pair is 1)
     * @param p, tmp temporary values
     * @param product, to store the product of all moduli
     * @return sum, the sum of x which is also the solution after x % prod
     * sum is the smallest number x such that: 
-    * x % n[0] = rem[0], 
-    * x % n[1] = rem[1], 
+    * x % m[0] = rem[0], 
+    * x % m[1] = rem[1], 
     * .................. 
-    * x % n[k-1] = rem[k-1] 
-    * k the size of n[], rem[]     	
+    * x % m[k-1] = rem[k-1] 
+    * k the size of m[], rem[]     	
     */	
-     public BigInteger chineseRemainder(ArrayList<BigInteger> remainderList_A, ArrayList<BigInteger> modulList_N) {
+     public BigInteger chineseRemainder(ArrayList<BigInteger> remainderList_R, ArrayList<BigInteger> modulList_M) {
     	
 	 // Initialize temporary values
 	
 		BigInteger p, tmp;
 		BigInteger product = BigInteger.ONE; 
 		BigInteger sum = BigInteger.ZERO;  
+		
+		int k = modulList_M.size();
+		
+	 // check the size of the two ArrayList, they must have the same size
+		
+		if (k > remainderList_R.size()) { k = remainderList_R.size();}
 
 	 // Compute product of all moduli  N = n[1]*...*n[k]
 		
-		for (int i = 0; i < modulList_N.size(); i++) 
+		for (int i = 0; i < k; i ++) 
 						
-			product = product.multiply(modulList_N.get(i)); 
+			product = product.multiply(modulList_M.get(i)); 
         
 		// For each i, the integers n[i] and N/n[i] are co-prime
 		// so divide N by current modulus to get product excluding said modulus
 		
-		for (int i = 0; i < modulList_N.size(); i++) {
+		for (int i = 0; i < k; i++) {
 					
-			p = product.divide(modulList_N.get(i));	
+			p = product.divide(modulList_M.get(i));	
 			
 		//  then calculate multiplicativeInverse x such that x*p == 1 % modulList_N.get(i)
 			
-			tmp = multiplicativeInverse(p, modulList_N.get(i)); 
+			tmp = multiplicativeInverse(p, modulList_M.get(i)); 
 			
-			sum = sum.add(remainderList_A.get(i).multiply(tmp).multiply(p)); 
+			sum = sum.add(remainderList_R.get(i).multiply(tmp).multiply(p)); 
 		
 		}		
 		// compute sum modulo product to get smallest/unique BigInteger x

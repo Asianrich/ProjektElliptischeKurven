@@ -18,7 +18,7 @@ import java.util.ArrayList;
 	BigInteger modDivision(BigInteger num_1, BigInteger num_2, BigInteger mod);
 	BigInteger modExponentiation(BigInteger num, BigInteger exp, BigInteger mod);
 	BigInteger phiFunction(BigInteger num);
-	BigInteger chineseRemainder(ArrayList<BigInteger> remainderList_A, ArrayList<BigInteger> modulList_N);
+	BigInteger chineseRemainder(ArrayList<BigInteger> remainderList_R, ArrayList<BigInteger> modulList_M);
 	BigInteger random(int length);
 	BigInteger random(BigInteger range);
 
