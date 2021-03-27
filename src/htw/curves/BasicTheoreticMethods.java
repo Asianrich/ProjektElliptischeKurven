@@ -361,13 +361,13 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	}
 
 	/*Method to calculate the Euler'sche function for a natural number n
-	 * It correspond to the count of numbers x in {1, 2, 3, �, n} that are relatively 
+	 * It correspond to the count of numbers x in {1, 2, 3,..., n} that are relatively 
 	 * prime to n, i.e., the numbers whose gcd(x,n) are 1.
-	 * Using the product formula we multiply n by product of (1 � 1/p) for all prime factors p of n.
+	 * Using the product formula we multiply n by product of (1 1/p) for all prime factors p of n.
 	 * @param number num
 	 * @param prim prime number
 	 * We count all prime numbers and their multiples and subtract this count from num to get the result
-	 * Prime factors and multiples of prime factors won�t have gcd as 1
+	 * Prime factors and multiples of prime factors won't have gcd as 1
 	 * return result, the totient at the end of the sample
 	 * */
 
