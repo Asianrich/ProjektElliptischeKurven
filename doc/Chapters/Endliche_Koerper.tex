@@ -1,0 +1,129 @@
+\chapter{Endliche Körper}
+
+\section{Primzahl-Generator}
+\\
+In der Kryptographie arbeitet man mit Primzahlen, jedoch nicht mit kleinen Zahlen.
+Jedoch bei höheren Primzahlen wird es schwieriger die Zahlen zu überprüfen, ob diese eine Primzahl ist.
+Eiune davon ist der Fermat-Test.
+
+\subsection{Fermat-Test}
+\\
+Der Algorithmus läuft folgender maßen ab:\\
+\\
+1. Wähle eine Zahl $ a \in {2,3,4,...,n-2}$ \\
+2. Überprüfe ob die Zahlen Teilerfremd sind. Ist diese, so ist die Zahl n keine Primzahl.\\
+3. Falls die Zahlen teilerfremd sind, so führe folgende Formel aus.\\
+$
+a^{n-1} \equiv  1\ mod\ n
+$\\
+4. Ist dies erfüllt, dann ist die Zahl n vermutlich eine Primzahl. 
+\\
+Die Zahl a ist dementsprechend ein F-Zeuge, der aussagen kann, das die Zahl n eine Primzahl ist.
+Aber es gibt Zahlen, welche F-Zeugen sind, jedoch ist die untersuchte Zahl keine Primzahl.
+Anhand folgendem Beispiel können wir erkennen, wieso das ist:
+
+Testen wir die Zahl 15. So kommt bei der zufälligen Zahl 4 in der Rechnung: \\
+$
+4^{15-1}\ mod\ 15 = 1
+$\\
+Es wird angedeutet, das die Zahl 15 eine Primzahl ist. Welches es jedoch nicht ist. Da man durch $3 \cdot 5 = 15$ kommt.\\
+Aus dem Grund ist es wichtig den Test mehrmals zu durchführen. Dadurch verringert sich die Fehlerwahrscheinlichkeit. Es erhöht aber die Laufzeit dadurch.\\
+
+\newpage
+\section{Was ist ein endlicher Körper (Galois-Feld)?}\\
+\\
+
+Ein Endlicher Körper oder auch Galoiskörper ist eine endliche Anzahl an Elementen, welche man die Grundoperationen Addition und Multiplikation anwenden kann.\\
+
+Subtraktion und Division sind inverse Operationen. Diese Rechenarten sind jedoch nicht anders, wie man normal die Zahlen in $\mathbb{R}$, $\mathbb{Q}$.
+
+Es ist eine Zyklische Gruppe $ \mathbb{Z}_p $ oder auch $ \mathbb{F}_p $. Hierbei muss p eine Primzahl sein. Damit alle Elemente darin enthalten sind. 
+
+Allgemein: Die endlichen Körper $\mathbb{F}_p$ beinhalten p-Elemente. Diese werden durch die Ganzzahlen ${0,1,2,....,p-1}$ repräsentiert. 
+
+Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert:
+
+Addition: Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a+b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist. Dies Zahl wird durch modulo p errechnet, nach der Addition.
+Multiplikation: Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a \cdot b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist. Dies Zahl wird durch modulo p errechnet, nach der Multiplikatioon.
+
+Jetzt nur noch für die inverse Operationen definieren.
+
+Additive Inverse (Subtraktion): Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p)
+Multiplikative Inverse (Division): Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)
+
+Nehmen wir als Beispiel die Primzahl 2.
+
+$ \mathbb{Z}_2 = {0,1} $\\
+
+Hier hat man lediglich nur 2 Elemente. Rechnet man beispielsweise bei Addition alle Möglichkeiten, sieht es so aus: $0 + 0;\ 0 + 1 = 1;\ 1 + 1 = 0$ 
+Um es einfacher und schöner zu gestalten erstellen wir eine Tabelle für Addition und Multiplikation.
+
+
+\begin{table}[h]
+    \begin{tabular}{l|l|lll|l|ll}
+    + & 0 & 1 &  & + & 0 & 1 &  \\ \cline{1-3} \cline{5-7}
+    0 & 0 & 1 &  & 0 & 0 & 0 &  \\ \cline{1-3} \cline{5-7}
+    1 & 1 & 2 &  & 1 & 0 & 1 & 
+    \end{tabular}
+\end{table}
+\\
+\\
+Beispiel mit $ \mathbb{Z}_3 = {0,1,2} $\\
+\\
+\begin{table}[h]
+    \begin{tabular}{l|l|l|lll|l|l|ll}
+    + & 0 & 1 & 2 &  & $\cdot$ & 0 & 1 & 2 &  \\ \cline{1-4} \cline{6-9}
+    0 & 0 & 1 & 2 &  & 0 & 0 & 0 & 0 &  \\ \cline{1-4} \cline{6-9}
+    1 & 1 & 2 & 0 &  & 1 & 0 & 1 & 2 &  \\ \cline{1-4} \cline{6-9}
+    2 & 2 & 0 & 1 &  & 2 & 0 & 2 & 1 & 
+    \end{tabular}
+\end{table}
+\\
+\newpage
+\section{Irreduzible Polynome}\\
+
+Bevor man die Verbindung zu endlichen Körper macht, muss man die Irreduzible Polynome verstehen.\\
+Irreduzible Polynome sind Polynome, welche man nicht mehr faktorisieren kann. Somit haben diese Polynome keine Nullstellen im $\mathbb{F}_{p} $
+\\
+\\
+Beispiele für Irreduzible Polynome sind:\\
+$
+x^2+ x + 1\\
+x^3 + x^2 + x + 1 \\
+x^4 + x^3  + x^2 + x + 1\\
+...
+$
+\\
+\\
+\subsection{Zusammenhang mit Endlichen Körper}\\
+\\
+Der Körper K wird folgendermaßen aufgeschrieben : $ K := \mathbb{F}_{p^m}$. p für Primzahl und m für den Gradienten. Der Gradient sagt aus, welches Polynom genommen wird. 
+Beispielsweise nimmt man für den Gradient 2 das Polynom $x^2 + x + 1$\\
+Alle Berechnungen werden mit Polynomen ausgeführt und die X-Werte werden nicht ersetzt.
+\\
+Die Elemente die in $ K := \mathbb{F}_{p^m}$ repräsentieren sind:\\
+\\
+Allgemein: $  \mathbb{F}_{p^m} = \{p_{m-1} \cdot x^{m-1} + {p_{m-2} \cdot x^{m-2} + ... + p_1 \cdot x + p_0 ; p_i \in \{0,1,..., p-1\} \}$\\
+Man kann $\mathbb{F}_{p^m}$ auch so schreiben : $\mathbb{F}_{p^m}[x] = \frac{\mathbb{F}_{p}[x]}{Polynom} $\\
+\\
+Wie sehen dann die Polynom-Addition, und Multiplikation aus? Um es einfacher zu verstehen, nutzen wir einen Beispiel.
+\\
+Wir nehmen den Körper $ := \mathbb{F}_{2^2}$
+\\
+Hierbei wird unser Polynom $ x^2+ x + 1 $ benutzt. Da der Gradient = 2 ist. Wenn ein Polynom mit einem gleichen oder höheren Gradienten gibt, wird dieser durch Polynomdivision verkleinert und den Rest davon genommen.\\
+bei $ x^2+ x + 1 $ können nur 4 Möglichkeiten geben. $ := \frac{\mathbb{F}_{2}[x]}{x^2+ x + 1} = \{0, 1, x, x+1\}$\\
+
+Macht man eine Tabelle für diese Elemente, kommt folgendes dabei raus:
+
+\begin{table}[h]
+    \begin{tabular}{l|l|l|l|lll|l|l|l|ll}
+    +   & 0   & 1   & x   & x+1 &  & \cdot   & 0 & 1   & x   & x+1 &  \\ \cline{1-5} \cline{7-11}
+    0   & 0   & 1   & x   & x+1 &  & 0   & 0 & 0   & 0   & 0   &  \\ \cline{1-5} \cline{7-11}
+    1   & 1   & 0   & x+1 & x   &  & 1   & 0 & 1   & x   & x+1 &  \\ \cline{1-5} \cline{7-11}
+    x   & x   & x+1 & 0   & 1   &  & x   & 0 & x   & x+1 & 1   &  \\ \cline{1-5} \cline{7-11}
+    x+1 & x+1 & x   & 1   & 0   &  & x+1 & 0 & x+1 & 1   & x   & 
+    \end{tabular}
+\end{table}
+
+
+
