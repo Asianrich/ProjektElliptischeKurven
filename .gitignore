@@ -82,3 +82,22 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
+
+##############################
+## Latex
+##############################
+*.log
+*.bib
+*.fdb*
+*.fls
+*.lol
+*.lof
+*.tcp
+*.synctex*
+*.run*
+*.lot
+*.toc
+*.aux
+*.bbl
+*.blg
+
