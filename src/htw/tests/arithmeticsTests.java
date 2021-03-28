@@ -257,13 +257,52 @@ public class arithmeticsTests {
 
 
 	@Test
-	public void testCRT(){
-		ArrayList<BigInteger> list_A = new ArrayList<>(), list_N = new ArrayList<>();
-		list_A.add(BigInteger.valueOf(1));
-		list_A.add(BigInteger.valueOf(4));
-		list_N.add(BigInteger.valueOf(2));
-		list_N.add(BigInteger.valueOf(5));
+	public void testCRTwithListOfLengthTwo(){
+		ArrayList<BigInteger> list_R = new ArrayList<>(), list_M = new ArrayList<>();
+		list_R.add(BigInteger.valueOf(1));
+		list_R.add(BigInteger.valueOf(4));
+		list_M.add(BigInteger.valueOf(2));
+		list_M.add(BigInteger.valueOf(5));
 
-		assertEquals(BigInteger.valueOf(9), test.chineseRemainder(list_A, list_N));
+		assertEquals(BigInteger.valueOf(9), test.chineseRemainder(list_R, list_M));
 	}
+ 	
+	@Test
+	public void testCRTwithListOfLengthThree(){
+		ArrayList<BigInteger> list_R = new ArrayList<>(), list_M = new ArrayList<>();
+		list_R.add(BigInteger.valueOf(2));
+		list_R.add(BigInteger.valueOf(3));
+		list_R.add(BigInteger.valueOf(2));
+		list_M.add(BigInteger.valueOf(3));
+		list_M.add(BigInteger.valueOf(5));
+		list_M.add(BigInteger.valueOf(7));
+
+		assertEquals(BigInteger.valueOf(23), test.chineseRemainder(list_R, list_M));
+	}
+	
+	@Test
+	public void testCRTwithLargeNumbers(){
+		ArrayList<BigInteger> list_R = new ArrayList<BigInteger>(), list_M = new ArrayList<BigInteger>();
+		list_R.add(new BigInteger("7631415079307304117"));
+		list_R.add(new BigInteger("1248561880341424820456626"));
+		list_R.add(new BigInteger("2756437267211517231"));
+		list_M.add(new BigInteger("17353461355013928499"));
+		list_M.add(new BigInteger ("3882485124428619605195281"));
+		list_M.add(new BigInteger("13563122655762143587"));
+
+		assertEquals(new BigInteger("937307771161836294247413550632295202816"), test.chineseRemainder(list_R, list_M));
+	}
+	
+	@Test
+	public void testCRTWhenBigIntegerIsNotInvertible_thenArithmeticException(){
+		ArrayList<BigInteger> list_R = new ArrayList<>(), list_M = new ArrayList<>();
+		list_R.add(BigInteger.valueOf(11));
+		list_R.add(BigInteger.valueOf(22));
+		list_R.add(BigInteger.valueOf(19));
+		list_M.add(BigInteger.valueOf(10));
+		list_M.add(BigInteger.valueOf(4));
+		list_M.add(BigInteger.valueOf(2));
+	
+		Assertions.assertThrows(ArithmeticException.class, () -> test.chineseRemainder(list_R, list_M));
+	} 
 }

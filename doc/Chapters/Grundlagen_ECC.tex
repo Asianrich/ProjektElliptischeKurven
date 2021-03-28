@@ -3,13 +3,13 @@
 \section{Begriffsabgrenzung}
 
 
-Nach \cite{damer} ist unter dem Begriff  \textbf{Kryptographie} \enquote{die Wissenschaft von geheimen Schreiben zu verstehen.} Grundkonzept eines kryptografischen Systems ist also die Verschlüsselung von Informationen bzw. von Daten, um die Vertraulichkeit der Informationen zu gewährleisten.
+Nach Dietmer ist unter dem Begriff  \textbf{Kryptographie} \enquote{die Wissenschaft von geheimen Schreiben zu verstehen.} Grundkonzept eines kryptografischen Systems ist also die Verschlüsselung von Informationen bzw. von Daten, um die Vertraulichkeit der Informationen zu gewährleisten \cite{damer}.
 
 Daten, die über einen unsicheren Kanal wie das Internet übertragen werden, werden mit Hilfe moderner Kryptosysteme so verschlüsselt, dass Unbefugte in einem Szenario, in dem sie auf die Informationen zugegriffen haben, nicht verstehen, wonach sie suchen\cite{moVarol}. 
 Der unverschlüsselte Information wird als \textit{Klartext} (Plaintext, Cleartext), der verschlüsselte als \textit{Chiffretext} (Ciphertext, Cryptotext) bezeichnet und der Verschlüsselungsprozess des Klartextes wird \textit{Chiffrieren} (engl. Encryption) gennant. Umgekerht wird unter \textit{Dechriffrieren} (engl. Decryption), den Entschlüsselungsprozess eines Chiffretextes, verstanden.
 
 Im Allgemeinen werden die beiden Prozesse durch eine Reihe von Regeln erreicht, sogennante Verschlüsselungs- und Entschlüsselungsalgorithmen. Der Verschlüsselungsprozess basiert auf einem Schlüssel , der dann zusammen mit den Informationen als Eingabe an einen Verschlüsselungsalgorithmus übergeben wird. 
-Danach können unter Verwendung eines "Entschlüsselungsalgorithmus" die Informationen mit dem entsprechenden Entschlüsselungsschlüssels abgerufen werden. Wer einen geheimen Schlüssel besitzt, kann die Informationen in Klartext entschlüsseln\cite{moVarol}. Die folgende Abbildung \ref{konzept} verdeutlicht die Zusammenhänge.
+Danach können unter Verwendung eines Entschlüsselungsalgorithmus die Informationen mit dem entsprechenden Entschlüsselungsschlüssels abgerufen werden. Wer einen geheimen Schlüssel besitzt, kann die Informationen in Klartext entschlüsseln\cite{moVarol}. Die folgende Abbildung \ref{konzept} verdeutlicht die Zusammenhänge.
 
 \begin{figure}
     \centering
@@ -28,7 +28,7 @@ Im Gegensatz zu einem symmetrischen Verschlüsselungsverfahren erfordern asymmet
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width = 0.5 \textwidth]{Graphics/Fig1. Encryption.PNG}
+    \includegraphics[width = 0.5 \textwidth]{Graphics/Fig1Encryption.png}
     \caption{Public-Key Verschlüsselung}
     \label{key}
 \end{figure}
@@ -42,7 +42,7 @@ Für unsere Arbeit liegt jedoch der Schwerpunkt auf der Kryptographie mit ellipt
 Die elliptische Kurvenkryptographie (ECC) ist Verschlüsselungstechnik mit öffentlichem Schlüssel, 
 die auf der algebraischen Struktur elliptischer Kurven über endlichen Körper basiert \cite{mihNita} und zur Erstellung schnellerer, kleinerer und effizienterer kryptografischer Schlüssel verwendet werden kann \cite{khan}. 
 
-Die Verwendung einer elliptischen Kurve in der Kryptographie wurde im Jahr 1985 unabhängig voneinander von Miller [10] und \cite{koblitz} vorgeschlagen. In den späten 1990er Jahren wurde ECC von einer Reihe von Organisationen wie ANSI [4, 5], IEEE [4,6], ISO [7, 8], NIST [9, 10] standardisiert und erhielt kommerzielle Akzeptanz \cite{GaMoDa}.
+Die Verwendung einer elliptischen Kurve in der Kryptographie wurde im Jahr 1985 unabhängig voneinander von Miller \cite{miller} und Koblitz \cite{koblitz} vorgeschlagen. In den späten 1990er Jahren wurde ECC von einer Reihe von Organisationen wie ANSI \cite{ansi}, IEEE \cite{ieee}, ISO \cite{iso}, NIST \cite{nist} standardisiert und erhielt kommerzielle Akzeptanz \cite{GaMoDa}.
 Das bekannteste Verschlüsselungsschema ist das Elliptic Curve Integrated Encryption Scheme (ECIES), das in IEEE- und auch in SECG SEC 1-Standards enthalten ist\cite{marKaur}. Beispiele für die Anwendung von ECC sind unter anderen Mehrzweck-Smartcards, die  neuen  deutschen  Personaldokumente\cite{merLo}, 
 
 Im Allgemeinen basieren Kryptosysteme mit öffentlichem Schlüssel auf die Schwierigkeit der Lösung bestimmten mathematischen Probleme, z.B. beruht RSA-Verfahren auf dem Integer Factorizierungsproblem und DH sowie ECC basieren auf dem Diskreten Logarithmus-Problem. Es besteht jedoch ein Problem bei herkömmlichen Kryptosystemen mit öffentlichem Schlüsseln wie RSA. 
@@ -142,11 +142,12 @@ Das \textbf{Elliptic Curve Diskrete Logarithmus Problem (ECDLP)} ist ähnlich de
 
 Die Primzahl p, die Gleichung der elliptischen Kurve E und der Punkt P und seine Ordnung n sind die Domainparameter. Der privater Schlüssel ist die ganze Zahl k, die gleichmäßig zufällig aus dem Intervall [1, n - 1] ausgewählt wird, und der entsprechende öffentliche Schlüssel ist $ Q = kP $.
 
+Daher ist die Hauptoperation bei der ECC die Punktmultiplikation, also die Multiplikation eines Skalars k mit einem beliebigen Punkt P auf der Kurve, um einen anderen Punkt Q auf der Kurve zu erhalten. 
 
 Das Lösen von ECDLP ist viel schwieriger als DLP, da die Komplexität der Punktarithmetik in ECDLP im Vergleich zur Ganzzahlarithmetik in DLP zunimmt. 
 Aus diesem Grund ist ECC in der Lage, ein ähnliches Sicherheitsniveau wie RSA bereitzustellen, jedoch mit einer kürzeren Schlüsselgröße, was es wiederum zur beliebtesten Wahl macht\cite{mo2014}. 
 
-Damit ein auf $ \mathbf{F_p} $basierendes diskretes Logarithmus-System effizient ist, sollten schnelle Algorithmen zur Berechnung der Gruppenoperation bekannt sein. Aus Sicherheitsgründen sollte das Problem des diskreten Logarithmus in $ \mathbf{Z_p} $ unlösbar sein\cite{Hankerson}.
+Damit ein auf $ \mathbf{F_p} $ basierendes diskretes Logarithmus-System effizient ist, sollten schnelle Algorithmen zur Berechnung der Gruppenoperation bekannt sein. Aus Sicherheitsgründen sollte das Problem des diskreten Logarithmus in $ \mathbf{Z_p} $ unlösbar sein\cite{Hankerson}.
 Es gibt viele Algorithmen zur Lösung von \textbf{ECDLP}, aber der erfolgreichste ist die Kombination von Pollards Rho- und Pohlig-Hellman-Angriffen mit vollständig exponentieller Laufzeit (\cite{mo2014};\cite{Hankerson}). 
 Angriffe resultieren normalerweise aus den Schwächen bei der Auswahl der elliptischen Kurve und des endlichen Feldes (siehe Kapitel 4 und 5), aber die meisten Angriffe können durch korrekte Auswahl der Parameter der elliptischen Kurve vereitelt werden \cite{mo2014}.
 Daher sollten diese öffentlichen Parameter sicher ausgewählt werden, um alle erkannten Angriffe zu vermeiden\cite{aliKa}. Der nächste Abschnitt beschäftigt sich näher mit diesen Parametern. 
@@ -157,7 +158,10 @@ Vor der Implementierung eines ECC-Systems müssen mehrere Entscheidungen getroff
 Dazu gehören die Auswahl von Domänenparametern für elliptische Kurven (zugrunde liegendes endliches Feld, Felddarstellung, elliptische Kurve) sowie Algorithmen für Feldarithmetik, elliptische Kurvenarithmetik und Protokollarithmetik. 
 Die Auswahl kann durch Sicherheitsaspekte, Anwendungsplattform (Software oder Hardware), Einschränkungen der jeweiligen Computer- und Kommunikationsumgebung (z. B. Speichergröße, Bandbreite) beeinflusst werden \cite{Havaze}.
 
-Im Allgemeinen können zwei Arten von elliptischen Kurvendomänenparametern verwendet werden \cite{standard}:
+Bevor der Verschlüsselungsprozess gestartet und der verschlüsselte Text transformiert wird, müssen Domänenparameter von beiden
+Parteien vereinbart werden, die an der sicheren und vertrauenswürdigen Kommunikation über ECC beteiligt sind \cite{sosax}.
+Sie werden von einer Gruppe von Benutzern gemeinsam genutzt und können in einigen Anwendungen jedoch für jeden Benutzer spezifisch sein \cite{kalsa}.
+Es können zwei Arten von elliptischen Kurvendomänenparametern verwendet werden \cite{standard}:
 \begin{itemize}
     \item elliptische Kurvendomänenparameter über $ \mathbf{Z_p} $ und
     \item elliptische Kurvendomänenparameter über $ \mathbf{F_2^m} $ .
@@ -200,8 +204,13 @@ definiert sind, einem Basispunkt $ G = (xG; yG) $ auf $ E (F_2^m) $, eine Primza
  \end{align*} 
  \end{ceqn}
 und $ \#E (\mathbf{F_p}) $  die Anzahl der Punkte auf einer elliptischen Kurve ist. (\cite{standard}; \cite{GaMoDa})
-Für diese Arbeit wurden jedoch nur Parameter über $ \mathbf{ Z_p } $ bevorzugt. 
 
-Je nach gewähltem Feld verwendet ECC für seine Operationen modulare Arithmetik oder Polynomarithmetik. Dies wird im nächsten Kapitel(Kapitel 3) präsentiert. 
+
+Um einen Angriff auf ECDLP zu vermeiden, muss $ |E| $ eine ausreichend große Primzahl sein. Zumindest wird vorgeschlagen, dass $ n > 2^{160} $ ist \cite{kalsa}.
+
+
+Für diese Arbeit wurden jedoch nur Parameter über $ \mathbf{ Z_p } $ bevorzugt. 
+Die Verwendung der elliptischen Kurvenarithmetik macht ECC unter allen vorhandenen kryptografischen Schemata einzigartig.
+Je nach gewähltem Feld verwendet ECC für seine Operationen modulare Arithmetik oder Polynomarithmetik. Dies wird im nächsten Kapitel präsentiert. 
 
 

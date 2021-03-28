@@ -1,13 +1,248 @@
 \chapter{Zahlentheoretische Grundlagen}
 
-Aufgrund vielversprechender Ergebnisse in verschiedenen Sicherheitsanwendungen ist es sehr wichtig, elliptische Kurvenarithmetik und ECC-basierte Kryptosysteme zu verstehen. wichtige Grundlagen
-der Zahlentheorie, die für die Kryptographie von Bedeutung sind, werden hier
-zusammengefasst. Es handelt sich dabei um die modulare Arithmetik, Die Verwendung der elliptischen Kurvenarithmetik macht ECC unter allen vorhandenen kryptografischen Schemata einzigartig. Die Arithmetik verwendet modulare Arithmetik, einschließlich modularer Multiplikation, Addition und die Bestimmung
-von modularen Inversen. In diesem Kapitel werden endliche Feldarithmetikoperationen wie modulare Addition, modulare Subtraktion, modulare Multiplikation und modulare Inversion zusammen mit Beispielen beschrieben.
+Hoher Durchsatz und geringe Ressourcen sind in vielen Anwendungen die entscheidenden Entwurfsparameter des ECC-Prozessors \cite{Hossain2019}.
+Da die Effizienz von ECC-Prozessoren hauptsächlich von modularen arithmetischen Operationen wie modularer Addition, Subtraktion und Multiplikation abhängt, ist der effiziente Entwurf modularer Arithmetik eine sehr anspruchsvolle Aufgabe für die Implementierung eines Hochleistungs-ECC-Prozessors \cite{Hossain2019}. 
+ist es sehr wichtig Grundlagen der Zahlentheorie,  zu verstehen. 
+In diesem Kapitel werden die wichtigsten Arithmetikoperationen  über dem Primfeld $ \mathbf{ Z_p } $, die für die Kryptographie von Bedeutung sind, zusammen mit Beispielen vorgestellt und beschrieben. 
 
 \section{Modulararithmetik}
 
+Die modulare Arithmetik ist:
+\begin{quote} \enquote{ein Prozess zum Reduzieren einer Zahl modulo einer
+anderen Zahl, wobei dieser Prozess zahlreiche
+Multi-Präzisions-Gleitkomma-Divisionsoperationen
+umfassen kann.
+}\cite{patent}\end{quote} 
+Die modulare Artihmetik bietet endliche Strukturen, die alle üblichen arithmetischen Operationen der ganzen Zahlen aufweisen und die mit vorhandener Computerhardware problemlos implementiert werden können \cite{Contini2011}.
+Eine wichtige Eigenschaft dieser Strukturen ist, dass sie durch Operationen wie Exponentiation zufällig permutiert zu sein scheinen, aber die Permutation kann oft leicht durch eine andere Exponentiation umgekehrt werden \cite{Contini2011}.
+In entsprechend ausgewählten Fällen ermöglichen diese Vorgänge die Ver- und
+Entschlüsselung oder die Generierung und Überprüfung von Signaturen
+\cite{Contini2011}.
+Im Allgemeinen lässt sich eine modulare Reduktion durch die folgende Gleichung definieren: $ r = x mod p = x – \floor*{\frac{x}{p}} \cdot p $, wobei x die zu reduzierende Anzahl modulo p ist, der gefundene Rest r, der im Bereich von [0, p-1] liegt\cite{patent}.
 
+Daraus lässt sich die Äquivalenzrelation definieren und man sagt, dass $ r $ kongruent zu $ x $ modulo $ p $ ist. 
+Eine Zahl $ r $ ist \textbf{kongruent} bzw. \textbf{äquivalent} zu einer Zahl $ x $ modulo $ p $, ausgedrückt durch $ r \equiv x ( mod p )$, falls
+\begin{ceqn}
+\begin{align*}
+     p | ( r - x) 
+\end{align*}
+\end{ceqn}
+, also wenn r und x den gleichen Rest haben, wenn sie durch p geteilt werden und $ r = k $ $\cdot $ $ p + x $ mit  $ k \in $ $ \mathbf{Z} $.
+
+
+
+In dieser Arbeit bildet  die Klasse \textit{BasicTheoreticMethod.java}, das Grundgerüst der Implementierung von elliptischen Kurven über das Primfeld $\mathbf{ Z_p} $. 
+Sie enthält zahlentheoretische Methoden, die eine wichtige Bedeutung für die Kryptographie haben.
+
+Die erste wichtigste Methode ist die Methode der Berechnung vom Modulo: $\mathbf{ X \quad\text{mod}\quad P} $
+
+\subsection{Berechnung von X mod Y}
+
+
+Eine naivste Methode wurde implementiert, in dem das Finden von $ r = x mod p $ zuerst
+durch wiederholte Berechnung des Quotients $ q = \frac{x}{p} $ und dann durch
+wiederholtes Subtrahieren von x mit dem Ergebnis aus der Multiplikation von p mit q, bis das Ergebnis im Bereich von $ [0, p-1] $ liegt.
+Die Leistung der Modulo-Operation hängt vor allem hier von der Leistung des Divisionsalgorithmus ab.
+
+Die naivste Art eine ganzzahlige Division zu implementieren, besteht darin,
+solange den Divisor p von der Dividende x zu subtrahieren, bis die Dividende x negativ wird, und dabei den Quotienten q hochzuzählen. Wenn die Dividende x negativ wird, wird
+die Dividende vom Divisor addiert und der Quotient um eins verringert\cite{bericht}. 
+
+Die implementierte Methode ist jedoch sehr langsam und kostspielig, wenn die Anzahl der Iterationen berücksichtigt wird, wenn eine große Zahl durch eine kleine Zahl geteilt wird. 
+\cite{barett}
+
+Aber Methoden wie die \textbf{Barrett-Reduktion} können verwendet werden, um die Modulo-Operation zu optimieren.(\cite{anoops}, \cite{hasenplaugh})
+
+Eine Barrett-Reduktion ist ein Verfahren zum Reduzieren einer Zahl modulo einer anderen Zahl, wobei die Division durch Multiplikationen und Verschiebungen ersetzt werden können, da die beiden letzteren Operationen viel billiger sind.\cite{patent}.
+Also der Quotient  $ q = \frac{x}{p} $ wird unter Verwendung kostengünstigerer Operationen mit Potenzen einer geeignet gewählten Basis $ b $ geschätzt. Für die Barett-Reduktion wird b häufig als Potenz von 2 gewählt werden.
+
+Eine modulabhängige Größe $ m = \floor*{\frac{b^{2k}}{p}} $ muss berechnet werden, wodurch der Algorithmus für den Fall geeignet ist, dass viele Reduktionen mit einem einzigen Modul durchgeführt werden\cite{Hankerson}. 
+
+Dies erklärt sich aus der Tatsache, dass beispielsweise jede RSA-Verschlüsselung für eine Entität ein Reduktionsmodul für den öffentlichen Schlüsselmodul dieser Entität erfordert \cite{menezes:1997}. $ q $ kann nun einmal nur für jedes Modul gleich dem Kehrwert von p berechnet werden \cite{barett}.
+
+Das Modulares Reduktonsverfahren umfasst\cite{patent}:
+\begin{itemize}
+       \item die Eingabe die zu reduzierenden Wert x und des Modulos p, wobei dies eine spezielle Form (z.B. NIST-Primzahl) hat,
+       \item das Durchführen der modularen Reduktion von x mod p, wobei die modulare Reduktion umfasst:
+       \begin{itemize}
+         \item Berechnen eines genäherten Basisquotienten m,
+         \item Berechnen einer Quotienten-Näherung q, 
+         \item Berechnen eines genäherten Rests r, und
+         \item Berechnen einer geschätzten, reduzierten Form des Wert x auf der Basis der Quotienten-Näherung und des genäherten Rests.
+       \end{itemize}
+\end{itemize}
+
+ Die Tabelle \ref{tab3} veranschaulicht den Barett-Reduktion-Algortihmus. 
+
+
+
+\begin{table}[!ht]
+\centering
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Algorithmus: Modulo-Berechnung}\\
+		\midrule
+		Input: b > 3, p, $ k = \floor*{log_bp} + 1, 0 \leq x < b^{2k}, m = \floor*{\frac{b^{2k}}{p}} $\\
+		Output: $ x mod p $ \\
+		                                           \\
+		                                           
+		1. Berechne $ q = \floor*{ \floor*{\frac{x}{b^{k-1}}} \frac{m}{b^{k+1}} }\cdot p $;\\
+		2. $ r = (x $ mod $ b^{k+1} ) - (q \cdot p $ mod $ b^{k+1})$;  \\
+		3. If r < 0 then $ r = r + b^{k+1}$;\\ 
+		4. While $ r \geq p $ do r = r - p; \\
+		5. Return r. \\
+	   \bottomrule
+	\end{tabular}
+	\caption{Barett-Reduktion\cite{nist}}
+	\label{tab3}
+\end{table}
+
+
+
+
+Weitere grundlegende und wesentliche Operationen für die
+Kryptographie sind die modulare Addition, modulare Subtraktion und modulare Multiplikation. 
+Die Berechnung erfolgt genauso wie bei der normalen Arithmetik und
+dann wird das Ergebnis durch den Modulo geteilt, bis der kleinste positive Rest gefunden wird.
+
+\subsection{Modulare Addition}
+
+
+Die modulare Addition über $ \mathbf{Z_p} $ kann mathematisch
+geschrieben werden als:
+
+\begin{ceqn}
+\begin{align*}
+    x + y ( mod p ) 
+\end{align*}
+\end{ceqn}, wobei x und y die
+gegebene Zahlen und p die Primzahl sind. In dieser Arbeit wurde für die Implementierung der modularen Addition zuerst $ x $ und $ y $ 
+addiert, dann wird das Ergebnis modulo p berechnet, wenn außerhalb des Bereichs von [0, p-1] liegt, sonst wird die Summe direkt ausgegeben.
+
+Seien zum Beispiel x = 17, y = 4, p = 5, dann ist
+\begin{ceqn}
+
+\begin{align*}
+   x + y ( mod p ) = \quad 17 + 4 (mod 5) = \quad 21 \equiv 1 mod 5
+\end{align*}
+\end{ceqn}
+Ein kostengünstiger bzw. schnellerer Algorithmus wäre zuerst x und y binär darzustellen und in einem Array von t-Bit zu speichern.
+Danach sind x und y wortweise bzw.
+bitweise zu addieren und das Ergebnis dann p subtrahieren, solange es p - 1 überschreitet. 
+Jede Wortaddition erzeugt zum Beispiel in einer 32-Bit Plattform-Architektur eine 32-Bit-Summe und eine 1-Bit-Übertragsziffer , die zur
+nächsthöheren Summe addiert werden\cite{nist}. Die einfache Addition und die \textit{Addition mit Übertrag} können schnelle Einzeloperationen sein. \cite{Hossain2019}. Die Tabellen \ref{tab1} und \ref{tab2} veranschaulichen die beiden Algorithmen. 
+
+\begin{table}[!ht]
+\centering
+\subfloat[1.Tabelle]{	
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Klassischer Algorithmus: Modulare Addition}\\
+		\midrule
+		Input: Modulo p und Zahlen x, y  $\in $ [0, p - 1]  \\
+		Output: $ r = (x + y) mod p $ \\
+		                                           \\
+		                                           
+		1. Berechne r = x + y;\\
+		2. If $ r \neq 0 $, then finde den Rest r = r mod p else r = 0;  \\
+		3. return r.\\ 
+	   \bottomrule
+	\end{tabular}}
+	\caption{Modulare Addition aus der Klasse \textit{BasicTheoreticMethods}}
+	\label{tab1}
+%\end{table}
+\qquad\qquad%
+%\begin{table}[b]
+%\centering
+
+\subfloat[2.Tabelle]{
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Algorithmus: Modulare Addition}\\
+		\midrule
+		Input: Modulo p und Zahlen x, y  $\in $ [0, p - 1]  \\
+		$ t = \ceil*{m/32} $ und $ m = \ceil*{log_2p} $   \\
+		Output: $ c = (x + y) mod p $ \\
+		                                           \\
+		                                           
+		1. $ c_0  = x_0 + y_0 $;\\
+		2. For i from 1 to t-1 do: $ c = Add_-With_-Carry(x_i, y_i) $;\\
+		3. If the carry bit is set, then subtract p from $ c = (c_{{t_-} 1}, ..., c_2,c_1,c_0)$;\\
+		4. If $ c \geq p $  then $ c = c - p $;\\
+		5. Return c.\\
+       \bottomrule
+	\end{tabular}}
+    \caption{Empfohlene modulare Addition von amerikanischen Standard NIST für eine 32-Bit Architektur-Plattform\cite{nist}.}	
+	\label{tab2}
+\end{table}
+
+
+\subsection{Modulare Subtraktion}
+
+
+Mathematisch kann die modulare Subtraktion als $ (x - y) mod p $ geschrieben
+werden, wobei x und y die gegebenen Zahlen und p die Primzahl sind. 
+Ein einfachster Weg diese Operation durchführen, besteht darin, die beiden Zahlen x
+und y zuerst zu subtrahieren und dann der kleinste positive Rest im Bereich von [0, p-1] zu berechnen, in dem das Ergebnis
+der Subtraktion von (x - y) durch p geteilt wird. Der Algorithmus sieht genauso wie den Algorithmus der modularen Addition, wobei im ersten Schritt anstatt eine Addition, eine Subtraktion durchgeführt wird.
+
+Seien zum Beispiel x = 15, y = 23, p = 5, dann ist
+\begin{align*}
+    (x - y) mod p = \quad (15-23) mod 5 = \quad -8 \equiv 2 mod 5
+\end{align*}
+
+In der effizienteren Art, Modulo-Subtraktion durchzuführen, wird das Übertragungsbit nicht mehr als \texttt{Carry-Bit}, sondern als \texttt{Borrow-Bit} (Ausleih-Bit) interpretiert.\cite{nist}. Die Operation wird dann ähnlich wie die modulare Addition implementiert.  
+
+\subsection{Modulare Multiplikation}
+
+
+Die modulare Multiplikation ist eine der teuersten und zeitaufwändigsten
+Operationen der Kryptographie über $ Z_p$. Aber um ein höheres, leistungsstarkes Kryptosystem zu entwickeln,
+muss eine effiziente Implementierung der modularen Multiplikation erfolgen \cite{Hossain2019}. 
+Mathematisch kann die modulare Multiplikation-Operation ausgedrückt werden als
+\begin{align*}
+    (x \cdot y) mod p.
+\end{align*} 
+
+Um Modulo-Multiplikationen durchzuführen, wurde in dieser Arbeit die Zahlen x und y einfach multipliziert und dann die ganzzahlige Division durch p zu verwendet, um den Rest zu erhalten.
+Dies bedeutet auch, dass die Leistung des ganzen Algorithmus, genauso wie bei der modularen Addition und Subtraktion, von Modulo-Operationen bzw. von der Leistung des Divisionsalgorithmus abhängt.
+Seien zum Beispiel: x = 35, y = 7, p = 5, dann gilt:
+\begin{align*}
+    (x \cdot y) mod p = \quad (35 \cdot 7) mod 5 = \quad 245 \equiv 0 mod 5
+\end{align*}
+
+Neben der Barett-Reduktion Methode gibt es auch eine andere Methode, die die
+Modulo-Operationen viel schneller als die reguläre klassische Methode
+durchführen kann: Die \textbf{Montgomery-Multiplikation}. 
+Die \textbf{Montgomery-Multiplikation} ist ein Verfahren zur modularen Multiplikation, bei der die traditionelle Teilung-Operation vermeidet wird und anschließend nur Multiplikationen, Additionen und Verschiebungen verwendet werden\cite{sahuMa}.
+Der modulare multiplikative Algorithmus ist in Tabelle \ref{tab4} angegeben.
+
+\begin{table}[!ht]
+\centering
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Algorithmus: Modulare Multiplikation}\\
+		\midrule
+		Input: p, x und y zwei positive k-Bit Ganzzahlen, $ x_i $, $ y_i $: i-te Bit in x und y\\
+		Output: $ m = x \cdot y $ mod $ p $ \\
+		                                           \\
+		                                           
+		1. m = 0;\\
+		2. For i = 0 to k-1 \\
+		   \quad2.1 \quad $ m = m + ( x \cdot y_i) $;\\
+		   \quad2.2 \quad If $ ( m_0 = 1 ) $ then $ m = m/2 $ \quad else \quad $ m = (m + p)/2 $;\\ 
+	    3. Return m. \\
+	   \bottomrule
+	\end{tabular}
+	\caption{Montgomery-Multiplikation\cite{sahuMa}}
+	\label{tab4}
+\end{table}
+
+Das Verfahren ist für eine einzelne modulare Multiplikation nicht effizient,
+kann jedoch effektiv bei Berechnungen wie der modularen Exponentiation
+verwendet werden, bei denen viele Multiplikationen für eine gegebene Eingabe durchgeführt werden\cite{Hankerson}.
+
+\subsection{Modulare Exponentiation}
 
 \section{Modulare Inverse}
 
