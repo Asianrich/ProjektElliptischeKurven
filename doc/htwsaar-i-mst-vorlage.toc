@@ -42,28 +42,38 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3.3}Polynomarithmetik}{12}{section.3.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}Endliche Koerper}{13}{chapter.4}% 
+\contentsline {chapter}{\numberline {4}Endliche K\IeC {\"o}rper}{13}{chapter.4}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Elliptische Kurven}{14}{chapter.5}% 
+\contentsline {section}{\numberline {4.1}Primzahl-Generator}{13}{section.4.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}Darstellungen von Punkten}{14}{section.5.1}% 
+\contentsline {subsection}{\numberline {4.1.1}Fermat-Test}{13}{subsection.4.1.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}Punktmultiplikation}{14}{section.5.2}% 
+\contentsline {section}{\numberline {4.2}Was ist ein endlicher K\IeC {\"o}rper (Galois-Feld)?}{14}{section.4.2}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}Punktaddition}{14}{section.5.3}% 
+\contentsline {section}{\numberline {4.3}Irreduzible Polynome}{15}{section.4.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}Punktverdopplung}{14}{section.5.4}% 
+\contentsline {subsection}{\numberline {4.3.1}Zusammenhang mit Endlichen K\IeC {\"o}rper}{15}{subsection.4.3.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Elliptic Curve Diffie Hellman}{15}{chapter.6}% 
+\contentsline {chapter}{\numberline {5}Elliptische Kurven}{16}{chapter.5}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}Fazit}{16}{chapter.7}% 
+\contentsline {section}{\numberline {5.1}Darstellungen von Punkten}{16}{section.5.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\nonumberline Literatur}{17}{chapter*.7}% 
+\contentsline {section}{\numberline {5.2}Punktmultiplikation}{16}{section.5.2}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\nonumberline Abbildungsverzeichnis}{19}{chapter*.8}% 
+\contentsline {section}{\numberline {5.3}Punktaddition}{16}{section.5.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\nonumberline Tabellenverzeichnis}{19}{chapter*.9}% 
+\contentsline {section}{\numberline {5.4}Punktverdopplung}{16}{section.5.4}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\nonumberline Listings}{19}{chapter*.10}% 
+\contentsline {chapter}{\numberline {6}Elliptic Curve Diffie Hellman}{17}{chapter.6}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Abk\IeC {\"u}rzungsverzeichnis}{20}{chapter*.11}% 
+\contentsline {chapter}{\numberline {7}Fazit}{18}{chapter.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\nonumberline Literatur}{19}{chapter*.10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\nonumberline Abbildungsverzeichnis}{21}{chapter*.11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\nonumberline Tabellenverzeichnis}{21}{chapter*.12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\nonumberline Listings}{21}{chapter*.13}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Abk\IeC {\"u}rzungsverzeichnis}{22}{chapter*.14}% 
