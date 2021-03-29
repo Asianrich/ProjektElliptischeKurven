@@ -98,7 +98,7 @@ Alle Berechnungen werden mit Polynomen ausgeführt und die X-Werte werden nicht 
 \\
 Die Elemente die in $ K := \mathbb{F}_{p^m}$ repräsentieren sind:\\
 \\
-Allgemein: $  \mathbb{F}_{p^m} = \{p_{m-1} \cdot x^{m-1} + {p_{m-2} \cdot x^{m-2} + ... + p_1 \cdot x + p_0 ; p_i \in \{0,1,..., p-1\} \}$\\
+Allgemein: $  \mathbb{F}_{p^m} = \{p_{m-1} \cdot x^{m-1} + p_{m-2} \cdot x^{m-2} + ... + p_1 \cdot x + p_0 ; p_i \in \{0,1,..., p-1\} \}$\\
 Man kann $\mathbb{F}_{p^m}$ auch so schreiben : $\mathbb{F}_{p^m}[x] = \frac{\mathbb{F}_{p}[x]}{Polynom} $\\
 \\
 Wie sehen dann die Polynom-Addition, und Multiplikation aus? Um es einfacher zu verstehen, nutzen wir einen Beispiel.
@@ -112,7 +112,7 @@ Macht man eine Tabelle für diese Elemente, kommt folgendes dabei raus:
 
 \begin{table}[h]\caption{TODO CAPTION}
     \begin{tabular}{l|l|l|l|lll|l|l|l|ll}
-    +   & 0   & 1   & x   & x+1 &  & \cdot   & 0 & 1   & x   & x+1 &  \\ \cline{1-5} \cline{7-11}
+    +   & 0   & 1   & x   & x+1 &  & $\cdot$   & 0 & 1   & x   & x+1 &  \\ \cline{1-5} \cline{7-11}
     0   & 0   & 1   & x   & x+1 &  & 0   & 0 & 0   & 0   & 0   &  \\ \cline{1-5} \cline{7-11}
     1   & 1   & 0   & x+1 & x   &  & 1   & 0 & 1   & x   & x+1 &  \\ \cline{1-5} \cline{7-11}
     x   & x   & x+1 & 0   & 1   &  & x   & 0 & x   & x+1 & 1   &  \\ \cline{1-5} \cline{7-11}
