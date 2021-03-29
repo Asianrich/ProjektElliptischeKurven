@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.7.17)  28 MAR 2021 20:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.7.17)  29 MAR 2021 12:26
 entering extended mode
 **./htwsaar-i-mst-vorlage.tex
 (htwsaar-i-mst-vorlage.tex
@@ -1985,16 +1985,16 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zplm' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-)
+ [2
+
+
+
+
+])
 \tf@toc=\write6
 \openout6 = `htwsaar-i-mst-vorlage.toc'.
 
-) [2
-
-
-
-
-]
+) [3]
 \openout2 = `Chapters/Einleitung.aux'.
 
 
@@ -2011,7 +2011,7 @@ chapter 1.
 
  (Chapters/Grundlagen_ECC.tex
 chapter 2.
-<Graphics/Cipher.png, id=154, 277.035pt x 127.22531pt>
+<Graphics/Cipher.png, id=168, 277.035pt x 127.22531pt>
 File: Graphics/Cipher.png Graphic file (type png)
 <use Graphics/Cipher.png>
 Package pdftex.def Info: Graphics/Cipher.png  used on input line 16.
@@ -2022,7 +2022,7 @@ Package pdftex.def Info: Graphics/Cipher.png  used on input line 16.
 
 
  <./Graphics/Cipher.png>]
-<Graphics/Fig1Encryption.png, id=168, 229.60782pt x 84.315pt>
+<Graphics/Fig1Encryption.png, id=182, 229.60782pt x 84.315pt>
 File: Graphics/Fig1Encryption.png Graphic file (type png)
 <use Graphics/Fig1Encryption.png>
 Package pdftex.def Info: Graphics/Fig1Encryption.png  used on input line 31.
@@ -2118,17 +2118,87 @@ ne an-de-re Me-tho-de, die die Modulo-
 
  (Chapters/Endliche_Koerper.tex
 chapter 4.
-) [13
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--29
+
+ []
+
+[13
 
 
 
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 84--93
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--93
+
+ []
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.101 ... x + p_0 ; p_i \in \{0,1,..., p-1\} \}$\\
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--110
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--110
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--110
+
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.115     +   & 0   & 1   & x   & x+1 &  & \cdot
+                                                   & 0 & 1   & x   & x+1 &  ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.115 ...   & 0   & 1   & x   & x+1 &  & \cdot   &
+                                                   0 & 1   & x   & x+1 &  \\...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+) [15]
 \openout2 = `Chapters/EC.aux'.
 
  (Chapters/EC.tex
 chapter 5.
-) [14
+) [16
 
 
 
@@ -2138,7 +2208,7 @@ chapter 5.
 
  (Chapters/ECDH.tex
 chapter 6.
-) [15
+) [17
 
 
 
@@ -2148,7 +2218,7 @@ chapter 6.
 
  (Chapters/Fazit.tex
 chapter 7.
-) [16
+) [18
 
 
 
@@ -2166,7 +2236,7 @@ Package biblatex Warning: No driver for entry type 'standard'.
 Package biblatex Warning: No driver for entry type 'standard'.
 (biblatex)                Using fallback driver on input line 4.
 
-[17
+[19
 
 
 
@@ -2184,7 +2254,7 @@ Package biblatex Warning: No driver for entry type 'standard'.
 Package biblatex Warning: No driver for entry type 'standard'.
 (biblatex)                Using fallback driver on input line 4.
 
-[18]
+[20]
 \openout2 = `FrontBackmatter/ListOfs.aux'.
 
  (FrontBackmatter/ListOfs.tex
@@ -2207,7 +2277,7 @@ Package tocbasic Info: character protrusion at lol deactivated on input line 11
 \tf@lol=\write9
 \openout9 = `htwsaar-i-mst-vorlage.lol'.
 
-) [19
+) [21
 
 
 
@@ -2216,7 +2286,7 @@ Package tocbasic Info: character protrusion at lol deactivated on input line 11
 \openout2 = `FrontBackmatter/Abbreviations.aux'.
 
 
-(FrontBackmatter/Abbreviations.tex) [20
+(FrontBackmatter/Abbreviations.tex) [22
 
 
 
@@ -2239,11 +2309,11 @@ Package logreq Info: Writing requests to 'htwsaar-i-mst-vorlage.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45330 strings out of 492895
- 857401 string characters out of 3133462
- 1453341 words of memory out of 3000000
- 48153 multiletter control sequences out of 15000+200000
- 595710 words of font info for 254 fonts, out of 3000000 for 9000
+ 45352 strings out of 492895
+ 857633 string characters out of 3133462
+ 1452341 words of memory out of 3000000
+ 48161 multiletter control sequences out of 15000+200000
+ 595859 words of font info for 256 fonts, out of 3000000 for 9000
  1143 hyphenation exceptions out of 8191
  76i,15n,122p,9102b,3156s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\DJ MacHack\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dp
@@ -2258,9 +2328,9 @@ X 2.9/fonts/type1/urw/palatino/uplb8a.pfb><E:/Program Files/MiKTeX 2.9/fonts/ty
 pe1/urw/palatino/uplr8a.pfb><E:/Program Files/MiKTeX 2.9/fonts/type1/urw/palati
 no/uplr8a.pfb><E:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb
 >
-Output written on htwsaar-i-mst-vorlage.pdf (22 pages, 294844 bytes).
+Output written on htwsaar-i-mst-vorlage.pdf (25 pages, 309969 bytes).
 PDF statistics:
- 593 PDF objects out of 1000 (max. 8388607)
- 104 named destinations out of 1000 (max. 500000)
- 55180 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 640 PDF objects out of 1000 (max. 8388607)
+ 115 named destinations out of 1000 (max. 500000)
+ 55220 words of extra memory for PDF output out of 61914 (max. 10000000)
 
