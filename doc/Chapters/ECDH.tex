@@ -1,1 +1,12 @@
-\chapter{Elliptic Curve Diffie Hellman}
+\chapter{ECDH – Elliptic Curve Diffie Hellman}
+\section{Diffie Hellman Schlüsselaustausch}
+Das Diffie-Hellman-Protokoll wird benutzt um auf einem unsicheren Kanal einen gemeinsamen geheimen Schlüssel zu vereinbaren um damit eine verschlüsselte sichere Kommunikation zu betreiben.\\
+Dafür einigen sich beide Teilnehmer über den öffentlichen Kanal auf eine ausreichend große Primzahl \(p\) und eine natürliche Zahl \(g\), die zwischen 1 und \(p-1\) liegt und ein Erzeuger von \(Z_P\) ist.\\
+Nun muss jeder Teilnehmer eine geheime Zufallszahl generieren, die kleiner \(p\) ist. Danach berechnet jeder seinen öffentlichen Schlüssel \[A = g^a mod p\] und schickt diesen an den anderen Teilnehmer.\\
+Wenn jeder mit seinem privaten Schlüssel und dem öffentlichen Schlüssel des Gegenübers den gemeinsamen Schlüssel \[K_1 = B^a mod p\] \[K_2 = A^b mod p\] \[K_1 = K_2\] berechnen.\\
+Um die Kommunikation abzuhören müsste ein Angreifer das diskrete Logarithmusproblem lösen, was bei großen Zahlen nicht effizient möglich ist.
+
+\section{Schlüsselaustausch bei Elliptischen Kurven}
+Wie beim klassischen Diffie Hellman Schlüssel Austausch wird bei der Variante mit elliptischer Kurve ein Schlüsselaustausch vorangetrieben. Dabei braucht jeder Teilnehmer einen privaten Schlüssel \(d\), eine zufällige Zahl die zwischen 1 und \(n-1\) gewählt wird und einen öffentlichen Schlüssel Punkt \(Q\). \(Q\) entsteht durch die folgende Formel \[ Q = d * G\] mit \(G\) als Erzeuger der Kurve.\\ 
+Mit dem eigenen \(d\) und dem \(G\) vom Gegenüber kann man den Punkt \[K = d_a * Q_b\] \[K = d_b * Q_a\] berechnen. Von \(K\) benötigt man in den meisten Verfahren nur die x-Koordinate.\\
+Sollte ein Teilnehmer einen ungültigen Punkt, der nicht auf der Kurve liegt, wählen und der Andere validiert diesen Punkt nicht, ist es möglich den geheimen Schlüssel des echten Punktes herauszufinden.
