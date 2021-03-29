@@ -136,4 +136,66 @@ public class FiniteFieldsTest {
         BigInteger prim = Field.generatePrime(len, trials);
         return prim;
     }
+
+    @Test
+     public void addField(){
+        try{
+            BigInteger temp1 = BigInteger.valueOf(13);
+            BigInteger temp2 = BigInteger.valueOf(9);
+
+            Fields fields = new FiniteFields(BigInteger.valueOf(17));
+            BigInteger num = fields.add(temp1, temp2);
+            Assert.assertTrue(num.compareTo(BigInteger.valueOf(5)) == 0);
+        }
+        catch (Exception error){
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void subtractField(){
+        try{
+            BigInteger temp1 = BigInteger.valueOf(13);
+            BigInteger temp2 = BigInteger.valueOf(9);
+
+            Fields fields = new FiniteFields(BigInteger.valueOf(17));
+            BigInteger num = fields.subtract(temp1, temp2);
+            Assert.assertTrue(num.compareTo(BigInteger.valueOf(4)) == 0);
+        }
+        catch (Exception error){
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void multiplyField(){
+        try{
+            BigInteger temp1 = BigInteger.valueOf(13);
+            BigInteger temp2 = BigInteger.valueOf(9);
+
+            Fields fields = new FiniteFields(BigInteger.valueOf(17));
+            BigInteger num = fields.multiply(temp1, temp2);
+            Assert.assertTrue(num.compareTo(BigInteger.valueOf(15)) == 0);
+        }
+        catch (Exception error){
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void divideField(){
+        try{
+            BigInteger temp1 = BigInteger.valueOf(13);
+            BigInteger temp2 = BigInteger.valueOf(9);
+
+            Fields fields = new FiniteFields(BigInteger.valueOf(17));
+            BigInteger num = fields.divide(temp1, temp2);
+            Assert.assertTrue(num.compareTo(BigInteger.valueOf(9)) == 0);
+        }
+        catch (Exception error){
+            Assert.assertTrue(false);
+        }
+    }
+
+
 }
