@@ -19,13 +19,20 @@ $\\
 Die Zahl a ist dementsprechend ein F-Zeuge, der aussagen kann, das die Zahl n eine Primzahl ist.
 Aber es gibt Zahlen, welche F-Zeugen sind, jedoch ist die untersuchte Zahl keine Primzahl.
 Anhand folgendem Beispiel können wir erkennen, wieso das ist:
-
+\\
 Testen wir die Zahl 15. So kommt bei der zufälligen Zahl 4 in der Rechnung: \\
 $
 4^{15-1}\ mod\ 15 = 1
 $\\
 Es wird angedeutet, das die Zahl 15 eine Primzahl ist. Welches es jedoch nicht ist. Da man durch $3 \cdot 5 = 15$ kommt.\\
 Aus dem Grund ist es wichtig den Test mehrmals zu durchführen. Dadurch verringert sich die Fehlerwahrscheinlichkeit. Es erhöht aber die Laufzeit dadurch.\\
+
+\subsection*{Algorithmus im Programm}
+Es wird eine Zufällige Zahl generiert. Bei unseren Kryptographie-Beispielen wird mit einer 8192 Bit-Zahl erwartet. Daher geben wir auch die Länge der Bits mit hinzu.\\
+Beim Fermat-Test wird eine 2.te Zahl (welcher kleiner ist) generiert und es wird nach dem ggt von den 2 zufälligen Zahlen ermittelt. Ist der ggT von den beiden größer als 1,\\
+so ist die zu überprüfende Zahl keine Primzahl. Ist es 1, so geht es weiter mit dem Test. Wir nutzen die Formel oben und überprüfen, ob das Ergebnis 1 rausbringt. Ist dieser nicht 1, so ist es keine Primzahl. Ergibt es 1, so ist die 2.te generierte Zahl ein F-Zeuge und inkrementiert den Counter\\
+Diesen Test für die 2.te Zahl generieren, wird beliebig mal ausgeführt und es wird überprüft, ob mehr F-Zeugen gibt als F-Lügner. Gibt es mehr F-Zeugen als F-Lügner, so ist unsere 1. generierte Zahl wahrscheinlich eine Primzahl.
+
 
 \newpage
 \section{Was ist ein endlicher Körper (Galois-Feld)?}
@@ -56,17 +63,16 @@ Hier hat man lediglich nur 2 Elemente. Rechnet man beispielsweise bei Addition a
 Um es einfacher und schöner zu gestalten erstellen wir eine Tabelle für Addition und Multiplikation.
 
 
-\begin{table}[h]\caption{TODO CAPTION}
+\begin{table}[h]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
     \begin{tabular}{l|l|lll|l|ll}
     + & 0 & 1 &  & + & 0 & 1 &  \\ \cline{1-3} \cline{5-7}
     0 & 0 & 1 &  & 0 & 0 & 0 &  \\ \cline{1-3} \cline{5-7}
     1 & 1 & 2 &  & 1 & 0 & 1 & 
     \end{tabular}
 \end{table}
+\\
 
-Beispiel mit $ \mathbb{Z}_3 = {0,1,2} $
-
-\begin{table}[h]\caption{TODO CAPTION}
+\begin{table}[h]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
     \begin{tabular}{l|l|l|lll|l|l|ll}
     + & 0 & 1 & 2 &  & $\cdot$ & 0 & 1 & 2 &  \\ \cline{1-4} \cline{6-9}
     0 & 0 & 1 & 2 &  & 0 & 0 & 0 & 0 &  \\ \cline{1-4} \cline{6-9}
@@ -74,6 +80,13 @@ Beispiel mit $ \mathbb{Z}_3 = {0,1,2} $
     2 & 2 & 0 & 1 &  & 2 & 0 & 2 & 1 & 
     \end{tabular}
 \end{table}
+
+\subsection*{Algorithmus im Programm}
+
+Das Programm verläuft folgendermaßen. Zuerst erstellt man ein Objekt mit der gewählten Primzahl. Das Objekt besitzt alle möglichen Rechenoperationen in dem Umfeld.
+Führt man eine Rechnung, wird überprüft ob die Zahl im jeweiligen Menge ist. Nach der Rechnung wird das Ergebnis mit modulo Prim ausgerechnet und zurückgeschickt. 
+
+Die Rechenoperationen werden von der Modulare Arithmetik bereitgestellt und im Grunde werden die Werte weitergegeben.
 
 \newpage
 \section{Irreduzible Polynome}
@@ -120,5 +133,10 @@ Macht man eine Tabelle für diese Elemente, kommt folgendes dabei raus:
     \end{tabular}
 \end{table}
 
+\subsection*{Algorithmus im Programm}
 
+Im Prinzip arbeitet das Programm, wie normal bei den Primzahl. Jedoch wird es mit Polynomen arbeiten, welche in ArrayList<BigInteger> abgespeichert wird.\\
+Zuerst wird der Gradient bestimmt und es wird aus einer Liste paar Beispiel-Irreduzible Polynome genommen. Wenn ein ArrayList übergeben wird, bestimmt die Länge, den Höchsten Gradienten an.\\
+Angenommen ist die Size der Liste q, so ist der Gradient q-1. Zuerst werden die Polynome mit den Grundrechenoperationen berechnet und anschließend über mod Irreduzibles Polynom abgerechnet. Anschließend wird der Rest ausgegeben.
+\\
 
