@@ -185,7 +185,7 @@ public class PointTests {
     public void testAdd10(){
         Point erg = p13.add(p14, curve);
         BigInteger y = erg.getY();
-        assertTrue(y.equals(BigInteger.valueOf(6)));
+        assertTrue(y.equals(BigInteger.TWO));
     }
 
 }
