@@ -185,7 +185,7 @@ public class JacobianPoint implements Point {
      * @return
      */
     public Point toAffine(EllipticCurves e) {
-        if(this.isInf()){
+        if(this.isInf(e)){
             Point erg = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO);
             while(e.onCurve(erg)){
                 erg = new AffinePoint(erg.getX(), erg.getY().add(BigInteger.ONE));
