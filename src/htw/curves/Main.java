@@ -58,6 +58,8 @@ public class Main {
 						BigInteger b;
 						BigInteger x;
 						BigInteger y;
+						BigInteger al;
+						BigInteger bo;
 						if (file.hasNext()){
 							read = file.nextLine();
 							p = new BigInteger(read);
@@ -100,25 +102,25 @@ public class Main {
 						}
 						if (file.hasNext()) {
 							read = file.nextLine();
-							a = new BigInteger(read);
+							al = new BigInteger(read);
 						} else {
 							System.out.println("Geben Sie Alices Schluessel für DH ein:");
 							read = sc.nextLine();
-							a = new BigInteger(read);
+							al = new BigInteger(read);
 						}
 						if (file.hasNext()) {
 							read = file.nextLine();
-							b = new BigInteger(read);
+							bo = new BigInteger(read);
 						} else {
 							System.out.println("Geben Sie Bobs Schluessel für DH ein:");
 							read = sc.nextLine();
-							b = new BigInteger(read);
+							bo = new BigInteger(read);
 						}
 						EllipticCurve curve = new EllipticCurve(a, b, p);
 						Point erz = new ProjectivePoint(x, y, BigInteger.ONE);
 						dh = new DiffieHellman(curve, erz);
-						dh.setBobKey(b);
-						dh.setAliceKey(a);
+						dh.setBobKey(bo);
+						dh.setAliceKey(al);
 						System.out.println("Datei erfolgreich eingelesen! Sie koennen nun mit Schritt 3 - x weitermachen.");
 					}
 					break;
