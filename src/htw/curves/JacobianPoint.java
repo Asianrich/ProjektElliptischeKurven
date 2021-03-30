@@ -50,7 +50,7 @@ public class JacobianPoint implements Point {
                 if (this.isInf(e) && p.isInf(e)) {
                     return e.getInf(); //inf
                 } else {
-                    if (this.isInf())
+                    if (this.isInf(e))
                         return p;
                     else
                         return this;
@@ -66,7 +66,7 @@ public class JacobianPoint implements Point {
                     BigInteger v = ff.subtract(s, r);
                     BigInteger w = ff.subtract(u, t);
                     BigInteger x = ff.add(ff.subtract(ff.multiply(BigInteger.valueOf(-1),ff.pow(v, BigInteger.valueOf(3))),ff.multiply(ff.multiply(BigInteger.TWO, r), ff.pow(v, BigInteger.TWO))),ff.pow(w, BigInteger.TWO));
-                    BigInteger y = ff.add(ff.multiply(BigInteger.valueOf(-8), ff.pow(this.getY(), BigInteger.valueOf(4))),ff.multiply(ff.subtract(v, x), w));
+                    BigInteger y = ff.add(ff.multiply(BigInteger.valueOf(-1), ff.multiply(t, ff.pow(v, BigInteger.valueOf(3)))),ff.multiply(ff.subtract(ff.multiply(r, ff.pow(v, BigInteger.TWO)),x),w));
                     BigInteger z = ff.multiply(v, ff.multiply(this.getZ(), p.getZ()));
                     return new JacobianPoint(x, y, z);
                 }
@@ -104,7 +104,7 @@ public class JacobianPoint implements Point {
     public Point kMul(BigInteger k, EllipticCurves e) {
         Point c = this;
         BigInteger a = k;
-        Point b = e.getInf();
+        Point b = new JacobianPoint(BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO);
         while (a.compareTo(BigInteger.ZERO) > 0) {
             if (a.mod(BigInteger.TWO).equals(BigInteger.ZERO)) {
                 a = a.divide(BigInteger.TWO);
@@ -150,7 +150,7 @@ public class JacobianPoint implements Point {
      */
     @Override
     public boolean isInf() {
-        return this.z.equals(BigInteger.ZERO);
+        return this.getZ().equals(BigInteger.ZERO) && this.getX().equals(BigInteger.ONE) && this.getY().equals(BigInteger.ONE);
     }
 
     /**
@@ -160,7 +160,7 @@ public class JacobianPoint implements Point {
      */
     @Override
     public boolean isInf(EllipticCurves e) {
-        return isInf();
+        return !e.onCurve(this);
     }
 
     /**
@@ -185,7 +185,7 @@ public class JacobianPoint implements Point {
      * @return
      */
     public Point toAffine(EllipticCurves e) {
-        if(this.isInf()){
+        if(this.isInf(e)){
             Point erg = new AffinePoint(BigInteger.ZERO, BigInteger.ZERO);
             while(e.onCurve(erg)){
                 erg = new AffinePoint(erg.getX(), erg.getY().add(BigInteger.ONE));
@@ -196,6 +196,11 @@ public class JacobianPoint implements Point {
         return new AffinePoint(ff.divide(this.getX(), ff.pow(this.getZ(), BigInteger.TWO)), ff.divide(this.getY(), ff.pow(this.getZ(), BigInteger.valueOf(3))));
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public Point toJacobian(EllipticCurves e) {
         return this;
@@ -208,5 +213,13 @@ public class JacobianPoint implements Point {
     @Override
     public Point toProjective(EllipticCurves e) {
         return this.toAffine(e).toProjective(e);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void print(){
+        System.out.println(this.x + "|" + this.y + "|" + this.z);
     }
 }

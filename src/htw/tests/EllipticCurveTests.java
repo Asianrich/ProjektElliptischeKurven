@@ -214,4 +214,11 @@ public class EllipticCurveTests {
         Point erg = p14.kMul(BigInteger.valueOf(10001), curve);
         assertTrue(curve.onCurve(erg));
     }
+
+    @Test
+    public void find(){
+        Point erg = curve.findRoot();
+        assertTrue(curve.isNonSingular(curve.getA(), curve.getB()));
+        assertTrue(curve.onCurve(erg));
+    }
 }

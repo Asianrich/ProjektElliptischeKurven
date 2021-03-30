@@ -100,7 +100,7 @@ public class EllipticCurve implements EllipticCurves {
             //return p.getY().multiply(p.getY().multiply(p.getZ())).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX()).multiply(p.getZ().multiply(p.getZ()))).add(this.b.multiply(p.getZ().multiply(p.getZ().multiply(p.getZ()))))).mod(this.p));
         }
         if(p instanceof JacobianPoint){
-            if(p.getZ().equals(BigInteger.ZERO))
+            if(p.getZ().equals(BigInteger.ZERO) && p.getX().equals(BigInteger.ONE) && p.getY().equals(BigInteger.ONE))
                 return false;
             return ff.pow(p.getY(), BigInteger.TWO).equals(ff.add(ff.pow(p.getX(), BigInteger.valueOf(3)), ff.add(ff.multiply(ff.multiply(this.a, p.getX()), ff.pow(p.getZ(), FOUR)), ff.multiply(this.b, ff.pow(p.getZ(), BigInteger.valueOf(6))))));
             //return p.getY().multiply(p.getY().multiply(p.getZ())).mod(this.p).equals(((p.getX().multiply(p.getX().multiply(p.getX()))).add(this.a.multiply(p.getX()).multiply(p.getZ().multiply(p.getZ()))).add(this.b.multiply(p.getZ().multiply(p.getZ().multiply(p.getZ()))))).mod(this.p));

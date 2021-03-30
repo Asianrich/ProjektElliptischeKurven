@@ -25,8 +25,8 @@ public class Main {
 			file = new Scanner(new File(path), "UTF-8");
 			file.useLocale(Locale.GERMANY);
 		} catch (Exception e){
-			e.printStackTrace();
 			System.out.println("Datei war wohl nicht vorhanden!");
+			file = null;
 		}
 		do {
 			System.out.println("Willkommen im Menü!");
@@ -51,14 +51,16 @@ public class Main {
 					System.out.println();
 					break;
 				case 2:
-					if(file != null){
+						sc.nextLine();
 						BigInteger p;
 						BigInteger g;
 						BigInteger a;
 						BigInteger b;
 						BigInteger x;
 						BigInteger y;
-						if (file.hasNext()){
+						BigInteger al;
+						BigInteger bo;
+						if (file != null && file.hasNext()){
 							read = file.nextLine();
 							p = new BigInteger(read);
 						} else {
@@ -66,7 +68,7 @@ public class Main {
 							read = sc.nextLine();
 							p = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							a = new BigInteger(read);
 						} else {
@@ -74,7 +76,7 @@ public class Main {
 							read = sc.nextLine();
 							a = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							b = new BigInteger(read);
 						} else {
@@ -82,7 +84,7 @@ public class Main {
 							read = sc.nextLine();
 							b = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							x = new BigInteger(read);
 						} else {
@@ -90,7 +92,7 @@ public class Main {
 							read = sc.nextLine();
 							x = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							y = new BigInteger(read);
 						} else {
@@ -98,44 +100,58 @@ public class Main {
 							read = sc.nextLine();
 							y = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
-							a = new BigInteger(read);
+							al = new BigInteger(read);
 						} else {
 							System.out.println("Geben Sie Alices Schluessel für DH ein:");
 							read = sc.nextLine();
-							a = new BigInteger(read);
+							al = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
-							b = new BigInteger(read);
+							bo = new BigInteger(read);
 						} else {
 							System.out.println("Geben Sie Bobs Schluessel für DH ein:");
 							read = sc.nextLine();
-							b = new BigInteger(read);
+							bo = new BigInteger(read);
+						}
+						if (file != null && file.hasNext()) {
+							read = file.nextLine();
+							g = new BigInteger(read);
+						} else {
+							System.out.println("Punktart:");
+							System.out.println("0: Affin");
+							System.out.println("1: Projektiv");
+							System.out.println("2: Jakobi");
+							read = sc.nextLine();
+							g = new BigInteger(read);
 						}
 						EllipticCurve curve = new EllipticCurve(a, b, p);
-						Point erz = new ProjectivePoint(x, y, BigInteger.ONE);
+						Point erz = new AffinePoint(x, y);
+						if(g.equals(BigInteger.ONE))
+							erz = new ProjectivePoint(x, y, BigInteger.ONE);
+						if(g.equals(BigInteger.TWO))
+							erz = new JacobianPoint(x, y, BigInteger.ONE);
 						dh = new DiffieHellman(curve, erz);
-						dh.setBobKey(b);
-						dh.setAliceKey(a);
+						dh.setBobKey(bo);
+						dh.setAliceKey(al);
 						System.out.println("Datei erfolgreich eingelesen! Sie koennen nun mit Schritt 3 - x weitermachen.");
-					}
 					break;
 				case 3:
 					System.out.println("Alice Key: ");
 					dh.calcAlice();
-					System.out.println(dh.aliceK.getX() + "|" + dh.aliceK.getY());
+					dh.aliceK.print();
 					break;
 				case 4:
 					System.out.println("Bobs Key: ");
 					dh.calcBob();
-					System.out.println(dh.bobK.getX() + "|" + dh.bobK.getY());
+					dh.bobK.print();
 					break;
 				case 5:
 					System.out.println("Common Key: ");
 					Point com = dh.commonKey();
-					System.out.println(com.getX() + "|" + com.getY());
+					com.print();
 					break;
 				default:
 					System.out.println("Keine oder ungültige Wahl!");

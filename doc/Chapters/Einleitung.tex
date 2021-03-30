@@ -12,8 +12,8 @@ Diese können in zwei Gruppen eingeteilt werden nähmlich: symmetrische (mit pri
 \\
 
 In dieser Arbeit wird der Fokus hauptsächlich auf eine asymmetrische Verschlüsselungstechnik liegen: die \textbf{Elliptische-Kurven-Kryptographie} (engl. \textbf{Elliptic Curve Cryptography: ECC}) aufgrund ihrer zahlreichen Vorteile gegenüber herkömmlichen kryptographischen Algorithmen.
-Gemäß den Richtlinien des Nationalen Instituts für Standards und Technologie (NIST) kann eine ECC-Schlüsselgröße von 163 Bit eine gleichwertige bzw. höhere Sicherheit wie ein 1024-Bit des RSA-Algorithmus gewährleisten. Mit ECC-Schlüsselgroßen sind nur eine geringere Rechenleistung, sowie ein geringerer Speicher- und Stromverbrauch erforderlich (\cite{edoh}; \cite{sosax}). Zudem kann die Technologie in Verbindung mit den meisten Verschlüsselungsmethoden mit öffentlichen Schlüsseln wie RSA und Diffie-Hellman verwendet werden.
-ECC ist ideal für den Einsatz in eingeschränkten Umgebungen wie Personal Digital Assistenten, Mobilfone und Smartcards. 
+Gemäß den Richtlinien des Nationalen Instituts für Standards und Technologie (NIST) kann eine ECC-Schlüsselgröße von 163 Bit eine gleichwertige bzw. höhere Sicherheit wie ein 1024-Bit des RSA-Algorithmus gewährleisten. Mit guten ECC-Schlüsselgrößen sind nur eine geringere Rechenleistung, sowie ein geringerer Speicher- und Stromverbrauch erforderlich (\cite{edoh}; \cite{sosax}). Zudem kann die Technologie in Verbindung mit den meisten Verschlüsselungsmethoden mit öffentlichen Schlüsseln wie RSA und Diffie-Hellman verwendet werden.
+ECC ist ideal für den Einsatz in eingeschränkten Umgebungen wie Personal Digital Assistenten, Mobiltelefonen und Smartcards. 
 \\
 
 Im Allgemeinen lässt sich die Elliptische-Kurven-Kryptographie als ein Public-Key- bzw. ein asymmetrisches Verschlüssselungsverfahren definieren, das auf der elliptischen Kurventheorie basiert und zur Erstellung schnellerer, kleinerer und effizienterer kryptografischer Schlüssel verwendet werden kann.
@@ -36,7 +36,9 @@ Also unabhängig davon, wie sicher ECC theoretisch ist, muss der Algorithmus ord
 
 \section{Zielsetzung}
 
-Ziel dieser Projektarbeit ist es einen Überblick über elliptischen Kurven in der Kryptographie zu geben. Zudem es werden basierend auf elliptische Modular- und Kurvenarithmetik, eine Implementierung von elliptischen Kurven für die Kryptographie bereitgestellt, die dann zur  Erzeugung von Schlüsseln eines ECC-basierten Kryptosystems, das Diffie-Hellman-Kryptosystems verwendet wird. Es wurde in dieser Arbeit Java als bevorzugte Sprache für die Implementierung von elliptischen Kurven für die Kryptographie gewählt, weil die Verwendung von Java bei der Entwicklung einer Vielzahl von Internetanwendungen diese zur geeigneten Sprache für das Schreiben dieser Programme macht. Allerdings können die meisten Programme für Umgebungen mit eingeschränkten Ressourcen erweitert und optimiert werden. // TODO 
+Ziel dieser Projektarbeit ist es einen Überblick über elliptischen Kurven in der Kryptographie zu geben. 
+Zudem wird eine auf Modular- und Kurvenarithmetik basierende Implementierung der elliptischen Kurven für die kryptographische Anwendung bereitgestellt, die dann zur  Erzeugung von Schlüsseln eines ECC-basierten Kryptosystems verwendet wird.
+Java wurde als bevorzugte Sprache in dieser Arbeit für die Implementierung von elliptischen Kurven gewählt, weil sie gut lesbar und mit einfachen Mitteln eine gute Schnittstelle für viele Webanwendungen bietet, wodurch unsere Implementierung auch von anderen Programmen genutzt werden kann.
 
 \section{Projektaufbau}
 
