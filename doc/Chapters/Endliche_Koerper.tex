@@ -1,21 +1,61 @@
 \chapter{Endliche Körper}
 
 \section{Primzahl-Generator}
-In der Kryptographie arbeitet man mit Primzahlen, jedoch nicht mit kleinen Zahlen.
+In der Kryptographie arbeitet man mit Primzahlen, jedoch nicht mit kleinen Zahlen.\\
+Aber woher weißt man, ob es sich um eine Primzahl handelt? Bei relativ kleinen Zahlen, kann man dies sehr schnell herausfinden.
 Jedoch bei höheren Primzahlen wird es schwieriger die Zahlen zu überprüfen, ob diese eine Primzahl ist.
-Eiune davon ist der Fermat-Test.
+Es gibt mehrere Primzahl-Test-Algorithmen, der bekannteste von allen wäre dieser hier:
 
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Algorithmus: Probedivision}\\
+            \midrule
+            Input: Eine Zufällige Zahl $n \in \mathbb{N} $\\
+            Output: true = Primzahl, false = Keine Primzahl  \\
+                                                       \\
+                1. Beginne bei i = 2\\
+                2. ist n ein vielfaches von i?\\
+                    true: return false\\
+                3. ist $ i > \sqrt{n}$?\\
+                    false: inkrementiere i und gehe zu 2\\
+                4. return true\\
+           \bottomrule
+        \end{tabular}
+        \caption{Einfacher Primzahl-Test}
+        \label{tab3}
+    \end{table}
+
+Man erkennt hier deutlich, das es bei kleinen Zahlen relativ zügig gehen kann.\\
+Jedoch bei größeren Zahlen wird es ziemlich eine lange Zeit dauern. \\
+\\
+Mit diesen Gedanken, hat man nach Algortihmen gesucht, welche diesen einfachen Primzahl-Test ersetzt.\\
+\\Die bekanntestens sind:\\
+\\
+- Sieb des Eratosthenes\\
+- Sieb von Atkin\\
+- Probabilistische Primzahltests\\
+- und viele weitere.\\
+\\
+Von all den aufgelisteten Tests, wird der Fermat-Test angeschaut.\\
+\newpage
 \subsection{Fermat-Test}
 
-Der Fermat-Test ist einer der möglichen Algorithmen um Primzahlen herauszufinden.
-
+Der Fermat-Test beruhht sich auf den kleiner fermatischer Satz. Dieser folgt wie laut:
+\\
+$
+                    a^{n-1} \equiv  1\ mod\ n\\
+$
+\\
+Zuerst schauen wir den Algorithmus an.\\
 \begin{table}[!ht]
     \centering
         \begin{tabular}{l}
             \toprule
             \textbf{Algorithmus: Fermat-Test}\\
             \midrule
-            Input: Eine Zufällige Zahl\\
+            Input: Eine Zufällige Zahl $n \in \mathbb{N} $\\
             Output: true = Pseudoprimzahl, false = Keine Primzahl  \\
                                                        \\
                                                        
@@ -34,25 +74,233 @@ Der Fermat-Test ist einer der möglichen Algorithmen um Primzahlen herauszufinde
             -> false: return false\\
            \bottomrule
         \end{tabular}
-        \caption{Test}
+        \caption{Fermat-Test}
         \label{tab3}
     \end{table}
 
-Aber es gibt Zahlen, welche F-Zeugen sind, jedoch ist die untersuchte Zahl keine Primzahl.
+Diese Lösungsmöglichkeit sieht zum ersten schön aus. Jedoch beinhaltet dieser Algorithmus einen Fehler.\\
+Es gibt bestimmte Kombinationen, in der die untersuchte Zahl als Primzahl anerkannt wird, jedoch in Wahrheit keine Primzahl ist.\\
+
 Anhand folgendem Beispiel können wir erkennen, wieso das ist:
 \\
-Testen wir die Zahl 15. So kommt bei der zufälligen Zahl 4 in der Rechnung: \\
-$
-4^{15-1}\ mod\ 15 = 1
-$\\
-Es wird angedeutet, das die Zahl 15 eine Primzahl ist. Welches es jedoch nicht ist. Da man durch $3 \cdot 5 = 15$ kommt.\\
+Es wird die Zahl 15 genommen und führt von 2-15 die Zahlen durch und listet es in einer Liste auf.\\
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Vielfache von 3}\\
+            \midrule
+            3, 6, 9, 12\\
+           \bottomrule
+        \end{tabular}
+        \caption{Vielfache von 3}
+        \label{tab3}
+    \end{table}
+
+    \begin{table}[!ht]
+        \centering
+            \begin{tabular}{l}
+                \toprule
+                \textbf{Vielfache von 5}\\
+                \midrule
+                5,10\\
+               \bottomrule
+            \end{tabular}
+            \caption{Vielfache von 5}
+            \label{tab3}
+        \end{table}
+
+        \begin{table}[!ht]
+            \centering
+                \begin{tabular}{l}
+                    \toprule
+                    \textbf{F-Zeuge}\\
+                    \midrule
+                    4, 11, 14\\
+                   \bottomrule
+                \end{tabular}
+                \caption{F-Zeuge}
+                \label{tab3}
+            \end{table}
+
+            \begin{table}[!ht]
+                \centering
+                    \begin{tabular}{l}
+                        \toprule
+                        \textbf{F-Lügner}\\
+                        \midrule
+                        2,7, 8, 13 \\
+                       \bottomrule
+                    \end{tabular}
+                    \caption{F-Lügner}
+                    \label{tab3}
+                \end{table}
+
+Würde man nur F-Zeugen bekommen, wird die Zahlk 15 als Primzahl angedeutet. Die Zahl 15 ist aber keine Primzahl.
 Aus dem Grund ist es wichtig den Test mehrmals zu durchführen. Dadurch verringert sich die Fehlerwahrscheinlichkeit. Es erhöht aber die Laufzeit dadurch.\\
 
 \subsection*{Algorithmus im Programm}
-Es wird eine Zufällige Zahl generiert. Bei unseren Kryptographie-Beispielen wird mit einer 8192 Bit-Zahl erwartet. Daher geben wir auch die Länge der Bits mit hinzu.\\
-Beim Fermat-Test wird eine 2.te Zahl (welcher kleiner ist) generiert und es wird nach dem ggt von den 2 zufälligen Zahlen ermittelt. Ist der ggT von den beiden größer als 1,\\
-so ist die zu überprüfende Zahl keine Primzahl. Ist es 1, so geht es weiter mit dem Test. Wir nutzen die Formel oben und überprüfen, ob das Ergebnis 1 rausbringt. Ist dieser nicht 1, so ist es keine Primzahl. Ergibt es 1, so ist die 2.te generierte Zahl ein F-Zeuge und inkrementiert den Counter\\
-Diesen Test für die 2.te Zahl generieren, wird beliebig mal ausgeführt und es wird überprüft, ob mehr F-Zeugen gibt als F-Lügner. Gibt es mehr F-Zeugen als F-Lügner, so ist unsere 1. generierte Zahl wahrscheinlich eine Primzahl.
+
+Für eine Zufällige Zahl zu generieren, gibt man die Länge des Bits mit. In diesem Projekt wurde eine Primzahl, mit einer Bit-Länge von 8192 erwartet.
+
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Algorithmus: Primzahl-Generator}\\
+            \midrule
+            Input: Länge der Primzahl\\
+            Output: Primzahl  \\
+            \\
+            1. Zahl generiert\\
+            2. Fermat-Test anwenden, mit einer gewissen Anzahl an Versuchen\\
+                false: beginne bei 1. \\
+            3. return Primzahl\\
+           \bottomrule
+        \end{tabular}
+        \caption{Primzahl-Generator}
+        \label{tab3}
+    \end{table}
+
+\newpage
+Führt man den Algorithmus aus, so kommt man eventuell auf die Primzahl :
+
+70 6815 0405
+5962 8624 0116 5582 8814
+1890 4999 7822 5925 9076
+9503 5507 1619 2423 0111
+6620 5520 8288 3610 7731
+9769 4969 0297 4888 4070
+3257 5833 8064 6528 7972
+3291 7661 0446 8045 1640
+0051 6702 9150 4361 6802
+8389 3226 0098 4356 6161
+1330 4262 7433 1919 7858
+0365 6198 8262 0250 9889
+0007 0954 7574 9383 1886
+5361 3190 7877 2205 3670
+4087 2171 7091 6374 3838
+8716 3932 5296 3638 2140
+4949 1393 3782 5072 4723
+8804 6806 7614 3346 5804
+5628 0683 2443 5101 6267
+9171 2074 5458 0355 7929
+7744 9444 1421 5092 6350
+1162 8496 6988 9236 0338
+3073 1279 6721 0801 9128
+7263 5150 8342 4633 7071
+8726 3737 9368 5065 8952
+9713 4329 7856 0992 6224
+2713 6350 4753 0207 8413
+7888 8748 0655 9121 6942
+9384 5841 1784 2617 6752
+2643 0070 3556 3276 6686
+6523 6072 2767 0478 8204
+3629 2550 8690 0935 0632
+7571 2249 8673 5817 9463
+3439 3486 6162 1529 9621
+3988 9362 9652 6810 5885
+7633 5373 9720 0378 2639
+0125 7017 6324 9307 8768
+5224 1751 1885 3081 3584
+1722 1685 4433 3817 4480
+6016 5101 8674 2180 2737
+9668 4275 7149 1326 9800
+4087 1250 2661 4749 0951
+7078 6570 0339 9965 4623
+0540 0957 6548 0165 1284
+4902 1116 0441 2929 0051
+0857 9995 9240 9802 0822
+9474 7571 0623 7772 5932
+1672 7224 4630 0980 9029
+2147 5787 7331 0174 1858
+9750 2773 6215 9885 3344
+8006 3253 0604 6003 4384
+2821 4673 2124 8686 8459
+9423 0273 6968 4661 7844
+5424 0255 2547 4792 4467
+5374 9401 1206 7899 9391
+0968 8939 7038 7423 6856
+6727 7350 0374 2514 6856
+8184 5213 8164 4258 9305
+5193 7144 0916 7515 0860
+7244 0174 0141 8084 6042
+5181 0634 1126 9636 4500
+2538 5977 1624 4032 2865
+6823 7439 8977 1815 6120
+7864 1853 6229 5787 0600
+4382 5331 3365 1603 5651
+6751 3330 6865 9910 0308
+0063 4913 2569 2019 3094
+4494 1725 4427 0941 9613
+7271 6810 4820 9910 8363
+3502 9174 0854 8677 7734
+7568 0720 4455 8979 7970
+5022 1557 6524 0814 1278
+0843 8718 2630 3908 1154
+0097 0824 7859 4337 5885
+7050 0393 6496 8972 4092
+1182 0078 5656 0493 9605
+3816 6074 4358 4332 6214
+8690 7009 6825 5029 8782
+7415 1540 5975 1381 2588
+1923 3731 2939 7576 0031
+7781 9263 9960 8730 9804
+0411 6651 5594 1936 1198
+8630 9016 9448 2244 9085
+7228 5217 1963 4461 0055
+0330 2220 6229 6277 4812
+8053 7639 0871 8791 4674
+2159 7828 9380 7599 1756
+9444 0479 9931 8911 5307
+7384 0105 3550 1120 6437
+2188 8508 6491 4124 7819
+0968 8775 3958 5616 3999
+7092 4953 6260 8121 3276
+9665 6900 9134 2768 6308
+8067 1280 5023 8310 4702
+1587 4989 6780 0320 7794
+3957 4394 0139 7926 4275
+5192 6627 4494 8587 9184
+5545 5525 6075 3829 0180
+0868 1184 4304 9256 9086
+0751 5701 2096 2199 9694
+2375 1322 0102 3865 9208
+3656 9461 5931 3256 9318
+8649 6485 2471 1023 7452
+6270 1542 3029 3085 6406
+4691 0217 4783 4265 3842
+1920 4077 0900 8805 7200
+6880 2156 9270 3522 4746
+6514 7127 1080 7195 0979
+9595 9529 3246 9726 3472
+4012 0939 3505 3249 8908
+8835 0540 0900 3795 9129
+0667 8220 6335 1467 9553
+0848 7085 5458 0141 1058
+7791 3737 2972 0536 9327
+7136 3663 3385 1034 2973
+6790 2383 6961 9534 6174
+4388 2640 5243 9154 9655
+7946 0048 8789 7953 8528
+3864 1039 7464 3673 5184
+1846 6819 6396 5498 5830
+4678 7511 1233 6299 5444
+8304 9448 5627 1167 1761
+3370 4359 6385 2667 9925
+6225 6901 0792 6579 
+\\
+\\
+Diese Zahl wurde von anderen Programmen überprüft. https://www.alpertron.com.ar/ECM.HTM wurde es nachgeprüft.
+\\
+Weitere siehe Anhang\\
+\\
+\subsection*{Fazit zum Fermat-Test}
+
+Der Fermat-Test läuft um einiges schneller als die Probedivision.\\
+Jedoch sagt dieser Test nicht aus, ob die Zahl sich tatsächlich um eine Primzahl handelt.\\
+Je mehr Versuche man macht, desto geringer wird die Fehlerwahrscheinlichkeit. \\
+Will man diese Fehlerwahrscheinlichkeit verringert, wird die Laufzeit des Programmes, deutlich höher.  \\
 
 
 \newpage
@@ -61,18 +309,56 @@ Diesen Test für die 2.te Zahl generieren, wird beliebig mal ausgeführt und es 
 Ein Endlicher Körper oder Galois-Körper ist ein algebraisches System, welches eine endliche Menge mit definierten Addition und Multiplikation.\\
 Der Endliche Körper hat folgende Eigenschaften:
 
-Die Endliche Menge ist eine abelsche Gruppe, in der Die Rechenoperation Addition berechnet werden kann.
-Endliche Menge ohne dem Nullelement ist eine abelsche Gruppe, in der die Multiplikation stattfinden kann.
-Endliche Körper sind auch zyklische Gruppen mit der Schreibweise: $ \mathbb{Z}_p $. Der Unterschied zwischen x-Beliebige Zyklische Gruppen und einem Endlichen Körper ist, das der Endliche Körper durch einer Primpotenz $ p^n $ beschrieben werden kann.
+
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Eigenschaften der Endlichen Körper}\\
+            \midrule
+            - Die Endliche Menge ist eine abelsche Gruppe, in der \\
+            die Rechennoperation Addition berechnet werden kann.\\
+            - Endliche Menge ohne dem Nullelement ist eine abelsche Gruppe, \\
+            in der die Multiplikation stattfinden kann.\\
+            - Endliche Körper sind auch zyklische Gruppen mit der Schreibweise: $ \mathbb{Z}_p $. \\
+           \bottomrule
+        \end{tabular}
+        \caption{Beispiele für Irreduzible Polynome}
+        \label{tab3}
+    \end{table}
+
+Der Unterschied zwischen x-Beliebige Zyklische Gruppen und einem Endlichen Körper ist, das der Endliche Körper durch einer Primpotenz $ p^n $ beschrieben werden kann.
 
 Die Anzahl an Elementen in einem endlichen Körper nennt man Ordnung des Endlichen Körper. Die Ordnung des Endlichen Körper kann nur als Primpotenz dargestellt werden.\\
 
-Allgemein: Die endlichen Körper $\mathbb{F}_p$ beinhalten p-Elemente. Diese werden durch die Ganzzahlen ${0,1,2,....,p-1}$ repräsentiert. 
+Allgemein: Die endlichen Körper $\mathbb{F}_{p^n}$ beinhalten p-Elemente und n. Diese werden durch die Ganzzahlen ${0,1,2,....,p-1}$ repräsentiert. 
 
 Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert:
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Addition in der Endlichen Körper}\\
+            \midrule
+            Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a+b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist.\\
+           \bottomrule
+        \end{tabular}
+        \caption{Addition in der Endlichen Körper}
+        \label{tab3}
+    \end{table}
 
-Addition: Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a+b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist. Dies Zahl wird durch modulo p errechnet, nach der Addition.
-Multiplikation: Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a \cdot b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist. Dies Zahl wird durch modulo p errechnet, nach der Multiplikatioon.
+    \begin{table}[!ht]
+        \centering
+            \begin{tabular}{l}
+                \toprule
+                \textbf{Multiplikation in der Endlichen Körper}\\
+                \midrule
+                Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a \cdot b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist.\\
+               \bottomrule
+            \end{tabular}
+            \caption{Multiplikation in der Endlichen Körper}
+            \label{tab3}
+        \end{table}
 
 Subtraktion und Division sind inverse Operationen. Diese Rechenarten sind jedoch nicht anders, wie man normal die Zahlen in $\mathbb{R}$, $\mathbb{Q}$.
 
@@ -116,18 +402,49 @@ Die Rechenoperationen werden von der Modulare Arithmetik bereitgestellt und im G
 \section{Primzahlpotenz}
 
 \subsection*{Irreduzible Polynom}
-Bevor man die Verbindung zu endlichen Körper macht, muss man die Irreduzible Polynome verstehen.\\
-Irreduzible Polynome sind Polynome, welche man nicht mehr faktorisieren kann. Somit haben diese Polynome keine Nullstellen im $\mathbb{F}_{p} $
 
-Beispiele für Irreduzible Polynome sind:\\
-$
-x^2+ x + 1\\
-x^3 + x^2 + x + 1 \\
-x^4 + x^3  + x^2 + x + 1\\
-...
-$
-\\
-\\
+
+Bevor man die Verbindung zu endlichen Körper macht, muss man die Irreduzible Polynome verstehen.\\
+Damit Polynome Irreduzibel sind, müssen die Irreduziblitätskriterien erfüllt sein.\\
+
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Lemma}\\
+            \midrule
+            Sei K ein Körper und $ f \in K[T]$. Dann gilt\\
+            a) Jedes Polynom $ f \in K[T]$ vom Grade 1 ist irreduzibel.\\
+            b) Ein Polynom $ f \in K[T]$ vom Grade $\geq 2$, das eine Nullstelle in K besitzt,\\
+             ist reduzibel \\
+            c) $grad(f) \in {2,3}$: f irreduzibel über K $ \leftrightarrow $ \\
+            d) Besitzt ein Polynom $ $\\
+           \bottomrule
+        \end{tabular}
+        \caption{Beispiele für Irreduzible Polynome}
+        \label{tab3}
+    \end{table}
+
+
+Kurz zusammengefasst: Irreduzible Polynome sind Polynome, welche man nicht mehr faktorisieren kann. Somit haben diese Polynome keine Nullstellen im $\mathbb{F}_{p} $
+
+
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Beispiele für Irreduzible Polynome}\\
+            \midrule
+            $ x^2+ x + 1$\\
+            $x^3 + x^2 + x + 1$ \\
+            $x^4 + x^3  + x^2 + x + 1$\\
+            $...$\\
+           \bottomrule
+        \end{tabular}
+        \caption{Beispiele für Irreduzible Polynome}
+        \label{tab3}
+    \end{table}
+
 \subsection{Zusammenhang mit Endlichen Körper}
 
 Der Körper K wird folgendermaßen aufgeschrieben : $ K := \mathbb{F}_{p^m}$. p für Primzahl und m für den Gradienten. Der Gradient sagt aus, welches Polynom genommen wird. 
@@ -148,7 +465,7 @@ bei $ x^2+ x + 1 $ können nur 4 Möglichkeiten geben. $ := \frac{\mathbb{F}_{2}
 
 Macht man eine Tabelle für diese Elemente, kommt folgendes dabei raus:
 
-\begin{table}[h]\caption{TODO CAPTION}
+\begin{table}[h]\caption{Tabellen Grundrechenoperationen}
     \begin{tabular}{l|l|l|l|lll|l|l|l|ll}
     +   & 0   & 1   & x   & x+1 &  & $\cdot$   & 0 & 1   & x   & x+1 &  \\ \cline{1-5} \cline{7-11}
     0   & 0   & 1   & x   & x+1 &  & 0   & 0 & 0   & 0   & 0   &  \\ \cline{1-5} \cline{7-11}
