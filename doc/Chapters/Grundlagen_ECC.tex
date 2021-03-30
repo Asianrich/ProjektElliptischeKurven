@@ -5,11 +5,11 @@
 
 Nach Dietmer ist unter dem Begriff  \textbf{Kryptographie} \enquote{die Wissenschaft von geheimen Schreiben zu verstehen.} Grundkonzept eines kryptografischen Systems ist also die Verschlüsselung von Informationen bzw. von Daten, um die Vertraulichkeit der Informationen zu gewährleisten \cite{damer}.
 
-Daten, die über einen unsicheren Kanal wie das Internet übertragen werden, werden mit Hilfe moderner Kryptosysteme so verschlüsselt, dass Unbefugte in einem Szenario gelangen werden, in dem sie auf die Informationen zugegriffen haben, nicht verstehen, wonach sie suchen\cite{moVarol}. \\
-Der unverschlüsselte Information wird als \textit{Klartext} (Plaintext, Cleartext), der Verschlüsselte als \textit{Chiffretext} (Ciphertext, Cryptotext) bezeichnet und der Verschlüsselungsprozess des Klartextes wird \textit{Chiffrieren} (engl. encryption) gennant. Umgekerht wird unter \textit{Dechriffrieren} (engl. decryption), den Entschlüsselungsprozess eines Chiffretextes, verstanden.
+Daten, die über einen unsicheren Kanal wie das Internet übertragen werden, werden mit Hilfe moderner Kryptosysteme so verschlüsselt, dass Unbefugte in einem Szenario, in dem sie auf die Informationen zugegriffen haben, diese nicht frei lesen und verstehen können \cite{moVarol}. \\
+Die unverschlüsselte Information wird als \textit{Klartext} (Plaintext, Cleartext), die Verschlüsselte als \textit{Chiffretext} (Ciphertext, Cryptotext) bezeichnet und der Verschlüsselungsprozess des Klartextes wird \textit{chiffrieren} (engl. encryption) genannt. Umgekehrt wird unter \textit{dechriffrieren} (engl. decryption), der Entschlüsselungsprozess eines Chiffretextes, verstanden.
 
-Im Allgemeinen werden die beiden Prozesse durch eine Reihe von Regeln erreicht, sogennante Verschlüsselungs- und Entschlüsselungsalgorithmen. Der Verschlüsselungsprozess basiert auf einem Schlüssel, der dann zusammen mit den Informationen als Eingabe an einen Verschlüsselungsalgorithmus übergeben wird. 
-Danach können unter Verwendung eines Entschlüsselungsalgorithmus die Informationen mit dem entsprechenden Entschlüsselungsschlüssels abgerufen werden. Wer einen geheimen Schlüssel besitzt, kann die Informationen in Klartext entschlüsseln\cite{moVarol}. Die folgende Abbildung \ref{konzept} verdeutlicht die Zusammenhänge.
+Im Allgemeinen werden die beiden Prozesse durch eine Reihe von Regeln erreicht, sogenannte Verschlüsselungs- und Entschlüsselungsalgorithmen. Der Verschlüsselungsprozess basiert auf einem Schlüssel, der dann zusammen mit den Informationen als Eingabe an einen Verschlüsselungsalgorithmus übergeben wird. 
+Danach können unter Verwendung eines Entschlüsselungsalgorithmus die Informationen mit dem entsprechenden Schlüssel abgerufen werden. Wer einen geheimen Schlüssel besitzt, kann die Informationen in Klartext entschlüsseln \cite{moVarol}. Die folgende Abbildung \ref{konzept} verdeutlicht die Zusammenhänge.
 
 \begin{figure}
     \centering
@@ -19,10 +19,10 @@ Danach können unter Verwendung eines Entschlüsselungsalgorithmus die Informati
 \end{figure}
 
 
-In den 70er und 80er Jahren war die Kryptographie vor allem auf dem militären und diplomatischen Sektor beschränkt. Um geheime Nachrichten zu verschlüsseln, wurden sogenannte symmetrische Verschlüsselungsverfahren (z.B. Caesar-Verschlüsselung (\cite{moVarol})) verwendet, wo nur einen gemeinsamer geheimer Schlüssel sowohl für die Ver- als auch für die Entschlüsselung benötigt wird.\\
+In den 70er und 80er Jahren war die Kryptographie vor allem auf dem militären und diplomatischen Sektor beschränkt. Um geheime Nachrichten zu verschlüsseln, wurden sogenannte symmetrische Verschlüsselungsverfahren (z.B. Caesar-Verschlüsselung (\cite{moVarol})) verwendet, wo nur ein gemeinsamer geheimer Schlüssel sowohl für die Ver- als auch für die Entschlüsselung benutzt wird.\\
 
 Aus diesem Grund ist es bei der symmetrischen Verschlüsselung sehr wichtig, dass der geheime Schlüssel auf einem sicheren Übertragungsweg an den Empfänger weitervermittelt wird, bevor die verschlüsselten Nachrichten übermittelt werden können. Früher wurde der Schlüssel meist persönlich, in Form eines Botens, übergeben. 
-Da das persönliche Übergeben des Schlüssels sehr umständlich ist und es das Risiko besteht, dass der Schlüssel belauscht oder gestohlen werden konnte, wurden weitere Verschlüsslungsverfahren vorgeschlagen und zwar asymmetrische Verschlüsselungsverfahren (auch Public-Key-Verfahren gennant) \cite{werner}. 
+Da das persönliche Übergeben des Schlüssels sehr umständlich ist und das Risiko besteht, dass der Schlüssel belauscht oder gestohlen werden könnte, wurden weitere Verschlüsselungsverfahren vorgeschlagen. Dies sind die asymmetrischen Verschlüsselungsverfahren (auch Public-Key-Verfahren genannt) \cite{werner}. 
 
 Im Gegensatz zu einem symmetrischen Verschlüsselungsverfahren erfordern asymmetrische Verschlüsselungsverfahren, nicht nur einen Schlüssel, sondern ein Schlüsselpaar bestehend aus einem öffentlichen Schlüssel und einem privaten Schlüssel \cite{damer}. Die Kommunikation erfolgt hier ohne vorhergehenden Schlüsselaustausch und ist jedoch viel langsamer als die Kryptografie mit privaten Schlüsseln. Mit dem privaten Schlüssel werden Daten entschlüsselt oder digitale Signaturen erzeugt, während mit dem öffentlichen Schlüssel Daten verschlüsselt und die Authentizität von erzeugten Signaturen überprüft  werden (\cite{sahuMa}; \cite{damer}). Die Abbildung \ref{key} veranschaulicht diese Schlüssel. 
 
@@ -35,20 +35,20 @@ Im Gegensatz zu einem symmetrischen Verschlüsselungsverfahren erfordern asymmet
 
 
 Das erste asymmetrische Kryptosystem, Rivest-Shamir-Adleman-Verfahren (RSA-Verfahren) wurde im Jahr 1977 von Ronald Rivest, Adi Shamir und Leonard Adleman gefunden, 
-danach wurden weitere Kryptosysteme wie Rabin, Elgamal, Diffie Hellman Schlüsselaustausch und Elliptische Kurven-Kryptogrphie vorgestellt.\\
+danach wurden weitere Kryptosysteme wie Rabin, Elgamal und Elliptische Kurven-Kryptogrphie vorgestellt.\\
 Für unsere Arbeit liegt jedoch der Schwerpunkt auf der Kryptographie mit elliptischen Kurven und die Erzeugung von Schlüsseln, die für das Diffie-Hellman-Verfahren notwendig sind.\\
 
 Die \textbf{elliptische Kurven-Kryptographie (ECC)} ist eine Verschlüsselungstechnik mit öffentlichem Schlüssel, 
 die auf der algebraischen Struktur elliptischer Kurven über endlichen Körper basiert \cite{mihNita} und zur Erstellung schnellerer, kleinerer und effizienterer kryptografischer Schlüssel verwendet werden kann \cite{khan}.\\
 
 Die Verwendung einer elliptischen Kurve in der Kryptographie wurde im Jahr 1985 unabhängig voneinander von Miller \cite{miller} und Koblitz \cite{koblitz} vorgeschlagen. In den späten 1990er Jahren wurde ECC von einer Reihe von Organisationen wie ANSI \cite{ansi}, IEEE \cite{ieee}, ISO \cite{iso}, NIST \cite{nist} standardisiert und erhielt kommerzielle Akzeptanz \cite{GaMoDa}.
-Das bekannteste Verschlüsselungsschema ist das Elliptic Curve Integrated Encryption Scheme (ECIES), das in IEEE- und auch in SECG SEC 1-Standards enthalten ist \cite{marKaur}. Beispiele für die Anwendung von ECC sind unter anderen Mehrzweck-Smartcards, die  neuen  deutschen  Personaldokumente\cite{merLo}.\\
+Das bekannteste Verschlüsselungsschema ist das Elliptic Curve Integrated Encryption Scheme (ECIES), das in IEEE- und auch in SECG SEC 1-Standards enthalten ist \cite{marKaur}. Beispiele für die Anwendung von ECC sind unter anderen Mehrzweck-Smartcards wie die  neuen  deutschen  Ausweisdokumente \cite{merLo}.\\
 
-Außerdem basieren Kryptosysteme mit öffentlichem Schlüssel auf die Lösung bestimmten mathematischen Probleme, z.B. beruht RSA-Verfahren auf dem Integer Factorizierungsproblem, DH und ECC basieren auf dem Diskreten Logarithmus-Problem. Bei der Lösung dieser Probleme stellt sich jedoch fest, dass herkömmliche Kryptosysteme mit öffentlichem Schlüsseln wie RSA Nachteile aufweisen, wenn sie alle miteinander verglichen werden.
+Außerdem basieren Kryptosysteme mit öffentlichem Schlüssel auf der Lösung bestimmter mathematischen Probleme, z.B. beruht das RSA-Verfahren auf dem Integer Faktorisierungsproblem, DH und ECC basieren auf dem Diskreten Logarithmus-Problem. Bei der Lösung dieser Probleme stellt man im direkten Vergleich jedoch fest, dass herkömmliche Kryptosysteme mit öffentlichen Schlüsseln wie RSA Nachteile aufweisen.
 
 Das Hauptproblem besteht darin, dass die Schlüsselgröße ausreichend groß sein muss, um die Sicherheitsanforderungen auf hohem Niveau zu erfüllen, was zu einer geringeren Geschwindigkeit und einem höheren Bandbreitenverbrauch führt.\\
 
-Dies ist nicht den Fall, wenn elliptische Kurven (EC) für das Public Key Verfahren eingesetzt sind, da ECC im Vergleich zu RSA für den Benutzer eine gleichwertige Sicherheit bei kleineren Schlüsselgrößen bietet und für Angreifer schwerer exponentieller Zeitherausforderung, um in das System einzudringen\cite{GaMoDa}.\\
+Dies ist nicht den Fall, wenn elliptische Kurven (EC) für das Public Key Verfahren eingesetzt sind, da ECC im Vergleich zu RSA für den Benutzer eine gleichwertige Sicherheit bei kleineren Schlüsselgrößen bietet und für Angreifer schwerer exponentieller Zeitherausforderung, um in das System einzudringen \cite{GaMoDa}.\\
 
 Laut einigen Forschern kann ECC mit einem 164-Bit-Schlüssel ein Sicherheitsniveau erreichen, für dessen Erreichung andere Systeme einen 1.024-Bit-Schlüssel benötigen\cite{khan}. Es stellte sich heraus, dass ECC das effizienteste Kryptosystem mit öffentlichem Schlüssel ist \cite{naRaj}.
 Der Grund dafür ist, dass nach Miller und Koblitz das Diskreter-Logarithmus-Problem für elliptische Kurven schwerer sei als das klassische Diskreter-Logarithmus-Problem ist und zudem auch schnellere Laufzeiten ermögliche.\\
