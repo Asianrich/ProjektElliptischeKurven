@@ -25,8 +25,8 @@ public class Main {
 			file = new Scanner(new File(path), "UTF-8");
 			file.useLocale(Locale.GERMANY);
 		} catch (Exception e){
-			e.printStackTrace();
 			System.out.println("Datei war wohl nicht vorhanden!");
+			file = null;
 		}
 		do {
 			System.out.println("Willkommen im Menü!");
@@ -51,7 +51,7 @@ public class Main {
 					System.out.println();
 					break;
 				case 2:
-					if(file != null){
+						sc.nextLine();
 						BigInteger p;
 						BigInteger g;
 						BigInteger a;
@@ -60,7 +60,7 @@ public class Main {
 						BigInteger y;
 						BigInteger al;
 						BigInteger bo;
-						if (file.hasNext()){
+						if (file != null && file.hasNext()){
 							read = file.nextLine();
 							p = new BigInteger(read);
 						} else {
@@ -68,7 +68,7 @@ public class Main {
 							read = sc.nextLine();
 							p = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							a = new BigInteger(read);
 						} else {
@@ -76,7 +76,7 @@ public class Main {
 							read = sc.nextLine();
 							a = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							b = new BigInteger(read);
 						} else {
@@ -84,7 +84,7 @@ public class Main {
 							read = sc.nextLine();
 							b = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							x = new BigInteger(read);
 						} else {
@@ -92,7 +92,7 @@ public class Main {
 							read = sc.nextLine();
 							x = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							y = new BigInteger(read);
 						} else {
@@ -100,7 +100,7 @@ public class Main {
 							read = sc.nextLine();
 							y = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							al = new BigInteger(read);
 						} else {
@@ -108,7 +108,7 @@ public class Main {
 							read = sc.nextLine();
 							al = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							bo = new BigInteger(read);
 						} else {
@@ -116,7 +116,7 @@ public class Main {
 							read = sc.nextLine();
 							bo = new BigInteger(read);
 						}
-						if (file.hasNext()) {
+						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							g = new BigInteger(read);
 						} else {
@@ -137,7 +137,6 @@ public class Main {
 						dh.setBobKey(bo);
 						dh.setAliceKey(al);
 						System.out.println("Datei erfolgreich eingelesen! Sie koennen nun mit Schritt 3 - x weitermachen.");
-					}
 					break;
 				case 3:
 					System.out.println("Alice Key: ");
