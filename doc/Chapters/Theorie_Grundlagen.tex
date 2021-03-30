@@ -291,10 +291,10 @@ Die modulare Potenzierung ist die kostspielige, aber
 entscheidende und bedeutungsvolle Methode für viele kryptographische Protokolle. \\
 
 Algorithmen zur schnellen modularen Potenzierung wie das Square-and-Multiply-Verfahren, basieren vor
-allem auf der Auswertung der Binärdarstellung des Exponenten k \cite{lang}. 
-Dort wird der Exponent k binär dargestellt, als k = \(\sum_{i=0}^{t} k_i \cdot 2^i\) mit $ k_i \in \{0, 1\}$ und die Auswertung kann dabei je nach Algorithmen entweder von links nach rechts oder von rechts nach links erfolgen \cite{lang}. \\
+allem auf der Auswertung der Binärdarstellung des Exponenten k \cite{langMEI}. 
+Dort wird der Exponent k binär dargestellt, als k = \(\sum_{i=0}^{t} k_i \cdot 2^i\) mit $ k_i \in \{0, 1\}$ und die Auswertung kann dabei je nach Algorithmen entweder von links nach rechts oder von rechts nach links erfolgen \cite{langMEI}. \\
 
-Bei einem k-Bit-Exponenten werden dann für die Potenzierung höchstens k Quadrate und k Multiplikationen benötigt \cite{lang}.
+Bei einem k-Bit-Exponenten werden dann für die Potenzierung höchstens k Quadrate und k Multiplikationen benötigt \cite{langMEI}.
 Selbst wenn sie effizient mit dem wiederholten Square-and-Multiply-Verfahren durchgeführt wird, erreicht sie eine Bit-Komplexität von $\mathcal{O}(\log{}n^3)$ \cite{menezes:1997}.  \\
 
 Gegeben sei beispielsweise \(x^k = x^{13}\). Zu berechnen ist, \( 2^{13} \mod 7\).
@@ -303,7 +303,7 @@ Dann ist die binäre Darstellung von k = 1101. Der Exponent k lässt sich wie fo
   \[((((0) \cdot 2 + 1) \cdot 2 + 1) \cdot 2 + 0) \cdot 2 + 1   =   13 \]
 \end{ceqn}
 
-Daraus lässt sich $ x^{13} $ bzw. $ 2^{13}$ wie folgt aufteilen:
+Daraus lässt sich $ x^{13} $ bzw. $ 2^{13}$ wie folgt aufteilen:\\
 \begin{ceqn}
    \[ x^{13} = ((((x^0)^2 \cdot x^1)^2 \cdot x^1)^2 \cdot x^0)^2 \cdot x^1 \] \\
    \[ 2^{13} = ((((2^0)^2 \cdot 2^1)^2 \cdot 2^1)^2 \cdot 2^0)^2 \cdot 2^1 \] 
@@ -311,13 +311,13 @@ Daraus lässt sich $ x^{13} $ bzw. $ 2^{13}$ wie folgt aufteilen:
 
 Es ergibt sich, dass \( 2^{13} \equiv 2 \mod 7\).\\
 
-Die schnelle modulare Potenz kann jedoch auch in einfacher Weise realisiert werden \cite{lang}. Tatsächlich, kann \( x^{13}\) auch dargestellt werden, als 
+Die schnelle modulare Potenz kann jedoch auch in einfacher Weise realisiert werden \cite{langME}. Tatsächlich, kann \( x^{13}\) auch dargestellt werden, als 
 
 \begin{align*}
     x^{13} = x^{12} \cdot x \quad \text{und \( x^{12}\) weiterhin als} \quad x^{12} = (x^{6})^2.
 \end{align*}
 
-Ausgehend von dieser Beobachtung, ergibt sich die folgende Rekursionsformel \cite{lang}:
+Ausgehend von dieser Beobachtung, ergibt sich die folgende Rekursionsformel \cite{langME}:
 
 \begin{ceqn}
 \begin{align*}
@@ -378,7 +378,7 @@ resultierenden Wert aus der Berechnung der modularen multiplikative Inverse von 
 
 \subsection{Modulare multiplikative Inverse}
 
-Das modulare Inverse ist eine weitere wichtige Methode der Kryptographie. Wenn a eine ganze Zahl $a \in \mathbf{Z_p} $ und p eine Primzahl ist, ist das
+Das modulare Inverse ist eine weitere wichtige Methode der Kryptographie. Wenn a eine Restklasse aus $\in \mathbf{Z_p} $  (geschrieben $[a]_p$) und p eine Primzahl ist, ist das
 modulare Inverse $ a^{-1} $ eine ganze Zahl, die die Beziehung 
 \begin{ceqn}
  \begin{align*}
@@ -386,9 +386,10 @@ modulare Inverse $ a^{-1} $ eine ganze Zahl, die die Beziehung
  \end{align*}
 \end{ceqn} erfüllt.
 
-Das modulare Inverse wird mit Hilfe des extended Euklidean Algorithmus (EEA) bestimmt.
-Dort sind die ganzen Zahlen x und y zu finden, für die die folgende Gleichung erfüllt ist: $ ax + py = 1 $. \\
-Also muss der $ ggT (a, p) = 1 $ sein. Wenn dies den Fall lässt sich feststellen, dass a und p \textbf{Koprime} sind.
+Das modulare Inverse wird mit Hilfe des erweiterten euklidischen (EEA) bestimmt.
+Dort sind die ganzen Zahlen x und y zu finden, für die die folgende Gleichung erfüllt ist: \\
+$ ggT (a, p) = 1 = ax + py $. \\
+Also muss der $ ggT (a, p) = 1 $ sein, da p prim ist. Wenn dies den Fall lässt sich feststellen, dass a und p \textbf{Koprime} sind.
 \begin{align*}
     \textbf{Extended Euklidischer Algortihmus}
 \end{align*}
@@ -398,9 +399,66 @@ Der erste Schritt des euklidischen Algorithmus besteht darin, die größere Ganz
 Allerdings die Voraussetzung für die Bestimmung der Inverse, dass $ ggT(a, p) = 1 $ sein muss. 
 Wenn dies der Fall ist, können durch Umkehren der Schritte im euklidischen Algorithmus die ganzen Zahlen x und y gefunden werden.
 
-Die ganze Idee ist, mit der ggT zu beginnen und rekursiv rückwärts zu arbeiten. Dies kann erreicht werden, indem die Zahlen als Variablen behandelt werden, bis der Ausdruck \(1 = x \cdot a + y \cdot p \) erhalten wird, der eine lineare Kombination unserer Anfangszahlen ist. \\
+Dies kann erreicht werden, indem die Zahlen als Variablen behandelt werden, bis den Ausdruck \\
+\(1 = x \cdot a + y \cdot p \) erhalten wird, der eine lineare Kombination unserer Anfangszahlen ist. \\
 Daraus es folgt \( x \cdot a \equiv 1 \mod p \). 
-Mit Hilfe des modularen multiplikativen Inversen lässt sich leicht die modulare Division zwischen 2 Zahlen bestimmen.
+
+Zum Beispiel, gesucht ist die Inverse von $[17]_{53}$. \\
+EEA liefert:
+\begin{ceqn}
+\begin{align*}
+              53 = 3 \cdot 17 + 2 \\
+    \qquad    17 = 2 \cdot 2 + \boxed{1}   \\
+    \qquad    2 = 2 \cdot 1 + 0
+\end{align*}
+\end{ceqn}
+Es ergibt sich, dass ggT(17, 53) = 1. Es folgt: \\ 
+
+\begin{ceqn}
+\begin{align*}
+              1 = 25 \cdot 17 + (-8) \cdot 53 \\
+              1 \equiv 25 \cdot 17 \pmod 53
+\end{align*}
+\end{ceqn}
+d.h. die Inverse von $[17]_{53}$ ist $[25]_{53}$. \\
+
+Die modulare multiplikative Inverse lässt sich auch durch die modulare Exponentiation unter Verwendung des Satz von Euler berechnen. \\
+\textbf{Satz von Euler}
+Sei \(n \in \mathbb{N}\), die Menge der natürlichen Zahlen. Dann gilt
+für alle a \(\in \mathbb{N}\), die teilerfremd ( $ ggT(a, n) = 1 $) zu n sind also \cite{langMIE}: \\
+
+\begin{ceqn}
+\begin{align*}
+            a^{\varphi(n)} \equiv 1 \pmod n
+\end{align*}
+\end{ceqn}
+mit $ \varphi(n)$, die Euler’sche $\varphi$-Funktion, die die Anzahl der Elemente der
+reduzierten Menge der Reste modulo n bezeichnet \cite{damer}. \\
+
+Nach dem Satz von Euler gilt für jedes \(a \in \mathbf{Z^*_n} \)\\
+
+\begin{ceqn}
+\begin{align*}
+            a^{\varphi(n)} \mod n = 1 \\
+    \qquad  a^{\varphi(n) - 1} \mod n = a^{-1}
+\end{align*}
+\end{ceqn}
+
+Die Euler'sche $\varphi$-Funktion ist gleich der Anzahl der der zu n
+teilerfremden Zahlen zwischen 1 und n. Man schreibt \\
+
+\begin{ceqn}
+\begin{align*}
+         \varphi(n) = |\{ 1 \leq a < n, mit \quad ggT(a, n) = 1 \}|
+\end{align*}
+\end{ceqn}
+
+Für Primzahlen gilt \(\varphi(p) = p - 1 \). \\
+
+Durch modulare Exponentiation lässt sich zwar die Inverse einer Restklasse leicht bestimmen, aber sie ist im Vergleich mit der Berechnung mithilfe des erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
+
+Mit Hilfe der modularen multiplikative Inverse lässt sich leicht die modulare Division zwischen 2 Zahlen bestimmen.
+
 
 \subsection{Modulare Division}
 
