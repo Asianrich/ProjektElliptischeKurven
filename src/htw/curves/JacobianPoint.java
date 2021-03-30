@@ -196,6 +196,11 @@ public class JacobianPoint implements Point {
         return new AffinePoint(ff.divide(this.getX(), ff.pow(this.getZ(), BigInteger.TWO)), ff.divide(this.getY(), ff.pow(this.getZ(), BigInteger.valueOf(3))));
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public Point toJacobian(EllipticCurves e) {
         return this;

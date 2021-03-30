@@ -234,6 +234,11 @@ public class ProjectivePoint implements Point {
         return new AffinePoint(ff.divide(this.getX(), this.getZ()), ff.divide(this.getY(), this.getZ()));
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public Point toJacobian(EllipticCurves e) {
         return this.toAffine(e).toJacobian(e);

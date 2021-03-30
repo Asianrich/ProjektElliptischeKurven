@@ -226,6 +226,11 @@ public class AffinePoint implements Point {
         return this;
     }
 
+    /**
+     * 
+     * @param e
+     * @return
+     */
     @Override
     public Point toJacobian(EllipticCurves e) {
         return new JacobianPoint(this.getX(), this.getY(), BigInteger.ONE);
