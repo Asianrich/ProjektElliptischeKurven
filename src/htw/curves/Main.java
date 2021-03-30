@@ -116,8 +116,23 @@ public class Main {
 							read = sc.nextLine();
 							bo = new BigInteger(read);
 						}
+						if (file.hasNext()) {
+							read = file.nextLine();
+							g = new BigInteger(read);
+						} else {
+							System.out.println("Punktart:");
+							System.out.println("0: Affin");
+							System.out.println("1: Projektiv");
+							System.out.println("2: Jakobi");
+							read = sc.nextLine();
+							g = new BigInteger(read);
+						}
 						EllipticCurve curve = new EllipticCurve(a, b, p);
-						Point erz = new ProjectivePoint(x, y, BigInteger.ONE);
+						Point erz = new AffinePoint(x, y);
+						if(g.equals(BigInteger.ONE))
+							erz = new ProjectivePoint(x, y, BigInteger.ONE);
+						if(g.equals(BigInteger.TWO))
+							erz = new JacobianPoint(x, y, BigInteger.ONE);
 						dh = new DiffieHellman(curve, erz);
 						dh.setBobKey(bo);
 						dh.setAliceKey(al);
