@@ -252,4 +252,12 @@ public class ProjectivePoint implements Point {
     public Point toProjective(EllipticCurves e) {
         return this;
     }
+
+    /**
+     *
+     */
+    @Override
+    public void print(){
+        System.out.println(this.x + "|" + this.y + "|" + this.z);
+    }
 }

@@ -227,7 +227,7 @@ public class AffinePoint implements Point {
     }
 
     /**
-     * 
+     *
      * @param e
      * @return
      */
@@ -242,5 +242,13 @@ public class AffinePoint implements Point {
      */
     public Point toProjective(EllipticCurves e){
         return new ProjectivePoint(this.getX(), this.getY(), BigInteger.ONE);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void print(){
+        System.out.println(this.x + "|" + this.y);
     }
 }

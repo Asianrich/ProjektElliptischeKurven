@@ -127,17 +127,17 @@ public class Main {
 				case 3:
 					System.out.println("Alice Key: ");
 					dh.calcAlice();
-					System.out.println(dh.aliceK.getX() + "|" + dh.aliceK.getY());
+					dh.aliceK.print();
 					break;
 				case 4:
 					System.out.println("Bobs Key: ");
 					dh.calcBob();
-					System.out.println(dh.bobK.getX() + "|" + dh.bobK.getY());
+					dh.bobK.print();
 					break;
 				case 5:
 					System.out.println("Common Key: ");
 					Point com = dh.commonKey();
-					System.out.println(com.getX() + "|" + com.getY());
+					com.print();
 					break;
 				default:
 					System.out.println("Keine oder ungültige Wahl!");

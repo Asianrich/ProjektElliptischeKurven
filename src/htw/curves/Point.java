@@ -17,4 +17,5 @@ public interface Point {
     Point toAffine(EllipticCurves e);
     Point toJacobian(EllipticCurves e);
     Point toProjective(EllipticCurves e);
+    void print();
 }
