@@ -15,5 +15,6 @@ public interface Point {
     public boolean isInf(EllipticCurves e);
     public boolean equals(Point p);
     Point toAffine(EllipticCurves e);
-    Point toProjective();
+    Point toJacobian(EllipticCurves e);
+    Point toProjective(EllipticCurves e);
 }
