@@ -5,18 +5,18 @@
 
 In den letzten Jahren hat die dramatische Zunahme von elektronisch übertragenen Informationen zu einer zunehmenden Abhängigkeit von kryptographischen Verfahren geführt. 
 In unserer modernen vernetzten Welt ermöglicht Kryptographie es Menschen, nicht nur geheime Nachrichten über öffentliche Kanäle auszutauschen, sondern auch Online-Banking, Online-Handel und Online-Einkäufe zu tätigen, ohne befürchten zu müssen, dass die persönlichen Informationen kompromittiert werden \cite{werner}. 
-
+\\
 Daher ist unter dem Begriff \textbf{Kryptographie}, die Lehre mathematischer Techniken in Bezug auf Aspekte der Informationssicherheit wie Vertraulichkeit, Datenintegrität, Datensauthentifizierung, zu verstehen \cite{menezes:1997}.
 Die Dringlichkeit eines sicheren Austauschs digitaler Daten zu gewähren, hat daher in den letzten Jahren zu großen Mengen unterschiedlicher Verschlüsselungsverfahren geführt.
 Diese können in zwei Gruppen eingeteilt werden nähmlich: symmetrische (mit privaten Schlüsselalgorithmen) und asymmetrische Verschlüsselungsverfahren (mit öffentlichen Schlüsselalgorithmen) \cite{menezes:1997}. 
-
+\\
 
 In dieser Arbeit wird der Fokus hauptsächlich auf eine asymmetrische Verschlüsselungstechnik liegen: die \textbf{Elliptische-Kurven-Kryptographie} (engl. \textbf{Elliptic Curve Cryptography: ECC}) aufgrund ihrer zahlreichen Vorteile gegenüber herkömmlichen kryptographischen Algorithmen.
-Gemäß den Richtlinien des Nationalen Instituts für Standards und Technologie (NIST) kann eine ECC-Schlüsselgröße von 163 Bit eine gleichwertige bzw. höhere Sicherheit wie ein 1024-Bit des RSA-Algorithmus gewährleisten. Mit ECC-Schlüsselgroße ist nur eine geringere Rechenleistung, sowie ein geringerer Speicher- und Stromverbrauch erforderlich (\cite{edoh}; \cite{sosax}). Zudem kann die Technologie in Verbindung mit den meisten Verschlüsselungsmethoden mit öffentlichen Schlüsseln wie RSA und Diffie-Hellman verwendet werden.
-ECC ist ideal für den Einsatz in eingeschränkten Umgebungen wie Personal Digital Assistenten, Mobiltelefone und Smartcards. 
+Gemäß den Richtlinien des Nationalen Instituts für Standards und Technologie (NIST) kann eine ECC-Schlüsselgröße von 163 Bit eine gleichwertige bzw. höhere Sicherheit wie ein 1024-Bit des RSA-Algorithmus gewährleisten. Mit ECC-Schlüsselgroßen sind nur eine geringere Rechenleistung, sowie ein geringerer Speicher- und Stromverbrauch erforderlich (\cite{edoh}; \cite{sosax}). Zudem kann die Technologie in Verbindung mit den meisten Verschlüsselungsmethoden mit öffentlichen Schlüsseln wie RSA und Diffie-Hellman verwendet werden.
+ECC ist ideal für den Einsatz in eingeschränkten Umgebungen wie Personal Digital Assistenten, Mobilfone und Smartcards. 
+\\
 
-
-Im Allgemeinen lässt sich die Elliptische-Kurven-Kryptographie als ein Public-Key- bzw. ein asymmetrisches Verschlüssselungsverfahren definiert, das auf der elliptischen Kurventheorie basiert und zur Erstellung schnellerer, kleinerer und effizienterer kryptografischer Schlüssel verwendet werden kann.
+Im Allgemeinen lässt sich die Elliptische-Kurven-Kryptographie als ein Public-Key- bzw. ein asymmetrisches Verschlüssselungsverfahren definieren, das auf der elliptischen Kurventheorie basiert und zur Erstellung schnellerer, kleinerer und effizienterer kryptografischer Schlüssel verwendet werden kann.
 Im asymmetrischen Verfahren mit öffentlichen Schlüsseln verfügt jeder Benutzer oder das Gerät, das an der Kommunikation teilnimmt, über ein Schlüsselpaar: einen öffentlichen Schlüssel und einen privaten Schlüssel sowie eine Reihe von Operationen, die den Schlüsseln zugeordnet sind, um kryptographische Operationen wie die Verschlüsselung einer Nachricht auszuführen. 
 Nur der bestimmte Benutzer kennt den privaten Schlüssel, während der öffentliche Schlüssel an alle an der Kommunikation beteiligten Benutzer verteilt wird. 
 Zudem können die Daten, die mit öffentlichen Schlüsseln verschlüsselt sind, nur mit dem privaten Schlüssel entschlüsselt werden (\cite{edoh}; \cite{razad}). 
@@ -25,10 +25,13 @@ Zudem können die Daten, die mit öffentlichen Schlüsseln verschlüsselt sind, 
 
 
 Da ECC dazu beiträgt, eine gleichwertige Sicherheit bei geringerer Rechenleistung und geringerem Ressourcenverbrauch zu erreichen, hat sich ECC zu einem attraktiven und sehr effizienten Public-Key-Krytosystem entwickelt \cite{sosax}. 
-Ihre Sicherheit basiert jedoch auf die Komplexität, das diskrete Logarithmusproblem in der Gruppe von Punkten auf einer elliptischen Kurve zu berechnen \cite{BSI}, da dieses Problem in nur exponentieller Zeit gelöst werden kann. 
+Ihre Sicherheit basiert jedoch auf die Komplexität, das diskrete Logarithmusproblem in der Gruppe von Punkten auf einer elliptischen Kurve zu berechnen \cite{BSI}, da dieses Problem in nur exponentieller Zeit gelöst werden kann. \\
+
 Außerdem ist auch die Art der zu verwendeten elliptischen Kurven unter Betrachtung der verwendeten Parameter (z.B. den Koeffizienten der Kurve) optimal auszuwählen \cite{merLo}.
 Es existiert bereits mehrere Kurven die vom amerikanischen Standardinstitut NIST festgelegt wurden, obwohl deren Erzeugung allerdings nicht vollständig nachvollziehbar ist, was in amerikanischen Krypto-Standards zu erheblicher Kritik geführt hat \cite{ securenet}. 
+\\
 Zudem gibt es eine erhebliche Anzahl potenzieller Schwachstellen für elliptische Kurven, wie z. B. Seitenkanalangriffe und Twist-Security-Angriffe, die bedrohen, die Sicherheit von angebotenen ECC privaten Schlüsseln, ungültig zu machen \cite{stolbikova}.
+\\
 Also unabhängig davon, wie sicher ECC theoretisch ist, muss der Algorithmus ordnungsgemäß implementiert werden, da fehlgeschlagene Implementierung von ECC-Algorithmen zu erheblichen Sicherheitslücken in der kryptografischen Software führen können \cite{stolbikova}. 
 
 \section{Zielsetzung}
