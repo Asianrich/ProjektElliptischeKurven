@@ -1,8 +1,5 @@
 package htw.tests;
-import htw.curves.AffinePoint;
-import htw.curves.EllipticCurve;
-import htw.curves.Point;
-import htw.curves.ProjectivePoint;
+import htw.curves.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +33,11 @@ public class PointTests {
 
     ProjectivePoint p7 = new ProjectivePoint(BigInteger.valueOf(6), BigInteger.valueOf(1), BigInteger.ONE);
     ProjectivePoint p8 = new ProjectivePoint(BigInteger.valueOf(1), BigInteger.valueOf(4), BigInteger.ONE);
+
+    // ##### JACOBIAN ####
+
+    JacobianPoint p13 = new JacobianPoint(BigInteger.valueOf(4), BigInteger.valueOf(3), BigInteger.ONE);
+    JacobianPoint p14 = new JacobianPoint(BigInteger.valueOf(5), BigInteger.valueOf(6), BigInteger.ONE);
 
     // ##### AFFFINE ####
 
@@ -170,6 +172,20 @@ public class PointTests {
         Point test = p12.toAffine(curve2);
         Point ergT = erg.toAffine(curve2);
         assertTrue(ergT.equals(test));
+    }
+
+    @Test
+    public void testAdd9(){
+        Point erg = p13.add(p14, curve);
+        BigInteger x = erg.getX();
+        assertTrue(x.equals(BigInteger.ZERO));
+    }
+
+    @Test
+    public void testAdd10(){
+        Point erg = p13.add(p14, curve);
+        BigInteger y = erg.getY();
+        assertTrue(y.equals(BigInteger.valueOf(6)));
     }
 
 }

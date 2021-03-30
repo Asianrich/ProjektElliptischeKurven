@@ -29,8 +29,8 @@ public class ProjectivePoint implements Point {
      */
     @Override
     public Point add(Point p, EllipticCurves e) {
-        if (p instanceof AffinePoint) {
-            return this.add(p.toProjective(), e);
+        if (!(p instanceof ProjectivePoint)) {
+            return this.add(p.toProjective(e), e);
         }
         FiniteFields ff = new FiniteFields(e.getP());
         if (this.equals(p)) {
@@ -119,7 +119,7 @@ public class ProjectivePoint implements Point {
      */
     @Override
     public Point negate(EllipticCurves e) {
-        return this.toAffine(e).negate(e).toProjective();
+        return this.toAffine(e).negate(e).toProjective(e);
     }
 
     /**
@@ -234,12 +234,17 @@ public class ProjectivePoint implements Point {
         return new AffinePoint(ff.divide(this.getX(), this.getZ()), ff.divide(this.getY(), this.getZ()));
     }
 
+    @Override
+    public Point toJacobian(EllipticCurves e) {
+        return this.toAffine(e).toJacobian(e);
+    }
+
     /**
      *
      * @return
      */
     @Override
-    public Point toProjective() {
+    public Point toProjective(EllipticCurves e) {
         return this;
     }
 }
