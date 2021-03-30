@@ -104,7 +104,7 @@ public class JacobianPoint implements Point {
     public Point kMul(BigInteger k, EllipticCurves e) {
         Point c = this;
         BigInteger a = k;
-        Point b = new JacobianPoint(BigInteger.ONE, BigInteger.ONE, BigInteger.ZERO);
+        Point b = e.getInf();
         while (a.compareTo(BigInteger.ZERO) > 0) {
             if (a.mod(BigInteger.TWO).equals(BigInteger.ZERO)) {
                 a = a.divide(BigInteger.TWO);
