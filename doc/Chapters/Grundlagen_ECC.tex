@@ -97,8 +97,7 @@ Verknüpfungen \((\glqq + \grqq{},\glqq \cdot \grqq)\), sodass es gilt:
     \end{ceqn}
     
 \end{enumerate} 
-Ein Körper mit endlich vielen Elementen heißt endlicher Körper.
-Ein solcher Körper mit p Elementen wird mit $ \mathbf{F_p}$ (auch:
+Ein Körper mit endlich vielen Elementen heißt endlicher Körper. Ein solcher Körper mit p Elementen wird mit $ \mathbf{F_p}$ (auch:
 $ \mathbf{GF(p)} $) bezeichnet.\\
 
 Die \textbf{Charakteristik} eines Körpers $ \mathbf{K} $ ist die kleinste positive Zahl \textbf{p} mit 
@@ -174,7 +173,7 @@ Daher ist die Hauptoperation bei der ECC die Punktmultiplikation, also die Multi
 Das Lösen von ECDLP ist viel schwieriger als DLP, da die Komplexität der Punktarithmetik in ECDLP im Vergleich zur Ganzzahlarithmetik in DLP zunimmt. 
 Aus diesem Grund ist ECC in der Lage, ein ähnliches Sicherheitsniveau wie RSA bereitzustellen, jedoch mit einer kürzeren Schlüsselgröße, was es wiederum zur beliebtesten Wahl macht \cite{mo2014}.\\ 
 
-Damit ein auf $ \mathbf{F_p} $ basierendes diskretes Logarithmus-System effizient ist, sollten schnelle Algorithmen zur Berechnung der Gruppenoperation bekannt sein. Aus Sicherheitsgründen sollte das Problem des diskreten Logarithmus in $ \mathbf{Z_p} $ unlösbar sein \cite{Hankerson}.
+Damit ein auf $ \mathbf{F_p} $ basierendes diskretes Logarithmus-System effizient ist, sollten schnelle Algorithmen zur Berechnung der Gruppenoperation bekannt sein. Aus Sicherheitsgründen sollte das Problem des diskreten Logarithmus in $ \mathbf{Z_p} $ unlösbar sein \cite{Hankerson}. \\
 Es gibt viele Algorithmen zur Lösung von \textbf{ECDLP}, aber der erfolgreichste ist die Kombination von Pollards Rho- und Pohlig-Hellman-Angriffen mit vollständig exponentieller Laufzeit (\cite{mo2014};\cite{Hankerson}). 
 Angriffe resultieren normalerweise aus den Schwächen bei der Auswahl der elliptischen Kurve und des endlichen Feldes (siehe Kapitel 4 und 5), aber die meisten Angriffe können durch korrekte Auswahl der Parameter der elliptischen Kurve vereitelt werden \cite{mo2014}.
 Daher sollten diese öffentlichen Parameter sicher ausgewählt werden, um alle erkannten Angriffe zu vermeiden \cite{aliKa}. Der nächste Abschnitt beschäftigt sich näher mit diesen Parametern. 
