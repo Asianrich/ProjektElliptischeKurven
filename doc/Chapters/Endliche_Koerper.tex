@@ -6,17 +6,38 @@ Jedoch bei höheren Primzahlen wird es schwieriger die Zahlen zu überprüfen, o
 Eiune davon ist der Fermat-Test.
 
 \subsection{Fermat-Test}
-Der Algorithmus läuft folgender maßen ab:\\
-\\
-1. Wähle eine Zahl $ a \in {2,3,4,...,n-2}$ \\
-2. Überprüfe ob die Zahlen Teilerfremd sind. Ist diese, so ist die Zahl n keine Primzahl.\\
-3. Falls die Zahlen teilerfremd sind, so führe folgende Formel aus.\\
-$
-a^{n-1} \equiv  1\ mod\ n
-$\\
-4. Ist dies erfüllt, dann ist die Zahl n vermutlich eine Primzahl. 
-\\
-Die Zahl a ist dementsprechend ein F-Zeuge, der aussagen kann, das die Zahl n eine Primzahl ist.
+
+Der Fermat-Test ist einer der möglichen Algorithmen um Primzahlen herauszufinden.
+
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Algorithmus: Fermat-Test}\\
+            \midrule
+            Input: Eine Zufällige Zahl\\
+            Output: true = Pseudoprimzahl, false = Keine Primzahl  \\
+                                                       \\
+                                                       
+            1. Wähle eine Zahl $ a \in {2,3,4,...,n-2}$ \\
+            2. ggT berechnen. Überprüfe ob die Zahlen Teilerfremd sind.\\ 
+                -> Nicht teilerfremd => gemeinsamer Teiler => return false \\
+            3. Falls die Zahlen teilerfremd sind, so führe folgende Formel aus.\\
+                $
+                    a^{n-1} \equiv  1\ mod\ n
+                $\\
+            4. Wiederhole für eine gewisse Anzahl an Versuchen.\\
+                Merke Anzahl bestandenen versuchen.\\
+                
+            5. F-Zeuger > F-Lügner?    
+            -> true: return true \\
+            -> false: return false\\
+           \bottomrule
+        \end{tabular}
+        \caption{Test}
+        \label{tab3}
+    \end{table}
+
 Aber es gibt Zahlen, welche F-Zeugen sind, jedoch ist die untersuchte Zahl keine Primzahl.
 Anhand folgendem Beispiel können wir erkennen, wieso das ist:
 \\
@@ -37,11 +58,14 @@ Diesen Test für die 2.te Zahl generieren, wird beliebig mal ausgeführt und es 
 \newpage
 \section{Was ist ein endlicher Körper (Galois-Feld)?}
 
-Ein Endlicher Körper oder auch Galoiskörper ist eine endliche Anzahl an Elementen, welche man die Grundoperationen Addition und Multiplikation anwenden kann.\\
+Ein Endlicher Körper oder Galois-Körper ist ein algebraisches System, welches eine endliche Menge mit definierten Addition und Multiplikation.\\
+Der Endliche Körper hat folgende Eigenschaften:
 
-Subtraktion und Division sind inverse Operationen. Diese Rechenarten sind jedoch nicht anders, wie man normal die Zahlen in $\mathbb{R}$, $\mathbb{Q}$.
+Die Endliche Menge ist eine abelsche Gruppe, in der Die Rechenoperation Addition berechnet werden kann.
+Endliche Menge ohne dem Nullelement ist eine abelsche Gruppe, in der die Multiplikation stattfinden kann.
+Endliche Körper sind auch zyklische Gruppen mit der Schreibweise: $ \mathbb{Z}_p $. Der Unterschied zwischen x-Beliebige Zyklische Gruppen und einem Endlichen Körper ist, das der Endliche Körper durch einer Primpotenz $ p^n $ beschrieben werden kann.
 
-Es ist eine Zyklische Gruppe $ \mathbb{Z}_p $ oder auch $ \mathbb{F}_p $. Hierbei muss p eine Primzahl sein. Damit alle Elemente darin enthalten sind. 
+Die Anzahl an Elementen in einem endlichen Körper nennt man Ordnung des Endlichen Körper. Die Ordnung des Endlichen Körper kann nur als Primpotenz dargestellt werden.\\
 
 Allgemein: Die endlichen Körper $\mathbb{F}_p$ beinhalten p-Elemente. Diese werden durch die Ganzzahlen ${0,1,2,....,p-1}$ repräsentiert. 
 
@@ -50,7 +74,9 @@ Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert
 Addition: Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a+b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist. Dies Zahl wird durch modulo p errechnet, nach der Addition.
 Multiplikation: Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a \cdot b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist. Dies Zahl wird durch modulo p errechnet, nach der Multiplikatioon.
 
-Jetzt nur noch für die inverse Operationen definieren.
+Subtraktion und Division sind inverse Operationen. Diese Rechenarten sind jedoch nicht anders, wie man normal die Zahlen in $\mathbb{R}$, $\mathbb{Q}$.
+
+Diese sind wie folgt definiert:
 
 Additive Inverse (Subtraktion): Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p)
 Multiplikative Inverse (Division): Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)
@@ -70,8 +96,6 @@ Um es einfacher und schöner zu gestalten erstellen wir eine Tabelle für Additi
     1 & 1 & 2 &  & 1 & 0 & 1 & 
     \end{tabular}
 \end{table}
-\\
-
 \begin{table}[h]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
     \begin{tabular}{l|l|l|lll|l|l|ll}
     + & 0 & 1 & 2 &  & $\cdot$ & 0 & 1 & 2 &  \\ \cline{1-4} \cline{6-9}
@@ -89,8 +113,9 @@ Führt man eine Rechnung, wird überprüft ob die Zahl im jeweiligen Menge ist. 
 Die Rechenoperationen werden von der Modulare Arithmetik bereitgestellt und im Grunde werden die Werte weitergegeben.
 
 \newpage
-\section{Irreduzible Polynome}
+\section{Primzahlpotenz}
 
+\subsection*{Irreduzible Polynom}
 Bevor man die Verbindung zu endlichen Körper macht, muss man die Irreduzible Polynome verstehen.\\
 Irreduzible Polynome sind Polynome, welche man nicht mehr faktorisieren kann. Somit haben diese Polynome keine Nullstellen im $\mathbb{F}_{p} $
 
