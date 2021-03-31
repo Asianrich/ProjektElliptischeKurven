@@ -14,14 +14,28 @@ public class FiniteFields implements Fields {
 
     public FiniteFields(BigInteger prim) {
         math = new BasicTheoreticMethods();
+        if(prim.compareTo(BigInteger.TWO) == 0){
+            this.prim = prim;
+            return;
+        }
+
         if(checkPrime(prim, 5))
             this.prim = prim;
     }
 
+    @Override
+    public BigInteger getPrim(){
+        return this.prim;
+    }
+
     public FiniteFields(BigInteger prim, int gradient) {
         math = new BasicTheoreticMethods();
-        if(checkPrime(prim, 5))
+        if(prim.compareTo(BigInteger.TWO) == 0){
             this.prim = prim;
+        }
+        else if(checkPrime(prim, 5))
+            this.prim = prim;
+
         createIrreducible(gradient);
     }
 
@@ -29,10 +43,6 @@ public class FiniteFields implements Fields {
         if(gradient <= 0)
             return;
         switch(gradient){
-            case 1:
-                    polynom.add(BigInteger.ONE);
-                    polynom.add(BigInteger.ONE);
-                break;
             case 2:
                     polynom.add(BigInteger.ONE);
                     polynom.add(BigInteger.ONE);
@@ -88,6 +98,12 @@ public class FiniteFields implements Fields {
         return rndPrime;
     }
 
+    /**
+     * SquareRoot in Finite Field
+     * @param number
+     * @return
+     * @throws Exception
+     */
     @Override
     public BigInteger squareRoot(BigInteger number) throws Exception {
         BigInteger root[];
@@ -107,61 +123,107 @@ public class FiniteFields implements Fields {
         return root[0];
     }
 
-    private BigInteger polynomize(BigInteger number){
-        BigInteger sum = BigInteger.ZERO;
-        for(int i = 0; i < polynom.size(); i++){
-            sum = math.modAddition(sum, math.modExponentiation(number, BigInteger.valueOf(i).multiply(polynom.get(i)), prim), prim);
-        }
-        return sum;
-    }
-
-
+    /**
+     * Addition in Finite Field
+     * @param sum1
+     * @param sum2
+     * @return
+     */
     @Override
     public BigInteger add(BigInteger sum1, BigInteger sum2) {
         return math.modAddition(sum1,sum2,prim);
     }
 
+    /**
+     * Subtraktion in finite Field
+     * @param subtrahend
+     * @param minuend
+     * @return
+     */
     @Override
     public BigInteger subtract(BigInteger subtrahend, BigInteger minuend) {
         return math.modSubtraction(subtrahend, minuend, prim);
     }
 
+    /**
+     * Multiplication in Finite Field
+     * @param fact1
+     * @param fact2
+     * @return
+     */
     @Override
     public BigInteger multiply(BigInteger fact1, BigInteger fact2) {
         return math.modMultiplication(fact1, fact2, prim);
     }
 
+    /***
+     * Division in Finite Field
+     * @param divisor
+     * @param dividend
+     * @return
+     */
     @Override
     public BigInteger divide(BigInteger divisor, BigInteger dividend) {
         return math.modDivision(divisor,dividend,prim);
     }
 
+    /**
+     * pow in in Finite Field
+     * @param num
+     * @param exponent
+     * @return
+     */
     @Override
     public BigInteger pow(BigInteger num, BigInteger exponent) {
         return math.modExponentiation(num, exponent, prim);
     }
 
 
+    /**
+     * polynomial Addition in Finite Field
+     * @param sum1
+     * @param sum2
+     * @return
+     */
     @Override
     public ArrayList<BigInteger> add(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
         return math.modAddition(sum1, sum2, polynom, prim);
     }
 
+    /**
+     * Polynomial Subtraction in Finite Field
+     * @param subtrahend
+     * @param minuend
+     * @return
+     */
     @Override
     public ArrayList<BigInteger> subtract(ArrayList<BigInteger> subtrahend, ArrayList<BigInteger> minuend) {
         return math.modSubtraction(subtrahend, minuend, polynom, prim);
     }
 
+    /**
+     * Multiplication in in Finite Field
+     * @param factor1
+     * @param factor2
+     * @return
+     */
     @Override
     public ArrayList<BigInteger> multiply(ArrayList<BigInteger> factor1, ArrayList<BigInteger> factor2) {
         return math.modMultiply(factor1, factor2, polynom, prim);
     }
 
+    /**
+     * Division in Finite Field
+     * @param divisor
+     * @param dividend
+     * @return
+     */
     @Override
     public ArrayList<BigInteger> divide(ArrayList<BigInteger> divisor, ArrayList<BigInteger> dividend) {
         return math.modDivision(divisor, dividend, polynom, prim);
     }
 
+    // Prüft ob es eine Primzahl ist
     private boolean checkPrime(BigInteger prim, int trials){
         BigInteger rndNumber;
         BigInteger temp;
@@ -169,6 +231,7 @@ public class FiniteFields implements Fields {
         int success = 0;
         
         do{
+            //generiere eine Zahl kleiner als primzahl und überprüfe nach ob es einen Teiler hat
             do {
                 rndNumber = math.random(prim);
                 temp = math.gcdExtended(rndNumber, prim); //ggT(rndNumber, prim);
@@ -182,11 +245,13 @@ public class FiniteFields implements Fields {
             BigInteger primExponent = prim.subtract(BigInteger.valueOf(1));
             rndNumber = math.modExponentiation(rndNumber, primExponent, prim); //rndNumber.modPow(primExponent, prim);
 
+            //F-Zeugen erhöhen
             if(rndNumber.compareTo(BigInteger.valueOf(1)) == 0){
                 success++;
             }
         } while(tryCounter-- != 0);
 
+        //F-Zeuge > F-Lügner
         if(success >= (trials/2))
             return true;
         else

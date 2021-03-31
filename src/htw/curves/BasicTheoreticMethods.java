@@ -423,6 +423,12 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	}
 
 
+	/**
+	* Random-Number with Bit-Length input
+	* @param length = bit-Length
+	* @return Primzahl
+	 */
+
 	public BigInteger random(int length) {
 		Random rnd = new Random();
 		BigInteger rndNumber;
@@ -433,6 +439,11 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		return rndNumber;
 	}
 
+	/**
+	 * Random Number Generator with range
+	 * @param range highest Number
+	 * @return prime
+	 */
 	public BigInteger random(BigInteger range) {
 		Random rnd = new Random();
 		BigInteger rndNumber;
@@ -464,6 +475,14 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	}
 
 
+	/**
+	 * Polynom Addition
+	 * @param sum1 summand 1
+	 * @param sum2 summand 2
+	 * @param modPolynom Irreducible Polynom
+	 * @param modNumber prime number
+	 * @return ((summand 1 + summand 2) mod prime Number) mod polynom
+	 */
 	@Override
 	public ArrayList<BigInteger> modAddition(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2, ArrayList<BigInteger> modPolynom, BigInteger modNumber) {
 		int sizeLength = sum1.size();
@@ -483,6 +502,15 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		return polynomdivisionMod(temp, modPolynom, modNumber);
 	}
 
+
+	/**
+	 * Polynom Subtraction
+	 * @param subtrahend
+	 * @param minuend
+	 * @param mod polynom
+	 * @param modNumber
+	 * @return ((subtrahend - minuend) mod prime) mod polynom
+	 */
 	@Override
 	public ArrayList<BigInteger> modSubtraction(ArrayList<BigInteger> subtrahend, ArrayList<BigInteger> minuend, ArrayList<BigInteger> mod, BigInteger modNumber) {
 		int sizeLength = subtrahend.size();

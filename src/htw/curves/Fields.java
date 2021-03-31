@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public interface Fields {
 
+    BigInteger getPrim();
     BigInteger generatePrime(int len, int trials);
     BigInteger squareRoot(BigInteger number) throws Exception;
     BigInteger add(BigInteger sum1, BigInteger sum2);
