@@ -43,8 +43,8 @@ Die Negation wird durch einen Vorzeichenwechsel durchgeführt bei der y-Koordina
 \subsection{affin}
 Die Addition zweier Punkte bedeutet, dass man eine Gerade durch die Punkte zieht und diese Gerade schneidet die Kurve in einem dritten Punkt, dieser ist das Ergebnis.\\
 Bei zwei unterschiedlichen Punkten, wovon einer nicht im unendlichen Bereich liegt, wird die Steigung durch den Differenzquotienten berechnet: \[m = \frac{x_1-x_2}{y_1 - y_2}\]
-Nun braucht man nur noch einzusetzen \[x = m^2 -x1 - x2\] \[y = m(x-x_1)-y_1\] und erhält den neuen Punkt.\\
-Wenn \(P_1 = P_2\) ist, dann hat man eine Senkrechte durch \(P_1\), die die Kurve an einer Stelle \(P_3\) schneiden muss. Diesen Punkt erhält man durch folgende Formeln:\\
+Nun braucht man nur noch einzusetzen \[x = m^2 -x1 - x2\] \[y = m(x-x_1)-y_1\] und erhält den neuen Punkt. Sollte \(x_1 = x_2 , y_1 \neq y_2\) gelten, so ist \(P_1 + P_2 = \infty\).\\
+Wenn \(P_1 = P_2\) ist, dann hat man eine Senkrechte durch \(P_1\), die die Kurve an einer Stelle \(P_3\) schneiden muss. Näheres beschreibe ich unten bei der Punktverdoppelung.\\
 
 Ansonsten gilt \(P_1 + \infty = P_1\) , wobei \(\infty\) ein Punkt außerhalb der Kurve ist \cite{Washington2003}.\\
 Die Addition ist für den Rechner bei großen Zahlen sehr aufwendig, da man dividieren muss und das die anspruchsvollste Rechenoperation ist. Man benötigt zwei Multiplikationen, eine Quadrierung und eine Division \cite{Washington2003}.
