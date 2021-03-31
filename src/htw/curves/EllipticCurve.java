@@ -142,4 +142,15 @@ public class EllipticCurve implements EllipticCurves {
         else
             return null; //TODO whatever - hier nur Prim, was aber sonst
     }
+
+    public boolean isRoot(Point p){
+        LinkedList<Point> points = this.getAllPoints();
+        Point v = p.toAffine(this);
+        for(Point x : points){
+            if(x.equals(v)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

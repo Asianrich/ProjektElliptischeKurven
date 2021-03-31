@@ -67,5 +67,6 @@ Wenn man zwei gleiche Punkte addiert, ändert sich die oben genannte Formel zu:
 \[t = Az_1^2 + 3x_1^2\] \[u = y_1z_1\] \[v = ux_1y_1\] \[w = t^2 - 8v\] \[x_3 = 2uw\] \[y_3 = t(4v-w)- 8y_1^2u^2\] \[z_3 = 8u^3\] mit dem Sonderfall von \(P1 = -P2\) folgt \(P1 + P2 = \infty\). Eine Punktverdopplung benötigt nun nur noch sieben Multiplikationen und fünf Quadrierungen.
 \subsection{jakobi}
 Verdoppelt man einen Punkt, erkennt man direkt im Vergleich die Einfachheit der Formel:
-\[v = 4x_1y_1^2\] \[w = 3x_1^2 + Az_1^4\] \[x_3 = -2v + w^2\] \[y_3 = -8y_1^4 + (v-x_3)w_1\] \[z_3 = 2y_1z_1\]. Wodurch man die Operationen auf drei Multiplikationen und sechs Quadrierungen reduzieren kann. Das ist besonders schnell berechenbar für einen Computer \cite{Washington2003}.\\
+\[v = 4x_1y_1^2\] \[w = 3x_1^2 + Az_1^4\] \[x_3 = -2v + w^2\] \[y_3 = -8y_1^4 + (v-x_3)w_1\] \[z_3 = 2y_1z_1\]\\ 
+Wodurch man die Operationen auf drei Multiplikationen und sechs Quadrierungen reduzieren kann. Das ist besonders schnell berechenbar für einen Computer \cite{Washington2003}.\\
 Wenn man nun noch den Fall betrachtet, dass \(A = -3\) ist, wird \[w = 3(x_1^2 - z_1^4 = 3(x_1 + z_1^2)(x_1 - z_1^2)\] mit nur einer Multiplikation und einer Quadrierung, statt mit drei Quadrierungen berechnet. Daher haben viele Kurven in NIST Listen auch den Faktor \(A = -3\).

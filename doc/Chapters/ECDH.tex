@@ -3,10 +3,14 @@
 Das Diffie-Hellman-Protokoll wird benutzt um auf einem unsicheren Kanal einen gemeinsamen geheimen Schlüssel zu vereinbaren um damit eine verschlüsselte sichere Kommunikation zu betreiben.\\
 Dafür einigen sich beide Teilnehmer über den öffentlichen Kanal auf eine ausreichend große Primzahl \(p\) und eine natürliche Zahl \(g\), die zwischen 1 und \(p-1\) liegt und ein Erzeuger von \(Z_P\) ist.\\
 Nun muss jeder Teilnehmer eine geheime Zufallszahl generieren, die kleiner \(p\) ist. Danach berechnet jeder seinen öffentlichen Schlüssel \[A = g^a mod p\] und schickt diesen an den anderen Teilnehmer.\\
-Wenn jeder mit seinem privaten Schlüssel und dem öffentlichen Schlüssel des Gegenübers den gemeinsamen Schlüssel \[K_1 = B^a mod p\] \[K_2 = A^b mod p\] \[K_1 = K_2\] berechnen.\\
+Nun kann jeder mit seinem privaten Schlüssel und dem öffentlichen Schlüssel des Gegenübers den gemeinsamen Schlüssel \[K_1 = B^a mod p\] \[K_2 = A^b mod p\] \[K_1 = K_2\] berechnen.\\
 Um die Kommunikation abzuhören müsste ein Angreifer das diskrete Logarithmusproblem lösen, was bei großen Zahlen nicht effizient möglich ist.
 
 \section{Schlüsselaustausch bei Elliptischen Kurven}
-Wie beim klassischen Diffie Hellman Schlüssel Austausch wird bei der Variante mit elliptischer Kurve ein Schlüsselaustausch vorangetrieben. Dabei braucht jeder Teilnehmer einen privaten Schlüssel \(d\), eine zufällige Zahl die zwischen 1 und \(n-1\) gewählt wird und einen öffentlichen Schlüssel Punkt \(Q\). \(Q\) entsteht durch die folgende Formel \[ Q = d * G\] mit \(G\) als Erzeuger der Kurve.\\ 
+Wie beim klassischen Diffie-Hellman-Schlüssel-Austausch wird bei der Variante mit elliptischer Kurve ein Schlüsselaustausch vorangetrieben. Dabei braucht jeder Teilnehmer einen privaten Schlüssel \(d\), eine zufällige Zahl die zwischen 1 und \(p-1\) gewählt wird und einen öffentlichen Schlüssel Punkt \(Q\). \(Q\) entsteht durch die folgende Formel \[ Q = d * G\] mit \(G\) als Erzeuger der Kurve \(E\).\\ 
 Mit dem eigenen \(d\) und dem \(G\) vom Gegenüber kann man den Punkt \[K = d_a * Q_b\] \[K = d_b * Q_a\] berechnen. Von \(K\) benötigt man in den meisten Verfahren nur die x-Koordinate.\\
-Sollte ein Teilnehmer einen ungültigen Punkt, der nicht auf der Kurve liegt, wählen und der Andere validiert diesen Punkt nicht, ist es möglich den geheimen Schlüssel des echten Punktes herauszufinden.
+Sollte ein Teilnehmer einen ungültigen Punkt, der nicht auf der Kurve liegt, wählen und der Andere validiert diesen Punkt nicht, ist es möglich den geheimen Schlüssel des echten Punktes herauszufinden. \\Außerdem benutzen wir nur nicht singulare Kurven um mögliche Spitzen oder Kreuzungen der Kurve auszuschließen, denn auch diese Form mit den speziellen Punkten könnte als Angriffsmöglichkeit genutzt werden.
+
+\subsection*{Demo}
+In unserem Demoprogramm kann man die Parameter mit Hilfe einer Textdatei einlesen oder wenn man das nicht möchte auch per Hand eingeben. Dabei wird auch überprüft, ob die Kurve nicht singulär ist, bzw. ob der gegebene Punkt auch wirklich einen Erzeuger der Kurve darstellt.\\
+Im nächsten Schritt kann man Alice und Bobs öffentlichen Schlüssel ausrechnen. Mit etwas mehr Zeit hätte man daraus noch eine API bauen können, mit der man dann über Webverbindungen kommuniziert und den Schlüsselaustausch durchführt.
