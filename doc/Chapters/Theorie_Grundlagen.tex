@@ -30,8 +30,7 @@ Ziel ist der kleinste positive Rest zu finden. \\
 
 Im Allgemeinen lässt sich eine modulare Reduktion durch die folgende Gleichung definieren: \[ r = x \quad mod \quad p \quad = \quad x - \floor{\frac{x}{p}} \cdot p \], wobei x die zu reduzierende Anzahl modulo p ist, der gefundene Rest r, der im Bereich von [0, p - 1] liegt \cite{patent}. Daraus lässt sich die Äquivalenzrelation definieren und man sagt, dass $ r $ kongruent zu $ x $ modulo $ p $ ist.\\
 
-Eine Zahl $ r $ ist \textbf{kongruent} bzw. \textbf{äquivalent} zu einer Zahl $ x $ modulo $ p $, ausgedrückt durch \( r \equiv x \pmod{p} \), falls p ein Teiler von ( r - x) ist. 
-13 ?????? CITE???????
+Eine Zahl $ r $ ist \textbf{kongruent} bzw. \textbf{äquivalent} zu einer Zahl $ x $ modulo $ p $, ausgedrückt durch \( r \equiv x \pmod{p} \), falls p ein Teiler von ( r - x) ist \cite{damer}.
 
 
 Dies bedeutet, dass r und x den gleichen Rest haben, wenn sie durch p geteilt werden und $ r = k $ $\cdot $ $ p + x $ mit  $ k \in $ $ \mathbf{Z} $.\\
@@ -276,7 +275,7 @@ Das Verfahren ist für eine einzelne modulare Multiplikation nicht effizient,
 kann jedoch effektiv bei Berechnungen wie der modularen Potenzierung
 verwendet werden, bei denen viele Multiplikationen für eine gegebene Eingabe durchgeführt werden \cite{Hankerson}. Im nächsten Unterabschnitt werden Methoden zur Berechnung der modularen Potenzierung erläutert.
 
-\subsection{Modulare Exponentiation}
+\subsection{Modulare Potenzierung}
 
 Das Problem der modularen Potenzierung lässt sich mathematisch definieren als:
 \begin{ceqn}
@@ -393,15 +392,73 @@ Also muss der $ ggT (a, p) = 1 $ sein, da p prim ist. Wenn dies den Fall lässt 
 \begin{align*}
     \textbf{Extended Euklidischer Algortihmus}
 \end{align*}
-Der extended Euklidische Algorithmus basiert auf dem euklidischen Algorithmus, der den ggT von zwei ganzen Zahlen durch wiederholte Anwendung des Divisionsalgorithmus ermittelt. Aber bei der Berechnung des ggT wird auch der Wert von x verfolgt. \\
+Der extended Euklidische Algorithmus basiert auf dem euklidischen Algorithmus, der den ggT von zwei ganzen Zahlen durch wiederholte Anwendung des Divisionsalgorithmus ermittelt. Aber bei der Berechnung des ggT wird auch der Wert von x verfolgt. Im Vergleich zu anderen Algorithmen, die als Ausgabe sowohl den Wert des ggT als auch die Werte von x und y haben, gibt der für diese Arbeit implementierte Algorithmus \ref{tab8} nur den Wert vom ggT zurück. \\
+
+In diesem Algorithmus wird die Funktion \textit{gcdExtended} rekursiv aufgerufen, um den ggT (a, p) zu berechnen. Solange der Wert von p größer null ist, werden die Ergebnisse aus dem rekursiven Aufruf vom \( ggT (p \mod a, a) \) bestimmt und die Werte von a und p dementsprechend aktualisiert. Danach werden die Koeffizienten x und y berechnet und den ggT zurückgegeben.
+
+\begin{table}[!ht]
+\centering
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Algorithmus: EEA}\\
+		\midrule
+		Input: Positive BigInteger a, p  mit a $ \geq p$ \\
+		Output: d = ggT(a, p), für die es gilt: \(d = ax + py\) \\
+		                                           \\
+		                                           
+		1. If a = 0 then d = p, x = 0, y = 1 und return p;\\
+		2. If p = 0 then d = a, x = 1, y = 0 und return a;\\
+		3. \(x_1 = 1, y_1 = 1 \) ;\\
+		4. while (p > 0) \\
+		  \quad 4.1 \( d =  p \cdot x_1 + a \cdot (y_1 - (\floor*{p/a} \cdot x_1)\); \\ 
+		  \quad 4.2 \quad a = p, \( p = a - \floor*{a/b} \cdot p \); \\
+		5. \( x = y_1 - \floor*{p/a} \cdot x_1 \);\\
+		6. y = $ x_1 $ ; \\
+	    7. Return d. \\
+	   \bottomrule
+	\end{tabular}
+	\caption{Erweiterter Euklidischer Algorithmus aus der Klasse \textit{BasicTheoreticMethods.java}}
+	\label{tab8}
+\end{table}
 
 Der erste Schritt des euklidischen Algorithmus besteht darin, die größere Ganzzahl durch die Kleinere zu teilen. Dann wird der Divisor wiederholt durch den Rest geteilt, bis der Rest 0 ist. Der ggT ist dann der letzte Rest ungleich Null in diesem Algorithmus. \\
 Allerdings die Voraussetzung für die Bestimmung der Inverse, dass $ ggT(a, p) = 1 $ sein muss. 
 Wenn dies der Fall ist, können durch Umkehren der Schritte im euklidischen Algorithmus die ganzen Zahlen x und y gefunden werden.
 
 Dies kann erreicht werden, indem die Zahlen als Variablen behandelt werden, bis den Ausdruck \\
-\(1 = x \cdot a + y \cdot p \) erhalten wird, der eine lineare Kombination unserer Anfangszahlen ist. \\
-Daraus es folgt \( x \cdot a \equiv 1 \mod p \). 
+\[1 = x \cdot a + y \cdot p \] erhalten wird, der eine lineare Kombination unserer Anfangszahlen ist. 
+Daraus es folgt \( x \cdot a \equiv 1 \mod p \) und x ist dann das multiplikative Inverse von a. Die Tabelle \ref{tab8} veranschaulicht den Algorithmus zur Berechnung des modularen multiplikativen Inverses. \\
+
+\begin{table}[!ht]
+\centering
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Algorithmus: Modulares Inverse}\\
+		\midrule
+		Input: \(a \in \mathbf{Z_p}\) , p eine Primzahl \\
+		Output: \(a \cdot a^{-1} \mod  p\) \\
+		                                           \\
+		                                           
+		1. \( x = 0, y = 1, x_1 = 1, y_1 = 0, m = p \);\\
+		2. Prüfe ob a ein Inverse hat;\\
+		3. If a = 1 then x = 1;\\
+		4. while (p > 0) \\
+		 \quad 4.1\quad q = a/p; t = a; a = p; \\
+		 \quad 4.2 \quad \(p = t \mod p\);\\
+		 \quad 4.3 \quad t = x; \\
+		 \quad 4.4 \quad \(x = x_1 - q \cdot x\); \\
+		 \quad 4.5 \quad $x_1$ = t; \\
+		 \quad 4.6 \quad t = y; \\
+		 \quad 4.7 \quad \(y = y_1 - q \cdot x\); \\
+		 \quad 4.8 \quad $ y_1 = t $; \\
+		5.If x < 0 then x = x + m; \\
+	    6. Return x. \\
+	   \bottomrule
+	\end{tabular}
+	\caption{Modulares multiplikatives Inverse aus der Klasse \textit{BasicTheoreticMethods.java}}
+	\label{tab8}
+\end{table}
+
 
 Zum Beispiel, gesucht wird das Inverse von $[17]_{53}$. \\
 EEA liefert:
@@ -435,6 +492,13 @@ für alle a \(\in \mathbb{N}\), die teilerfremd ( $ ggT(a, n) = 1 $) zu n sind a
 mit $ \varphi(n)$, die Euler’sche $\varphi$-Funktion, die die Anzahl der Elemente der
 reduzierten Menge der Reste modulo n bezeichnet \cite{damer}. \\
 
+Durch modulare Potenzierung lässt sich zwar das Inverse einer Restklasse
+leicht bestimmen, aber sie ist im Vergleich mit der Berechnung mit dem
+erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
+\\
+
+\textbf{Bestimmung der Euler'sche Funktion für eine natürliche Zahl n } \\
+
 Nach dem Satz von Euler gilt für jedes \(a \in \mathbf{Z^*_n} \)\\
 
 \begin{ceqn}
@@ -455,7 +519,54 @@ teilerfremden Zahlen zwischen 1 und n. Man schreibt \\
 
 Für Primzahlen gilt \(\varphi(p) = p - 1 \). \\
 
-Durch modulare Potenzierung lässt sich zwar das Inverse einer Restklasse leicht bestimmen, aber sie ist im Vergleich mit der Berechnung mit dem erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
+
+Zur Bestimmung der Anzahl der positiven ganzen Zahlen \(\varphi(n)\)  $ \leq n $, die relativ prim zu n sind, wurde in dieser Arbeit eine naive
+Implementierung durchgeführt.\\
+Der Algortihmus startet mit der Initialisierung des Ergebnis
+\(\varphi(n)\) = n. Es wird angenommen, dass sowohl \(\varphi(0)\) als auch \(\varphi(1)\) gleich eins sind. Dann laufen wir iterativ über alle Zahlen durch, die kleiner oder gleich der Quadratwurzel von n
+sind. Es wird für jede Zahl p überprüft, ob diese
+Zahl n teilt. Wenn dies den Fall ist, werden alle Vielfachen der
+jeweiligen Zahl entfernt, indem diese wiederholt mit n geteilt
+werden. \\
+Der Grund dafür ist, dass der ggT von Primfaktoren und Ihre Vielfache ungleich eins ist.
+In jeder Iteration wird zusätzlich das Ergebnis um n/p
+reduziert, um die Euler'sche \(\varphi(n)\)-Funktion zu erhalten.
+Wenn die Zahl p nicht prim ist, dann wird direkt geprüft, ob diese größer eins ist. Wenn ja dann wird das Ergebnis dementsprechend um n/p reduziert. Die Tabelle \ref{tab7} stellt den Algorithmus für die Berechnung der \(\varphi(n)\)-Funktion dar.
+
+\begin{table}[!ht]
+\centering
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Algorithmus: Phi-Funktion}\\
+		\midrule
+		Input: \( n \in \mathbf{N}\) \\
+		Output: $ \varphi(n) $  \\
+		                                           \\
+		                                           
+		1.  \(\varphi(n) = n \); \\
+		2. If \((n = 1 || n = 2)\) then return \(\varphi(n) = 1 \);\\
+		3. For \((p = 2; p*p \leq n; p++)\)\\
+		 \quad 3.1\quad If \((n \mod p) = 0 \) \\
+		        \qquad 3.1.1 \quad \( \varphi(n) -= \varphi(n)/p \); \\
+		        \qquad 3.1.2 \quad while \((n \mod p) = 0 \) { n/p };\\
+		4. If (n > 1) then \( \varphi(n) -= \varphi(n)/p \); \\         
+	    5. Return $ \varphi(n). $ \\
+	   \bottomrule
+	\end{tabular}
+	\caption{Phi-Funktion aus der Klasse \textit{BasicTheoreticMethods.java}}
+	\label{tab7}
+\end{table}
+
+
+Da wir mit sehr großen Zahlen arbeiten, ist diese Implementierung jedoch nicht effizient. \\
+Eine effiziente Lösung wäre, anstatt auf alle Zahlen durchzulaufen, nur auf alle  Primzahlen, die kleiner oder gleich der Quadratwurzel von n sind, durchzulaufen. Diese Primzahlen können vom Anfang an zufällig z.B. mitHilfe des Fermat-Tests bestimmt und gespeichert werden. Im Kapitel 4 wird auf die Idee des Fermat-Test-Algorithmus näher eingegangen. \\
+
+Zum Beispiel für p = 7, eine Primzahl gilt: \\
+\\
+  \(\varphi(n) = |\{ 1, 2, 3, 4, 5, 6 \}| = 6 = 7 - 1 = p - 1\) \\
+
+\(\varphi(4) = |\mathbf{Z^*_4}| = |\{ [1]_4, [3]_4 \}| = 2\) \\
+
 
 Mit Hilfe des modularen multiplikativen Inverses lässt sich leicht die modulare Division zwischen 2 Zahlen bestimmen.
 
@@ -469,7 +580,12 @@ Die modulare Division lässt sich mathematisch definieren als:
 \end{align*}
 \end{ceqn}
 
-Bei der Bestimmung der modularen Division wird zuerst $ y^{-1}$, das modulare Inverse von y über p berechnet. Danach wird die modulare Multiplikation von $ x \cdot y^{-1} $ durchgeführt.  
+Bei der Bestimmung der modularen Division wird zuerst $ y^{-1}$, das modulare Inverse von y über p berechnet. Danach wird die modulare Multiplikation von $ x \cdot y^{-1} $ durchgeführt. Diese Operation ist definiert bzw. erfolgt, nur wenn das modulare Inverse von y existiert. 
+\\
+Gegeben sei zum Beispiel x = 8, y = 3, p = 5. \\
+\\
+\( 8/3 \mod 5 \quad = \quad 8 \cdot 3^{-1} \mod 5 \quad = \quad 8/3 \equiv 1 \mod 5 \)
+
 
 \section{Chinesischer Restsatz}
 
