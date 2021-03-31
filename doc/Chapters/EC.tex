@@ -3,16 +3,16 @@
 
 
 \section{Darstellungen von Punkten}
-Um Punkte auf einer elliptischen Kurve darzustellen oder anzugeben gibt es mehrere Möglichkeiten, die Unterschiedliche Vor- und Nachteile haben. Jede Darstellung wird daher auch anders miteinander verrechnet.
+Um Punkte auf einer elliptischen Kurve darzustellen oder anzugeben gibt es mehrere Möglichkeiten, die unterschiedliche Vor- und Nachteile haben. Jede Darstellung wird daher auch anders miteinander verrechnet.
 \subsection{Affine Darstellung}
 Die affine Darstellung ist die gebräuchlichste Art und Weise einen Punkt und eine elliptische Kurve darzustellen, da es nur die x und y Koordinaten gibt.\\
-In diesem Fall gibt es keine einheitliche Darstellung der Unendlichkeit und man muss prüfen, ob die Koordinaten auf der Kurve liegen.
+In diesem Fall gibt es keine einheitliche Darstellung der Unendlichkeit und man muss prüfen, ob die Koordinaten auf der Kurve \[y^2 = x^3 + Ax + B\] liegen.
 \subsection{Projektive Darstellung}
-Bei der projektiven Darstellung kommt die z - Koordinate hinzu, sodass aus der zwei dimensionalen eine drei dimensionale Kurve entsteht. Die Umrechnung eines affinen Punktes in einen projektiven Punkt ist dabei einfach durch das Hinzufügen von z = 1 durchzuführen. Bei der umgekehrten Richtung muss man die x und y Koordinaten durch z teilen, woraus folgt, dass alle Punkte mit z = 0 unendlich sind, da sie nicht auf der Kurve liegen können. Zur Erinnerung, die Formel der Kurve ändert sich von \(y^2 = x^3 + Ax + B\) zu \(y^2z = x^3 + Axz^2 + Bz^3\)\\
+Bei der projektiven Darstellung kommt die z - Koordinate hinzu, sodass aus der zwei-dimensionalen eine drei-dimensionale Kurve entsteht. Die Umrechnung eines affinen Punktes in einen projektiven Punkt ist dabei einfach durch das Hinzufügen von z = 1 durchzuführen. Bei der umgekehrten Richtung muss man die x und y Koordinaten durch z teilen, woraus folgt, dass alle Punkte mit z = 0 nicht auf der Kurve liegen und unendlich sind. Zur Erinnerung, die Formel der Kurve ändert sich von \(y^2 = x^3 + Ax + B\) zu \[y^2z = x^3 + Axz^2 + Bz^3\]\\
 Eine Punktaddition benötigt zwölf Multiplikationen und zwei Quadrierungen, während eine Punktverdopplung nur sieben Multiplikationen und fünf Quadrierungen braucht.
 \\
 \subsection{Jacobi Darstellung}
-Um einen noch größeren Speedup zu erreichen, kann man Jobische Koordinaten verwenden, da diese besonders effizient beim Verdoppeln sind. Hier ist die Darstellung (x,y,z) zu affin \((x/z^2, y/z^3)\) gewählt bei der Kurvenform \[y^2 = x^3 + Axz^4 + Bz^6\]Der Punkt unendlich ist definiert mit (1,1,0). 
+Um einen noch größeren Speedup zu erreichen, kann man Jakobi Koordinaten verwenden, da diese besonders effizient beim Verdoppeln sind. Hier ist die Darstellung (x,y,z) bei der Kurvenform \[y^2 = x^3 + Axz^4 + Bz^6\] gewählt. Zum Konvertieren nach affin muss man folgende Rechnung \((x/z^2, y/z^3)\) anwenden. Der Punkt unendlich ist mit (1,1,0) definiert. Natürlich werden alle anderen Punkte, die nicht auf der Kurve liegen auch als unendlich behandelt. 
 
 \subsection{k-fache Punktmultiplikation}
 Wenn ein Punkt mit k multipliziert wird, unterscheidet man, dass bei \(k > 0\) \[P + P + ... + P = kP\] und bei \(k < 0\) \[ (-P) + (-P) + ... + (-P) = kP\] berechnet wird. Durch wiederholtes Verdoppeln erreicht man bei großen \(k\) die beste Performance und da die elliptischen Kurven auf endlichen Feldern basieren, muss man sich auch keine Gedanken um immer größere Koordinaten machen, da diese immer \( mod p\) gerechnet werden.
@@ -21,16 +21,16 @@ Wenn ein Punkt mit k multipliziert wird, unterscheidet man, dass bei \(k > 0\) \
 Die Negation wird durch einen Vorzeichenwechsel durchgeführt bei der y-Koordinate. Da die Zahl dann negativ ist, muss noch das positive Gegenstück im endlichen Zahlenraum gefunden werden, was durch die einfache Addition der Zahl p geht. Vorausgesetzt ist hierbei eine affine Darstellung. Kommt man von einer anderen Darstellung muss man zuerst zur affinen Darstellung, dann negieren und abschließend in die ursprüngliche Darstellung umrechnen.
 
 \section{Punktaddition}
-\subsection{affine}
+\subsection{affin}
 Die Addition zweier Punkte bedeutet, dass man eine Gerade durch die Punkte zieht und diese Gerade schneidet die Kurve in einem dritten Punkt, dieser ist das Ergebnis.\\
 Bei zwei unterschiedlichen Punkten, wovon einer nicht im unendlichen Bereich liegt, wird die Steigung durch den Differenzquotienten berechnet: \[m = x_1-x_2 / y_1 - y_2\]
 Nun braucht man nur noch einzusetzen \[x = m^2 -x1 - x2\] \[y = m(x-x_1)-y_1\] und erhält den neuen Punkt.\\
 Ansonsten gilt \(P_1 + \infty = P_1\) , wobei \(\infty\) ein Punkt außerhalb der Kurve ist.\\
 Diese Addition ist für den Rechner bei großen Zahlen sehr aufwendig, da man dividieren muss und das die anspruchsvollste Rechenoperation ist. Man benötigt zwei Multiplikationen, eine Quadrierung und eine Division.
-\subsection{projektive}
+\subsection{projektiv}
 Bei \(P1 \neq P2\) sieht die Addition wie folgt aus:
 \[u = y_2z_1 - y_1z_2\] \[v = x_2z_1 - x_1z_2\] \[w = u^2z_1z_2 - v^3 -2v^2x_1z_2\] \[x_3 = 2uw\] \[y_3 = t(4v -w)-8y_1^2u^2\] \[z_3 = 8u^3\]
-\subsection{jakobische}
+\subsection{jakobi}
 Bei zwei unterschiedlichen Punkten wird wie folgt addiert:
 \[r = x1z_2^2\] \[s = x_2z_1^2\] \[t = y1z_2^3\] \[v = s - r\] \[w = u - t\] \[x_3 = -v^3 - 2rv^2 + 2^2\] \[y_3 = -tv^3 + (rv^2-x_3)*w_1\] \[z_3 = vz_1z_2\]
 Dadurch ergeben sich zwölf Multiplikationen und vier Quadrierungen.\\
