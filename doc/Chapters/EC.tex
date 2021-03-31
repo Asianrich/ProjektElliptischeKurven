@@ -8,8 +8,7 @@ Um Punkte auf einer elliptischen Kurve darzustellen oder anzugeben gibt es mehre
 Die affine Darstellung ist die gebräuchlichste Art und Weise einen Punkt und eine elliptische Kurve darzustellen, da es nur die x und y Koordinaten gibt.\\
 In diesem Fall gibt es keine einheitliche Darstellung der Unendlichkeit und man muss prüfen, ob die Koordinaten auf der Kurve \[y^2 = x^3 + Ax + B\] liegen.
 \subsection{Projektive Darstellung}
-Bei der projektiven Darstellung kommt die z - Koordinate hinzu, sodass aus der zwei-dimensionalen eine drei-dimensionale Kurve entsteht. Die Umrechnung eines affinen Punktes in einen projektiven Punkt ist dabei einfach durch das Hinzufügen von z = 1 durchzuführen. Bei der umgekehrten Richtung muss man die x und y Koordinaten durch z teilen, woraus folgt, dass alle Punkte mit z = 0 nicht auf der Kurve liegen und unendlich sind. Zur Erinnerung, die Formel der Kurve ändert sich von \(y^2 = x^3 + Ax + B\) zu \[y^2z = x^3 + Axz^2 + Bz^3\]\\
-Eine Punktaddition benötigt zwölf Multiplikationen und zwei Quadrierungen, während eine Punktverdopplung nur sieben Multiplikationen und fünf Quadrierungen braucht \cite{Washington2003}.
+Bei der projektiven Darstellung kommt die z - Koordinate hinzu, sodass aus der zwei-dimensionalen eine drei-dimensionale Kurve entsteht. Die Umrechnung eines affinen Punktes in einen projektiven Punkt ist dabei einfach durch das Hinzufügen von z = 1 durchzuführen. Bei der umgekehrten Richtung muss man die x und y Koordinaten durch z teilen, woraus folgt, dass alle Punkte mit z = 0 nicht auf der Kurve liegen und unendlich sind. Zur Erinnerung, die Formel der Kurve ändert sich von \(y^2 = x^3 + Ax + B\) zu \[y^2z = x^3 + Axz^2 + Bz^3\]
 \\
 \subsection{Jacobi Darstellung}
 Um einen noch größeren Speedup zu erreichen, kann man Jakobi Koordinaten verwenden, da diese besonders effizient beim Verdoppeln sind. Hier ist die Darstellung (x,y,z) bei der Kurvenform \[y^2 = x^3 + Axz^4 + Bz^6\] gewählt. Zum Konvertieren nach affin muss man folgende Rechnung \((x/z^2, y/z^3)\) anwenden. Der Punkt unendlich ist mit (1,1,0) definiert. Natürlich werden alle anderen Punkte, die nicht auf der Kurve liegen auch als unendlich behandelt \cite{Washington2003}.
@@ -51,6 +50,7 @@ Die Addition ist für den Rechner bei großen Zahlen sehr aufwendig, da man divi
 \subsection{projektiv}
 Bei \(P_1 \neq \pm P_2\) sieht die Addition wie folgt aus:
 \[u = y_2z_1 - y_1z_2\] \[v = x_2z_1 - x_1z_2\] \[w = u^2z_1z_2 - v^3 -2v^2x_1z_2\] \[x_3 = 2uw\] \[y_3 = t(4v -w)-8y_1^2u^2\] \[z_3 = 8u^3\]
+Eine Punktaddition benötigt zwölf Multiplikationen und zwei Quadrierungen und keine Division, was bedeutend schneller zu berechnen ist, als die affine Addition  \cite{Washington2003}.
 \subsection{jakobi}
 Bei zwei unterschiedlichen Punkten wird wie folgt addiert:
 \[r = x1z_2^2\] \[s = x_2z_1^2\] \[t = y1z_2^3\] \[v = s - r\] \[w = u - t\] \[x_3 = -v^3 - 2rv^2 + 2^2\] \[y_3 = -tv^3 + (rv^2-x_3)*w_1\] \[z_3 = vz_1z_2\]
@@ -64,7 +64,7 @@ Falls \(P_1 = P_2\) ist, dann erhält man eine Senkrechte durch \(P_1\), die die
 Daraus wird wiederum die x Koordinate \[m^2-2x\] und y Koordinate berechnet \[y = m(x - x_0)+y\]\\ Einerseits bekommt man in dieser Darstellung den Bruch nicht aufgehoben und daher ist sie nicht effizient berechenbar, aber andererseits ist es die für den Menschen anschaulichste Notation. Aus diesem Grund konvertieren wir die meisten Punkte zur Ausgabe in diese Darstellungsform, nachdem wir über eine der zwei folgenden Arten die Punktverdopplung durchgeführt haben.
 \subsection{projektiv}
 Wenn man zwei gleiche Punkte addiert, ändert sich die oben genannte Formel zu:
-\[t = Az_1^2 + 3x_1^2\] \[u = y_1z_1\] \[v = ux_1y_1\] \[w = t^2 - 8v\] \[x_3 = 2uw\] \[y_3 = t(4v-w)- 8y_1^2u^2\] \[z_3 = 8u^3\] mit dem Sonderfall von \(P1 = -P2\) folgt \(P1 + P2 = \infty\). Eine Punktverdopplung benötigt nun nur noch sieben Multiplikationen und fünf Quadrierungen.
+\[t = Az_1^2 + 3x_1^2\] \[u = y_1z_1\] \[v = ux_1y_1\] \[w = t^2 - 8v\] \[x_3 = 2uw\] \[y_3 = t(4v-w)- 8y_1^2u^2\] \[z_3 = 8u^3\] mit dem Sonderfall von \(P1 = -P2\) folgt \(P1 + P2 = \infty\). Eine Punktverdopplung benötigt nun nur noch sieben Multiplikationen und fünf Quadrierungen  \cite{Washington2003}.
 \subsection{jakobi}
 Verdoppelt man einen Punkt, erkennt man direkt im Vergleich die Einfachheit der Formel:
 \[v = 4x_1y_1^2\] \[w = 3x_1^2 + Az_1^4\] \[x_3 = -2v + w^2\] \[y_3 = -8y_1^4 + (v-x_3)w_1\] \[z_3 = 2y_1z_1\]\\ 
