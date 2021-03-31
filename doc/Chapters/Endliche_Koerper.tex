@@ -3,8 +3,8 @@
 \section{Primzahl-Generator}
 In der Kryptographie arbeitet man mit Primzahlen, jedoch nicht mit kleinen Zahlen.\\
 Aber woher weißt man, ob es sich um eine Primzahl handelt? Bei relativ kleinen Zahlen, kann man dies sehr schnell herausfinden.
-Jedoch bei höheren Primzahlen wird es schwieriger die Zahlen zu überprüfen, ob diese eine Primzahl ist.
-Es gibt mehrere Primzahl-Test-Algorithmen, der bekannteste von allen wäre dieser hier:
+Jedoch bei höheren Primzahlen wird es schwieriger die Zahlen zu überprüfen, ob es sich auch um eine Primzahl handelt.
+Es gibt mehrere Primzahl-Test-Algorithmen, der bekannteste von allen ist dieser hier:
 
 \begin{table}[!ht]
     \centering
@@ -28,9 +28,9 @@ Es gibt mehrere Primzahl-Test-Algorithmen, der bekannteste von allen wäre diese
     \end{table}
 
 Man erkennt hier deutlich, das es bei kleinen Zahlen relativ zügig gehen kann.\\
-Jedoch bei größeren Zahlen wird es ziemlich eine lange Zeit dauern. \\
+Jedoch bei größeren Zahlen wird es eine ziemlich lange Zeit dauern. \\
 \\
-Mit diesen Gedanken, hat man nach Algortihmen gesucht, welche diesen einfachen Primzahl-Test ersetzt.\\
+Mit diesen Gedanken, hat man nach Algorithmen gesucht, welche diesen einfachen Primzahl-Test ersetzen sollen.\\
 \\Die bekanntestens sind:\\
 \\
 - Sieb des Eratosthenes\\
@@ -38,11 +38,11 @@ Mit diesen Gedanken, hat man nach Algortihmen gesucht, welche diesen einfachen P
 - Probabilistische Primzahltests\\
 - und viele weitere.\\
 \\
-Von all den aufgelisteten Tests, wird der Fermat-Test angeschaut.\\
+Von all den aufgelisteten Tests, wird der Fermat-Test (probabilistischer Primzahltest) angeschaut.\\
 \newpage
 \subsection{Fermat-Test}
 
-Der Fermat-Test beruhht sich auf den kleiner fermatischer Satz. Dieser folgt wie laut:
+Der Fermat-Test beruht auf dem kleinen fermatischen Satz. Dieser lautet wie folgt:
 \\
 $
                     a^{n-1} \equiv  1\ mod\ n\\
@@ -55,21 +55,21 @@ Zuerst schauen wir den Algorithmus an.\\
             \toprule
             \textbf{Algorithmus: Fermat-Test}\\
             \midrule
-            Input: Eine Zufällige Zahl $n \in \mathbb{N} $\\
-            Output: true = Pseudoprimzahl, false = Keine Primzahl  \\
+            Input: Eine zufällige Zahl $n \in \mathbb{N} $\\
+            Output: true = Pseudoprimzahl, false = keine Primzahl  \\
                                                        \\
                                                        
             1. Wähle eine Zahl $ a \in {2,3,4,...,n-2}$ \\
-            2. ggT berechnen. Überprüfe ob die Zahlen Teilerfremd sind.\\ 
+            2. ggT berechnen. Überprüfe ob die Zahlen teilerfremd sind.\\ 
                 -> Nicht teilerfremd => gemeinsamer Teiler => return false \\
-            3. Falls die Zahlen teilerfremd sind, so führe folgende Formel aus.\\
+            3. Falls die Zahlen teilerfremd sind, so führe folgende Formel aus:\\
                 $
                     a^{n-1} \equiv  1\ mod\ n
                 $\\
             4. Wiederhole für eine gewisse Anzahl an Versuchen.\\
-                Merke Anzahl bestandenen versuchen.\\
+                Merke Anzahl bestandener Versuche.\\
                 
-            5. F-Zeuger > F-Lügner?    
+            5. F-Zeuge > F-Lügner?    
             -> true: return true \\
             -> false: return false\\
            \bottomrule
@@ -84,6 +84,7 @@ Es gibt bestimmte Kombinationen, in der die untersuchte Zahl als Primzahl anerka
 Anhand folgendem Beispiel können wir erkennen, wieso das ist:
 \\
 Es wird die Zahl 15 genommen und führt von 2-15 die Zahlen durch und listet es in einer Liste auf.\\
+\newpage
 \begin{table}[!ht]
     \centering
         \begin{tabular}{l}
@@ -136,12 +137,12 @@ Es wird die Zahl 15 genommen und führt von 2-15 die Zahlen durch und listet es 
                     \label{tab3}
                 \end{table}
 
-Würde man nur F-Zeugen bekommen, wird die Zahlk 15 als Primzahl angedeutet. Die Zahl 15 ist aber keine Primzahl.
-Aus dem Grund ist es wichtig den Test mehrmals zu durchführen. Dadurch verringert sich die Fehlerwahrscheinlichkeit. Es erhöht aber die Laufzeit dadurch.\\
+Würde man nur F-Zeugen bekommen, wird die Zahl 15 als Primzahl angedeutet. Die Zahl 15 ist aber keine Primzahl.
+Aus dem Grund ist es wichtig den Test mehrmals durchzuführen. Dadurch verringert sich die Fehlerwahrscheinlichkeit, aber es erhöht sich die Laufzeit.\\
 
 \subsection*{Algorithmus im Programm}
 
-Für eine Zufällige Zahl zu generieren, gibt man die Länge des Bits mit. In diesem Projekt wurde eine Primzahl, mit einer Bit-Länge von 8192 erwartet.
+Um eine zufällige Zahl zu generieren, gibt man die Länge in Bits mit. In diesem Projekt wurde eine Primzahl, mit einer Bit-Länge von 8192 erwartet.
 
 \begin{table}[!ht]
     \centering
@@ -291,23 +292,18 @@ Führt man den Algorithmus aus, so kommt man eventuell auf die Primzahl :
 6225 6901 0792 6579 
 \\
 \\
-Diese Zahl wurde von anderen Programmen überprüft. https://www.alpertron.com.ar/ECM.HTM wurde es nachgeprüft.
+Diese Zahl wurde von anderen Programmen wie \url{https://www.alpertron.com.ar/ECM.HTM} nachgeprüft. Weitere Zahlen findet man im Anhang\\
 \\
-Weitere siehe Anhang\\
-\newpage
 \subsection*{Fazit zum Fermat-Test}
 
 Der Fermat-Test läuft um einiges schneller als die Probedivision.\\
-Jedoch sagt dieser Test nicht aus, ob die Zahl sich tatsächlich um eine Primzahl handelt.\\
+Jedoch sagt dieser Test nicht aus, ob es sich tatsächlich um eine Primzahl handelt.\\
 Je mehr Versuche man macht, desto geringer wird die Fehlerwahrscheinlichkeit. \\
-Will man diese Fehlerwahrscheinlichkeit verringert, wird die Laufzeit des Programmes, deutlich höher.  \\
-Allein für die Zahl 8192 Bit, kann es um Stunden dauern in Java. 
+Will man diese Fehlerwahrscheinlichkeit verringern, wird die Laufzeit des Programmes, sich deutlich erhöhen.  \\
 
-
-\newpage
 \section{Was ist ein endlicher Körper (Galois-Feld)?}
 
-Ein Endlicher Körper oder Galois-Körper ist ein algebraisches System, welches eine endliche Menge mit definierten Addition und Multiplikation.\\
+Ein endlicher Körper oder Galois-Körper ist ein algebraisches System, welches eine endliche Menge mit definierten Addition und Multiplikation.\\
 Der Endliche Körper hat folgende Eigenschaften:
 
 
@@ -364,33 +360,9 @@ Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert
 Subtraktion und Division sind inverse Operationen. Diese Rechenarten sind jedoch nicht anders, wie man normal die Zahlen in $\mathbb{R}$, $\mathbb{Q}$.
 
 Diese sind wie folgt definiert:
-\begin{table}[!ht]
-    \centering
-        \begin{tabular}{l}
-            \toprule
-            \textbf{Additive Inverse (Subtraktion) in der Endlichen Körper}\\
-            \midrule
-                Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$.\\
-                Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p) \\
-            \bottomrule
-        \end{tabular}
-        \caption{Additive Inverse (Subtraktion) in der Endlichen Körper}
-        \label{tab3}
-    \end{table}
-    \begin{table}[!ht]
-        \centering
-            \begin{tabular}{l}
-                \toprule
-                \textbf{Multiplikative Inverse (Division)}\\
-                \midrule
-                Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$.\\
-                Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)\\
-                \bottomrule    
-            \end{tabular}
-            \caption{Multiplikative Inverse (Division)}
-            \label{tab3}
-        \end{table}
-    
+
+Additive Inverse (Subtraktion): Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p)
+Multiplikative Inverse (Division): Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)
 
 Nehmen wir als Beispiel die Primzahl 2.
 
@@ -426,17 +398,17 @@ Die Rechenoperationen werden von der Modulare Arithmetik bereitgestellt und im G
 \newpage
 \section{Primzahlpotenz}
 
-\subsection*{Irreduzible Polynom}
+\subsection*{Irreduzibles Polynom}
 
 
-Bevor man die Verbindung zu endlichen Körper macht, muss man die Irreduzible Polynome verstehen.\\
-Damit Polynome Irreduzibel sind, müssen die Irreduziblitätskriterien erfüllt sein.\\
+Bevor man die Verbindung zu endlichen Körper macht, muss man die irreduziblen Polynome verstehen.\\
+Damit Polynome irreduzibel sind, müssen die Irreduziblitätskriterien erfüllt sein.\\
 
 \begin{table}[!ht]
     \centering
         \begin{tabular}{l}
             \toprule
-            \textbf{Lemma \cite{IrKr}}\\
+            \textbf{Lemma}\\
             \midrule
             Sei K ein Körper und $ f \in K[T]$. Dann gilt\\
             a) Jedes Polynom $ f \in K[T]$ vom Grade 1 ist irreduzibel.\\
@@ -446,7 +418,7 @@ Damit Polynome Irreduzibel sind, müssen die Irreduziblitätskriterien erfüllt 
             d) Besitzt ein Polynom $ $\\
            \bottomrule
         \end{tabular}
-        \caption{Beispiele für Irreduzible Polynome}
+        \caption{Beispiele für irreduzible Polynome}
         \label{tab3}
     \end{table}
 
@@ -470,10 +442,10 @@ Kurz zusammengefasst: Irreduzible Polynome sind Polynome, welche man nicht mehr 
         \label{tab3}
     \end{table}
 
-\subsection{Zusammenhang mit Endlichen Körper}
+\subsection{Zusammenhang mit endlichen Körpern}
 
-Der Körper K wird folgendermaßen aufgeschrieben : $ K := \mathbb{F}_{p^m}$. p für Primzahl und m für den Gradienten. Der Gradient sagt aus, welches Polynom genommen wird. 
-Beispielsweise nimmt man für den Gradient 2 das Polynom $x^2 + x + 1$\\
+Der Körper K wird folgendermaßen aufgeschrieben $ K := \mathbb{F}_{p^m}$. p für Primzahl und m für den Gradienten. Der Gradient sagt aus, welches Polynom genommen wird. 
+Beispielsweise nimmt man für den Gradienten 2 das Polynom $x^2 + x + 1$\\
 Alle Berechnungen werden mit Polynomen ausgeführt und die X-Werte werden nicht ersetzt.
 \\
 Die Elemente die in $ K := \mathbb{F}_{p^m}$ repräsentieren sind:\\
@@ -481,14 +453,14 @@ Die Elemente die in $ K := \mathbb{F}_{p^m}$ repräsentieren sind:\\
 Allgemein: $  \mathbb{F}_{p^m} = \{p_{m-1} \cdot x^{m-1} + p_{m-2} \cdot x^{m-2} + ... + p_1 \cdot x + p_0 ; p_i \in \{0,1,..., p-1\} \}$\\
 Man kann $\mathbb{F}_{p^m}$ auch so schreiben : $\mathbb{F}_{p^m}[x] = \frac{\mathbb{F}_{p}[x]}{Polynom} $\\
 \\
-Wie sehen dann die Polynom-Addition, und Multiplikation aus? Um es einfacher zu verstehen, nutzen wir einen Beispiel.
+Wie sieht dann die Polynom-Addition und Multiplikation aus? Um es einfacher zu verstehen, nutzen wir ein Beispiel.
 \\
 Wir nehmen den Körper $ := \mathbb{F}_{2^2}$
 \\
-Hierbei wird unser Polynom $ x^2+ x + 1 $ benutzt. Da der Gradient = 2 ist. Wenn ein Polynom mit einem gleichen oder höheren Gradienten gibt, wird dieser durch Polynomdivision verkleinert und den Rest davon genommen.\\
-bei $ x^2+ x + 1 $ können nur 4 Möglichkeiten geben. $ := \frac{\mathbb{F}_{2}[x]}{x^2+ x + 1} = \{0, 1, x, x+1\}$\\
+Hierbei wird unser Polynom $ x^2+ x + 1 $ benutzt, da der Gradient = 2 ist. Wenn es ein Polynom mit einem gleichen oder höheren Gradienten gibt, wird dieses durch Polynomdivision verkleinert und der Rest davon genommen.\\
+Bei $ x^2+ x + 1 $ kann es nur 4 Möglichkeiten geben. $ := \frac{\mathbb{F}_{2}[x]}{x^2+ x + 1} = \{0, 1, x, x+1\}$\\
 
-Macht man eine Tabelle für diese Elemente, kommt folgendes dabei raus:
+Macht man eine Tabelle für diese Elemente, kommt folgendes dabei heraus:
 
 \begin{table}[h]\caption{Tabellen Grundrechenoperationen}
     \begin{tabular}{l|l|l|l|lll|l|l|l|ll}
@@ -502,8 +474,8 @@ Macht man eine Tabelle für diese Elemente, kommt folgendes dabei raus:
 
 \subsection*{Algorithmus im Programm}
 
-Im Prinzip arbeitet das Programm, wie normal bei den Primzahl. Jedoch wird es mit Polynomen arbeiten, welche in ArrayList<BigInteger> abgespeichert wird.\\
-Zuerst wird der Gradient bestimmt und es wird aus einer Liste paar Beispiel-Irreduzible Polynome genommen. Wenn ein ArrayList übergeben wird, bestimmt die Länge, den Höchsten Gradienten an.\\
-Angenommen ist die Size der Liste q, so ist der Gradient q-1. Zuerst werden die Polynome mit den Grundrechenoperationen berechnet und anschließend über mod Irreduzibles Polynom abgerechnet. Anschließend wird der Rest ausgegeben.
+Im Prinzip arbeitet das Programm, wie normal bei einer Primzahl. Jedoch wird es mit Polynomen arbeiten, welche in einer ArrayList<BigInteger> abgespeichert werden.\\
+Zuerst wird der Gradient bestimmt und es wird aus einer Liste ein Beispiel-Polynom genommen. Wenn eine ArrayList übergeben wird, bestimmt die Länge den höchsten Gradienten.\\
+Angenommen die Länge der Liste sei q, so ist der Gradient q-1. Zuerst werden die Polynome mit den Grundrechenoperationen berechnet und anschließend wird mit einem irreduziblen Polynom der Restwert bestimmt.
 \\
 
