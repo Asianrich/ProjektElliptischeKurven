@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -304,5 +305,65 @@ public class arithmeticsTests {
 		list_M.add(BigInteger.valueOf(2));
 	
 		Assertions.assertThrows(ArithmeticException.class, () -> test.chineseRemainder(list_R, list_M));
-	} 
+	}
+
+	@Test
+	public void polynomAdditionTest(){
+		ArrayList<BigInteger> list_R = new ArrayList<>(), list_M = new ArrayList<>(), list_Mod = new ArrayList<>(), list_check = new ArrayList<>();
+		list_R.add(BigInteger.ONE);
+		list_R.add(BigInteger.ONE);
+		list_R.add(BigInteger.ZERO);
+		list_R.add(BigInteger.ZERO);
+		list_R.add(BigInteger.ONE);
+		list_M.add(BigInteger.ZERO);
+		list_M.add(BigInteger.ONE);
+		list_M.add(BigInteger.ZERO);
+		list_M.add(BigInteger.ONE);
+		list_M.add(BigInteger.ONE);
+		list_Mod.add(BigInteger.ONE);
+		list_Mod.add(BigInteger.ONE);
+		list_Mod.add(BigInteger.ZERO);
+		list_Mod.add(BigInteger.ONE);
+		ArrayList<BigInteger> temp = test.modAddition(list_R, list_M, list_Mod, BigInteger.TWO);
+		list_check.add(BigInteger.ZERO);
+		list_check.add(BigInteger.ONE);
+		list_check.add(BigInteger.ZERO);
+		list_check.add(BigInteger.ZERO);
+		list_check.add(BigInteger.ZERO);
+		boolean test = true;
+		for(int i = 0; i < temp.size(); i++){
+			if(temp.get(i).compareTo(list_check.get(i)) != 0)
+				test = false;
+		}
+		Assert.assertTrue(test);
+
+	}
+
+	@Test
+	public void polynomMultiplikationTest(){
+		ArrayList<BigInteger> list_R = new ArrayList<>(), list_M = new ArrayList<>(), list_Mod = new ArrayList<>(), list_check = new ArrayList<>();
+		list_R.add(BigInteger.ONE);
+		list_R.add(BigInteger.ZERO);
+		list_R.add(BigInteger.ONE);
+		list_M.add(BigInteger.ONE);
+		list_M.add(BigInteger.ONE);
+		list_M.add(BigInteger.ONE);
+		list_Mod.add(BigInteger.ONE);
+		list_Mod.add(BigInteger.ONE);
+		list_Mod.add(BigInteger.ZERO);
+		list_Mod.add(BigInteger.ONE);
+		ArrayList<BigInteger> temp = test.modMultiply(list_R, list_M, list_Mod, BigInteger.TWO);
+		list_check.add(BigInteger.ZERO);
+		list_check.add(BigInteger.ONE);
+		list_check.add(BigInteger.ONE);
+		list_check.add(BigInteger.ZERO);
+		list_check.add(BigInteger.ZERO);
+		boolean test = true;
+		for(int i = 0; i < temp.size(); i++){
+			if(temp.get(i).compareTo(list_check.get(i)) != 0)
+				test = false;
+		}
+		Assert.assertTrue(test);
+
+	}
 }

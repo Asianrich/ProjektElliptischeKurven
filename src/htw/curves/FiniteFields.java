@@ -74,6 +74,11 @@ public class FiniteFields implements Fields {
     }
 
 
+    /*
+    * Generate a Prime number
+    * @len = bit-Length
+    * @trials = how many times you want to check
+     */
     @Override
     public BigInteger generatePrime(int len, int trials) {
         BigInteger rndPrime = BigInteger.valueOf(4); //Irgendeine Zahl, das nicht Prim ist.
@@ -136,34 +141,25 @@ public class FiniteFields implements Fields {
         return math.modExponentiation(num, exponent, prim);
     }
 
-    @Override
-    public ArrayList<BigInteger> squareRoot(ArrayList<BigInteger> number) throws Exception {
-        return null;
-    }
 
     @Override
     public ArrayList<BigInteger> add(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
-        return null;
+        return math.modAddition(sum1, sum2, polynom, prim);
     }
 
     @Override
-    public ArrayList<BigInteger> subtract(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
-        return null;
+    public ArrayList<BigInteger> subtract(ArrayList<BigInteger> subtrahend, ArrayList<BigInteger> minuend) {
+        return math.modSubtraction(subtrahend, minuend, polynom, prim);
     }
 
     @Override
-    public ArrayList<BigInteger> multiply(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
-        return null;
+    public ArrayList<BigInteger> multiply(ArrayList<BigInteger> factor1, ArrayList<BigInteger> factor2) {
+        return math.modMultiply(factor1, factor2, polynom, prim);
     }
 
     @Override
-    public ArrayList<BigInteger> divide(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<BigInteger> pow(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
-        return null;
+    public ArrayList<BigInteger> divide(ArrayList<BigInteger> divisor, ArrayList<BigInteger> dividend) {
+        return math.modDivision(divisor, dividend, polynom, prim);
     }
 
     private boolean checkPrime(BigInteger prim, int trials){

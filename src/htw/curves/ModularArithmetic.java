@@ -22,4 +22,10 @@ import java.util.ArrayList;
 	BigInteger random(int length);
 	BigInteger random(BigInteger range);
 
+
+    ArrayList<BigInteger> modAddition(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2, ArrayList<BigInteger> modPolynom, BigInteger modNumber);
+    ArrayList<BigInteger> modSubtraction(ArrayList<BigInteger> subtrahend, ArrayList<BigInteger> minuend, ArrayList<BigInteger> mod, BigInteger modNumber);
+    ArrayList<BigInteger> modMultiply(ArrayList<BigInteger> factor1, ArrayList<BigInteger> factor2, ArrayList<BigInteger> mod, BigInteger modNumber);
+    ArrayList<BigInteger> modDivision(ArrayList<BigInteger> divisor, ArrayList<BigInteger> dividend, ArrayList<BigInteger> mod, BigInteger modNumber);
+
 }

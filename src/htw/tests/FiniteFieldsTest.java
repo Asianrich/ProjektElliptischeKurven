@@ -32,7 +32,7 @@ public class FiniteFieldsTest {
     }
 
     @Test
-    public void FermatTest_4_bit() throws IOException {
+    public void GenerateFermatTest_4_bit() throws IOException {
 
         FileWriter myFile = new FileWriter("C:\\Users\\manhk\\Desktop\\prim.txt");
         for(int i = 0; i < 4; i++){
@@ -49,7 +49,7 @@ public class FiniteFieldsTest {
         Assert.assertTrue(true);
     }
     @Test
-    public void FermatTest_128_bit(){
+    public void GenerateFermatTest_128_bit(){
         FiniteFields Field = new FiniteFields();
         BigInteger prim = Field.generatePrime(128, 5);
         BigInteger test = prim;
@@ -57,7 +57,7 @@ public class FiniteFieldsTest {
     }
 
     @Test
-    public void FermatTest_512_bit(){
+    public void GenerateFermatTest_512_bit(){
         FiniteFields Field = new FiniteFields();
         BigInteger prim = Field.generatePrime(512, 5);
         BigInteger test = prim;
@@ -65,7 +65,7 @@ public class FiniteFieldsTest {
     }
 
     @Test
-    public void FermatTest_1024_bit(){
+    public void GenerateFermatTest_1024_bit(){
         FiniteFields Field = new FiniteFields();
         BigInteger prim = Field.generatePrime(1024, 5);
         BigInteger test = prim;
@@ -73,7 +73,7 @@ public class FiniteFieldsTest {
     }
 
     @Test
-    public void FermatTest_2048_bit(){
+    public void GenerateFermatTest_2048_bit(){
         FiniteFields Field = new FiniteFields();
         BigInteger prim = Field.generatePrime(2048, 5);
         BigInteger test = prim;
@@ -81,7 +81,7 @@ public class FiniteFieldsTest {
     }
 
     @Test
-    public void FermatTest_4096_bit(){
+    public void GenerateFermatTest_4096_bit(){
         FiniteFields Field = new FiniteFields();
         BigInteger prim = Field.generatePrime(4096, 4);
         BigInteger test = prim;
@@ -89,7 +89,7 @@ public class FiniteFieldsTest {
     }
 
     @Test
-    public void FermatTest_8192_bit() throws IOException {
+    public void GenerateFermatTest_8192_bit() throws IOException {
         FileWriter myFile = new FileWriter("C:\\Users\\manhk\\Desktop\\prim.txt");
         for(int i = 0; i < 1; i++){
             StringBuilder sb = new StringBuilder();
@@ -197,5 +197,55 @@ public class FiniteFieldsTest {
         }
     }
 
+    @Test
+    public void PrimeCheck(){
+        String test = "706815040559628624011655828814189049997822592590769503550716192423011166205520828836107731976949690297488840703257583380646528797232917661044680451640005167029150436168028389322600984356616113304262743319197858036561988262025098890007095475749383188653613190787722053670408721717091637438388716393252963638214049491393378250724723880468067614334658045628068324435101626791712074545803557929774494441421509263501162849669889236033830731279672108019128726351508342463370718726373793685065895297134329785609926224271363504753020784137888874806559121694293845841178426176752264300703556327666866523607227670478820436292550869009350632757122498673581794633439348661621529962139889362965268105885763353739720037826390125701763249307876852241751188530813584172216854433381744806016510186742180273796684275714913269800408712502661474909517078657003399965462305400957654801651284490211160441292900510857999592409802082294747571062377725932167272244630098090292147578773310174185897502773621598853344800632530604600343842821467321248686845994230273696846617844542402552547479244675374940112067899939109688939703874236856672773500374251468568184521381644258930551937144091675150860724401740141808460425181063411269636450025385977162440322865682374398977181561207864185362295787060043825331336516035651675133306865991003080063491325692019309444941725442709419613727168104820991083633502917408548677773475680720445589797970502215576524081412780843871826303908115400970824785943375885705003936496897240921182007856560493960538166074435843326214869070096825502987827415154059751381258819233731293975760031778192639960873098040411665155941936119886309016944822449085722852171963446100550330222062296277481280537639087187914674215978289380759917569444047999318911530773840105355011206437218885086491412478190968877539585616399970924953626081213276966569009134276863088067128050238310470215874989678003207794395743940139792642755192662744948587918455455525607538290180086811844304925690860751570120962199969423751322010238659208365694615931325693188649648524711023745262701542302930856406469102174783426538421920407709008805720068802156927035224746651471271080719509799595952932469726347240120939350532498908883505400900379591290667822063351467955308487085545801411058779137372972053693277136366333851034297367902383696195346174438826405243915496557946004887897953852838641039746436735184184668196396549858304678751112336299544483049448562711671761337043596385266799256225690107926579";
+        int counter = 0;
+
+        printCharPrime(test, counter);
+
+    }
+
+    private void printPrime(BigInteger number, int count){
+        if(number.compareTo(BigInteger.ZERO) == 0){
+            return;
+        }
+        else
+        {
+            printPrime(number.divide(BigInteger.valueOf(10000)), count + 1);
+        }
+        if((count % 5) == 4){
+            System.out.println(number.mod(BigInteger.valueOf(10000)));
+        }
+        else{
+            System.out.print(number.mod(BigInteger.valueOf(10000)));
+            System.out.print(" ");
+        }
+
+
+    }
+
+    private void printCharPrime(String text, int count){
+        char[] output = new char[4];
+        if(text.length()<= 4){
+            System.out.print(text + " ");
+        }
+        else
+        {
+            if(text.length()>4)
+                printCharPrime(text.substring(0, text.length() - 4) ,count + 1);
+            else
+                printCharPrime(text.substring(0, text.length() % 4) ,count + 1);
+            text.getChars(text.length()-4, text.length(), output,0);
+            if((count % 5) == 4){
+                System.out.println(output);
+            }
+            else{
+                System.out.print(output);
+                System.out.print(" ");
+            }
+        }
+
+    }
 
 }

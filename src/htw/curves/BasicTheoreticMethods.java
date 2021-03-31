@@ -448,8 +448,83 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 
 		return rndNumber;
 	}
- 
-  
+
+	/*
+	* Hier wird nur der Rest ausgegeben!
+	* */
+	private ArrayList<BigInteger> polynomdivisionMod(ArrayList<BigInteger> divisor, ArrayList<BigInteger> dividend, BigInteger modNumber){
+		ArrayList<BigInteger> temp = divisor;
+		for(int i = divisor.size()-1; i >= dividend.size()-1; i--){
+			BigInteger factor = modDivision(divisor.get(i), dividend.get(dividend.size()-1), modNumber);
+			for(int j = 0; j < dividend.size(); j++){
+				temp.set(i - j, modSubtraction(temp.get(i-j), dividend.get(dividend.size()-j-1).multiply(factor), modNumber));
+			}
+		}
+		return temp;
+	}
+
+
+	@Override
+	public ArrayList<BigInteger> modAddition(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2, ArrayList<BigInteger> modPolynom, BigInteger modNumber) {
+		int sizeLength = sum1.size();
+		if(sizeLength < sum2.size())
+			sizeLength = sum2.size();
+		ArrayList<BigInteger> temp = new ArrayList<BigInteger>();
+
+		for(int i = 0; i < sizeLength; i++){
+			if(i >= sum1.size())
+				temp.add(sum2.get(i).mod(modNumber));
+			else if(i >= sum1.size())
+				temp.add(sum2.get(i).mod(modNumber));
+			else
+				temp.add(sum1.get(i).add(sum2.get(i)).mod(modNumber));
+		}
+
+		return polynomdivisionMod(temp, modPolynom, modNumber);
+	}
+
+	@Override
+	public ArrayList<BigInteger> modSubtraction(ArrayList<BigInteger> subtrahend, ArrayList<BigInteger> minuend, ArrayList<BigInteger> mod, BigInteger modNumber) {
+		int sizeLength = subtrahend.size();
+		if(sizeLength < minuend.size())
+			sizeLength = minuend.size();
+		ArrayList<BigInteger> temp = new ArrayList<BigInteger>();
+
+		for(int i = 0; i < sizeLength; i++){
+			if(i >= subtrahend.size())
+				temp.add(minuend.get(i).mod(modNumber));
+			else if(i >= subtrahend.size())
+				temp.add(minuend.get(i).mod(modNumber));
+			else
+				temp.add(subtrahend.get(i).add(minuend.get(i)).mod(modNumber));
+		}
+
+		return polynomdivisionMod(temp, mod, modNumber);
+	}
+
+	@Override
+	public ArrayList<BigInteger> modMultiply(ArrayList<BigInteger> factor1, ArrayList<BigInteger> factor2, ArrayList<BigInteger> mod, BigInteger modNumber) {
+		int sizeLength = factor1.size() + factor2.size() - 1;
+		ArrayList<BigInteger> temp = new ArrayList<BigInteger>();
+		for(int i = 0; i < sizeLength; i++){
+			temp.add(BigInteger.ZERO);
+		}
+
+		for(int i = 0; i < factor1.size(); i++){
+			for(int j=0; j < factor2.size();j++){
+				temp.set(i+j, temp.get(i+j).add(factor1.get(i).multiply(factor2.get(j))).mod(modNumber));
+			}
+		}
+
+		return polynomdivisionMod(temp, mod, modNumber);
+	}
+
+	@Override
+	public ArrayList<BigInteger> modDivision(ArrayList<BigInteger> divisor, ArrayList<BigInteger> dividend, ArrayList<BigInteger> mod, BigInteger modNumber) {
+		return null;
+	}
+
+
 	/*Function implementing the Chinese remainder theorem 
 	* @param remainderList_R contains the remainders of the equations
 	* @param modulList_M contains all the moduli, i.e positive integers m[] that are pairwise coprime (gcd for every pair is 1)
