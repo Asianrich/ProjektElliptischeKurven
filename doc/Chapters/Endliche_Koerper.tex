@@ -294,13 +294,14 @@ Führt man den Algorithmus aus, so kommt man eventuell auf die Primzahl :
 Diese Zahl wurde von anderen Programmen überprüft. https://www.alpertron.com.ar/ECM.HTM wurde es nachgeprüft.
 \\
 Weitere siehe Anhang\\
-\\
+\newpage
 \subsection*{Fazit zum Fermat-Test}
 
 Der Fermat-Test läuft um einiges schneller als die Probedivision.\\
 Jedoch sagt dieser Test nicht aus, ob die Zahl sich tatsächlich um eine Primzahl handelt.\\
 Je mehr Versuche man macht, desto geringer wird die Fehlerwahrscheinlichkeit. \\
 Will man diese Fehlerwahrscheinlichkeit verringert, wird die Laufzeit des Programmes, deutlich höher.  \\
+Allein für die Zahl 8192 Bit, kann es um Stunden dauern in Java. 
 
 
 \newpage
@@ -363,9 +364,33 @@ Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert
 Subtraktion und Division sind inverse Operationen. Diese Rechenarten sind jedoch nicht anders, wie man normal die Zahlen in $\mathbb{R}$, $\mathbb{Q}$.
 
 Diese sind wie folgt definiert:
-
-Additive Inverse (Subtraktion): Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p)
-Multiplikative Inverse (Division): Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Additive Inverse (Subtraktion) in der Endlichen Körper}\\
+            \midrule
+                Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$.\\
+                Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p) \\
+            \bottomrule
+        \end{tabular}
+        \caption{Additive Inverse (Subtraktion) in der Endlichen Körper}
+        \label{tab3}
+    \end{table}
+    \begin{table}[!ht]
+        \centering
+            \begin{tabular}{l}
+                \toprule
+                \textbf{Multiplikative Inverse (Division)}\\
+                \midrule
+                Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$.\\
+                Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)\\
+                \bottomrule    
+            \end{tabular}
+            \caption{Multiplikative Inverse (Division)}
+            \label{tab3}
+        \end{table}
+    
 
 Nehmen wir als Beispiel die Primzahl 2.
 
@@ -411,7 +436,7 @@ Damit Polynome Irreduzibel sind, müssen die Irreduziblitätskriterien erfüllt 
     \centering
         \begin{tabular}{l}
             \toprule
-            \textbf{Lemma}\\
+            \textbf{Lemma \cite{IrKr}}\\
             \midrule
             Sei K ein Körper und $ f \in K[T]$. Dann gilt\\
             a) Jedes Polynom $ f \in K[T]$ vom Grade 1 ist irreduzibel.\\
