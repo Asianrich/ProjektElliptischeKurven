@@ -296,11 +296,11 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 			return BigInteger.ZERO;
 		}
 		if (num_2.equals(BigInteger.ZERO) || mod.equals(BigInteger.ZERO)) {
-		//	System.out.println("We can't calculate modular multiplicative inverse of this number");
+		
 			throw new ArithmeticException("We can't calculate modular multiplicative inverse of this number");			
 		}
 		if (mod.compareTo(BigInteger.ZERO) < 0) {
-			//	System.out.println("We can't calculate modular multiplicative inverse of this number");
+			
 				throw new IllegalArgumentException("Wrong arguments, change them !");			
 			}
 			
@@ -335,13 +335,14 @@ public class BasicTheoreticMethods implements ModularArithmetic {
         } 
         if (mod.compareTo(BigInteger.ZERO) < 0) {
         	throw new IllegalArgumentException("Operation can't be done");
-        } 
+        }
+       
         // if the exponent is less than zero, first find the modular multiplicative inverse of num modulo mod
         if (exp.compareTo(BigInteger.ZERO) < 0) {
         	exp = exp.abs();
-        	num = modCalculation (multiplicativeInverse(num, mod), mod) ;
+        	num = modCalculation (multiplicativeInverse(num, mod), mod) ; 
         	
-        }
+        } 
         // Update the number num if it is more than or equal to mod 
         
         num = modCalculation(num, mod);       
@@ -352,7 +353,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
             if((exp.and(BigInteger.ONE).equals(BigInteger.ONE))) 
                 pow = modCalculation((pow.multiply(num)), mod); 
       
-            // exponent must be even now  n = n / 2 
+            // exponent must be even now  exp = exp / 2 
             
             exp = exp.shiftRight(1);  
             num = modCalculation((num.multiply(num)), mod);  
@@ -363,7 +364,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 	/*Method to calculate the Euler'sche function for a natural number n
 	 * It correspond to the count of numbers x in {1, 2, 3,..., n} that are relatively 
 	 * prime to n, i.e., the numbers whose gcd(x,n) are 1.
-	 * Using the product formula we multiply n by product of (1 1/p) for all prime factors p of n.
+	 * Using the product formula we multiply n by product of (1 - 1/p) for all prime factors p of n.
 	 * @param number num
 	 * @param prim prime number
 	 * We count all prime numbers and their multiples and subtract this count from num to get the result
@@ -398,7 +399,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 					
 			if (modCalculation(num,prim).equals(BigInteger.ZERO)) {
 				
-				//update result as long as prim divides num: num*(1 � 1/p) = num - (num/p)
+				//update result as long as prim divides num: num = num - (num/p)
 				// subtract multiples of prim from result
 				
 				phiResult = phiResult.subtract(phiResult.divide(prim));
@@ -420,6 +421,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		}
 		return phiResult;
 	}
+
 
 	public BigInteger random(int length) {
 		Random rnd = new Random();
@@ -446,6 +448,7 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 
 		return rndNumber;
 	}
+ 
   
 	/*Function implementing the Chinese remainder theorem 
 	* @param remainderList_R contains the remainders of the equations
@@ -474,20 +477,20 @@ public class BasicTheoreticMethods implements ModularArithmetic {
 		
 		if (k > remainderList_R.size()) { k = remainderList_R.size();}
 
-	 // Compute product of all moduli  N = n[1]*...*n[k]
+	 // Compute product of all moduli  M = m[1]*...*m[k]
 		
 		for (int i = 0; i < k; i ++) 
 						
 			product = product.multiply(modulList_M.get(i)); 
         
-		// For each i, the integers n[i] and N/n[i] are co-prime
-		// so divide N by current modulus to get product excluding said modulus
+		// For each i, the integers m[i] and M/m[i] are co-prime
+		// so divide M by current modulus to get product excluding said modulus
 		
 		for (int i = 0; i < k; i++) {
 					
 			p = product.divide(modulList_M.get(i));	
 			
-		//  then calculate multiplicativeInverse x such that x*p == 1 % modulList_N.get(i)
+		//  then calculate multiplicativeInverse x such that x*p == 1 % modulList_M.get(i)
 			
 			tmp = multiplicativeInverse(p, modulList_M.get(i)); 
 			
