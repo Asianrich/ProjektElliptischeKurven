@@ -17,7 +17,7 @@ Multi-Präzisions-Gleitkomma-Divisionsoperationen
 umfassen kann \cite{patent}.
 }\end{quote} 
 Die modulare Artihmetik bietet endliche Strukturen, die alle üblichen arithmetischen Operationen der ganzen Zahlen aufweisen und die mit vorhandener Computerhardware problemlos implementiert werden können \cite{Contini2011}.
-Eine wichtige Eigenschaft dieser Strukturen ist, dass sie durch Operationen wie Exponentiation zufällig permutiert zu sein scheinen, aber die Permutation kann oft leicht durch eine andere Exponentiation umgekehrt werden \cite{Contini2011}.
+Eine wichtige Eigenschaft dieser Strukturen ist, dass sie durch Operationen wie Potenzieren zufällig permutiert zu sein scheinen, aber die Permutation kann oft leicht durch eine andere Potenz umgekehrt werden \cite{Contini2011}.
 In entsprechend ausgewählten Fällen ermöglichen diese Vorgänge die Ver- und
 Entschlüsselung oder die Generierung und Überprüfung von Signaturen
 \cite{Contini2011}.\\
@@ -25,13 +25,13 @@ Entschlüsselung oder die Generierung und Überprüfung von Signaturen
 Die Berechnung hier erfolgt genauso wie bei der normalen Arithmetik
 und der einzige Unterschied besteht darin, dass  alle
 Operationen in der modularen Arithmetik in Bezug auf eine
-positive ganze Zahl, den Modul, ausgeführt werden.
+positive ganze Zahl, das Modul, ausgeführt werden.
 Ziel ist der kleinste positive Rest zu finden. \\
 
 Im Allgemeinen lässt sich eine modulare Reduktion durch die folgende Gleichung definieren: \[ r = x \quad mod \quad p \quad = \quad x - \floor{\frac{x}{p}} \cdot p \], wobei x die zu reduzierende Anzahl modulo p ist, der gefundene Rest r, der im Bereich von [0, p - 1] liegt \cite{patent}. Daraus lässt sich die Äquivalenzrelation definieren und man sagt, dass $ r $ kongruent zu $ x $ modulo $ p $ ist.\\
 
 Eine Zahl $ r $ ist \textbf{kongruent} bzw. \textbf{äquivalent} zu einer Zahl $ x $ modulo $ p $, ausgedrückt durch \( r \equiv x \pmod{p} \), falls p ein Teiler von ( r - x) ist. 
-13
+13 ?????? CITE???????
 
 
 Dies bedeutet, dass r und x den gleichen Rest haben, wenn sie durch p geteilt werden und $ r = k $ $\cdot $ $ p + x $ mit  $ k \in $ $ \mathbf{Z} $.\\
@@ -59,20 +59,22 @@ In dieser Klasse wurden folgende Funktionen implementiert:
 \end{itemize}
 
 Diese Klasse enthält unter anderen zahlentheoretische Methoden, die eine wichtige Bedeutung für die Kryptographie haben.
-Die erste wichtigste Methode ist die Methode der Berechnung vom Modulo: $\textbf{ X $\mod P $} $
+
+Die erste wichtige Methode ist die Methode der Berechnung von Modulo: $\textbf{ X $\pmod P $} $
+
 
 \subsection{Berechnung von X mod Y}
 
 
-Eine naivste Methode wurde implementiert, in dem das Finden von $ r = x \pmod p $ zuerst
-durch wiederholte Berechnung des Quotients $ q = \frac{x}{p} $ und dann durch
+Eine naive Methode wurde implementiert, in dem das Finden von $ r = x \pmod p $ zuerst
+durch wiederholte Berechnung des Quotienten $ q = \frac{x}{p} $ und dann durch
 wiederholtes Subtrahieren von x mit dem Ergebnis aus der Multiplikation von p mit q, bis das Ergebnis im Bereich von $ [0, p - 1] $ liegt.
 Die Leistung der Modulo-Operation hängt vor allem hier von der Leistung des Divisionsalgorithmus ab. \\
 
-Die naivste Art eine ganzzahlige Division zu implementieren, besteht darin,
-solange den Divisor p von der Dividende x zu subtrahieren, bis die Dividende x negativ wird, und dabei den Quotienten q hochzuzählen. Wenn die Dividende x negativ wird, wird sie vom Divisor addiert und der Quotient um eins verringert \cite{bericht}. 
+Die naive Art eine ganzzahlige Division zu implementieren, besteht darin,
+solange den Divisor p von dem Dividend x zu subtrahieren, bis der Dividend x negativ wird, und dabei den Quotienten q hoch zu zählen. Wenn der Dividend x negativ wird, wird er zum Divisor aufaddiert und der Quotient um eins verringert \cite{bericht}. 
 
-Die implementierte Methode ist jedoch sehr langsam und kostspielig, wenn die Anzahl der Iterationen berücksichtigt wird, wenn eine große Zahl durch eine kleine Zahl geteilt wird 
+Die implementierte Methode ist jedoch sehr langsam und kostspielig, denn wenn eine große durch eine kleine Zahl geteilt wird, muss man sehr oft Iterieren 
 \cite{barett}. \\
 
 Aber Methoden wie die \textbf{Barrett-Reduktion} können verwendet werden, um die Modulo-Operation zu optimieren (\cite{anoops}, \cite{hasenplaugh}).\\
@@ -80,13 +82,13 @@ Aber Methoden wie die \textbf{Barrett-Reduktion} können verwendet werden, um di
 Eine \textbf{Barrett-Reduktion} ist ein Verfahren zum Reduzieren einer Zahl modulo einer anderen Zahl, wobei die Division durch Multiplikationen und Verschiebungen ersetzt werden können, da die beiden letzteren Operationen viel billiger sind \cite{patent}.\\
 Also der Quotient  $ q = \frac{x}{p} $ wird unter Verwendung kostengünstigerer Operationen mit Potenzen einer geeignet gewählten Basis $ b $ geschätzt. Für die Barett-Reduktion wird b häufig als Potenz von 2 gewählt werden.
 
-Eine modulabhängige Größe $ m = \floor*{\frac{b^{2k}}{p}} $ muss berechnet werden, wodurch der Algorithmus für den Fall geeignet ist, dass viele Reduktionen mit einem einzigen Modul durchgeführt werden \cite{Hankerson}. Der Quotient $ q $ kann nun einmal nur für jedes Modul gleich dem Kehrwert von p berechnet werden \cite{barett}.
+Eine modulabhängige Größe $ m = \floor*{\frac{b^{2k}}{p}} $ muss berechnet werden, wodurch der Algorithmus für den Fall geeignet ist, dass viele Reduktionen mit einem einzigen Modul durchgeführt werden \cite{Hankerson}. Der Quotient $ q $ kann nun nur einmal für jedes Modul gleich dem Kehrwert von p berechnet werden \cite{barett}.
 
 Dies erklärt sich aus der Tatsache, dass beispielsweise jede RSA-Verschlüsselung für eine Entität ein Reduktionsmodul für den öffentlichen Schlüssel dieser Entität erfordert \cite{menezes:1997}. \\
 
-Das Modulares Reduktonsverfahren umfasst \cite{patent}:
+Das modulare Reduktionsverfahren umfasst \cite{patent}:
 \begin{itemize}
-       \item die Eingabe die zu reduzierenden Wert x und des Modulos p, wobei dies eine spezielle Form (z.B. NIST-Primzahl) hat,
+       \item die Eingabe des zu reduzierenden Werts x und des Modulos p, wobei dies eine spezielle Form (z.B. NIST-Primzahl) hat,
        \item das Durchführen der modularen Reduktion von x mod p, wobei die modulare Reduktion umfasst:
        \begin{itemize}
          \item Berechnen eines genäherten Basisquotienten m,
@@ -107,7 +109,7 @@ Das Modulares Reduktonsverfahren umfasst \cite{patent}:
 		\textbf{Algorithmus: Modulo-Berechnung}\\
 		\midrule
 		Input: b > 3, p, $ k = \floor*{log_bp} + 1, 0 \leq x < b^{2k}, m = \floor*{\frac{b^{2k}}{p}} $\\
-		Output: $ x mod p $ \\
+		Output: $ x  mod  p $ \\
 		                                           \\
 		                                           
 		1. Berechne $ q = \floor*{ \floor*{\frac{x}{b^{k-1}}} \frac{m}{b^{k+1}} }\cdot p $;\\
@@ -124,7 +126,7 @@ Das Modulares Reduktonsverfahren umfasst \cite{patent}:
 
 
 
-Weitere grundlegende und wesentliche Operationen für die
+Weitere grundlegenden und wesentlichen Operationen für die
 Kryptographie sind die modulare Addition, modulare Subtraktion und modulare Multiplikation. 
 
 
@@ -139,7 +141,7 @@ geschrieben werden als:
     x + y \mod p 
 \end{align*}
 \end{ceqn} wobei x und y die
-gegebene Zahlen und p eine Primzahl sind. In dieser Arbeit wurde für die Implementierung der modularen Addition zuerst $ x $ und $ y $ 
+gegebenen Zahlen und p eine Primzahl sind. In dieser Arbeit wurde für die Implementierung der modularen Addition zuerst $ x $ und $ y $ 
 addiert, dann wird das Ergebnis modulo p berechnet, wenn dies außerhalb des Bereichs von [0, p-1] liegt, sonst wird die Summe direkt ausgegeben. \\
 
 Seien zum Beispiel x = 17, y = 4, p = 5, dann ist
@@ -149,12 +151,12 @@ Seien zum Beispiel x = 17, y = 4, p = 5, dann ist
    x + y \pmod p = \quad 17 + 4 \pmod 5 = \quad 21 \equiv 1 \mod 5 \\
 \end{align*}
 \end{ceqn}
-Ein kostengünstiger bzw. schnellerer Algorithmus wäre zuerst x und y binär darzustellen und in einem Array von t-Bit zu speichern.
+Ein kostengünstiger bzw. schnellerer Algorithmus wäre zuerst x und y binär darzustellen und in einem Array von t-Bits zu speichern.
 Danach sind x und y wortweise bzw.
-bitweise zu addieren und das Ergebnis dann p subtrahieren, solange es p - 1 überschreitet. \\
+bitweise zu addieren und vom Ergebnis dann p zu subtrahieren, solange es p - 1 überschreitet. \\
 
-Jede Wortaddition erzeugt zum Beispiel in einer 32-Bit Plattform-Architektur eine 32-Bit-Summe und eine 1-Bit-Übertragsziffer , die zur
-nächsthöheren Summe addiert werden \cite{nist}. Die einfache Addition und die \textit{Addition mit Übertrag} können schnelle Einzeloperationen sein \cite{Hossain2019}. Die Tabellen \ref{tab1} und \ref{tab2} veranschaulichen die beiden Algorithmen. 
+Jede Wortaddition erzeugt zum Beispiel in einer 32-Bit Plattform-Architektur eine 32-Bit-Summe und eine 1-Bit-Übertragsziffer, die zur
+nächsthöheren Summe addiert wird \cite{nist}. Die einfache Addition und die \textit{Addition mit Übertrag} können schnelle Einzeloperationen sein \cite{Hossain2019}. Die Tabellen \ref{tab1} und \ref{tab2} veranschaulichen die beiden Algorithmen. 
 
 \begin{table}[!ht]
 \centering
@@ -213,9 +215,9 @@ werden als:
 \end{ceqn} 
 
 wobei x und y die gegebenen Zahlen und p die Primzahl sind. 
-Ein einfachster Weg diese Operation durchführen, besteht darin, die beiden Zahlen x
+Der einfachste Weg diese Operation durch zu führen, besteht darin, die beiden Zahlen x
 und y zuerst zu subtrahieren und dann der kleinste positive Rest im Bereich von [0, p-1] zu berechnen, in dem das Ergebnis
-der Subtraktion von (x - y) durch p geteilt wird. Der Algorithmus sieht genauso wie den Algorithmus der modularen Addition, wobei im ersten Schritt anstatt eine Addition, eine Subtraktion durchgeführt wird. \\
+der Subtraktion von (x - y) durch p geteilt wird. Der Algorithmus sieht genauso aus wie der Algorithmus der modularen Addition, wobei im ersten Schritt anstatt eine Addition, eine Subtraktion durchgeführt wird. \\
 
 Seien zum Beispiel x = 15, y = 23, p = 5, dann ist
 \begin{align*}
@@ -251,7 +253,7 @@ Neben der Barett-Reduktion Methode gibt es auch eine andere Methode, die die
 Modulo-Operationen viel schneller als die reguläre klassische Methode
 durchführen kann: Die \textbf{Montgomery-Multiplikation}. \\
 
-Die \textbf{Montgomery-Multiplikation} ist ein Verfahren zur modularen Multiplikation, bei der die traditionelle Teilung-Operation vermeidet wird und anschließend nur Multiplikationen, Additionen und Verschiebungen verwendet werden\cite{sahuMa}. Die Zahlen x und y werden binär dargestellt 
+Die \textbf{Montgomery-Multiplikation} ist ein Verfahren zur modularen Multiplikation, bei der die traditionelle Divisons-Operation vermeidet wird und anschließend nur Multiplikationen, Additionen und Verschiebungen verwendet werden \cite{sahuMa}. Die Zahlen x und y werden binär dargestellt. 
 Der modulare multiplikative Algorithmus ist in Tabelle \ref{tab4} angegeben.
 
 \begin{table}[!ht]
@@ -276,12 +278,12 @@ Der modulare multiplikative Algorithmus ist in Tabelle \ref{tab4} angegeben.
 \end{table}
 
 Das Verfahren ist für eine einzelne modulare Multiplikation nicht effizient,
-kann jedoch effektiv bei Berechnungen wie der modularen Exponentiation
-verwendet werden, bei denen viele Multiplikationen für eine gegebene Eingabe durchgeführt werden \cite{Hankerson}. Im nächsten Unterabschnitt werden Methoden zur Berechnung der modularen Exponentiation erläutert.
+kann jedoch effektiv bei Berechnungen wie der modularen Potenzierung
+verwendet werden, bei denen viele Multiplikationen für eine gegebene Eingabe durchgeführt werden \cite{Hankerson}. Im nächsten Unterabschnitt werden Methoden zur Berechnung der modularen Potenzierung erläutert.
 
 \subsection{Modulare Exponentiation}
 
-Das Problem der modularen Exponentiation lässt sich mathematisch definieren als:
+Das Problem der modularen Potenzierung lässt sich mathematisch definieren als:
 \begin{ceqn}
 
 \begin{align*}
@@ -290,23 +292,23 @@ Das Problem der modularen Exponentiation lässt sich mathematisch definieren als
 
 \end{ceqn}
 
-Die modulare Exponentiation ist die kostspielige, aber
+Die modulare Potenzierung ist die kostspielige, aber
 entscheidende und bedeutungsvolle Methode für viele kryptographische Protokolle. \\
 
-Algorithmen zur schnellen modularen Exponentiation wie das Square-and-Multiply-Verfahren, basieren vor
+Algorithmen zur schnellen modularen Potenzierung wie das Square-and-Multiply-Verfahren, basieren vor
 allem auf der Auswertung der Binärdarstellung des Exponenten k \cite{langMEI}. 
 Dort wird der Exponent k binär dargestellt, als k = \(\sum_{i=0}^{t} k_i \cdot 2^i\) mit $ k_i \in \{0, 1\}$ und die Auswertung kann dabei je nach Algorithmen entweder von links nach rechts oder von rechts nach links erfolgen \cite{langMEI}. \\
 
-Bei einem k-Bit-Exponenten werden dann für die Exponentiation höchstens k Quadrate und k Multiplikationen benötigt \cite{langMEI}.
+Bei einem k-Bit-Exponenten werden dann für die Potenzierung höchstens k Quadrate und k Multiplikationen benötigt \cite{langMEI}.
 Selbst wenn sie effizient mit dem wiederholten Square-and-Multiply-Verfahren durchgeführt wird, erreicht sie eine Bit-Komplexität von $\mathcal{O}(\log{}n^3)$ \cite{menezes:1997}.  \\
 
 Gegeben sei beispielsweise \(x^k = x^{13}\). Zu berechnen ist, \( 2^{13} \mod 7\).
-Dann ist die binäre Darstellung von k = 1101. Der Exponent k lässt sich wie folgt auswerten: \\
+Dann ist die binäre Darstellung von k = 1101. Der Exponent k lässt sich wie folgt auswerten:
 \begin{ceqn}
   \[((((0) \cdot 2 + 1) \cdot 2 + 1) \cdot 2 + 0) \cdot 2 + 1   =   13 \]
 \end{ceqn}
 
-Daraus lässt sich $ x^{13} $ bzw. $ 2^{13}$ wie folgt aufteilen: \\
+Daraus lässt sich $ x^{13} $ bzw. $ 2^{13}$ wie folgt aufteilen:\\
 \begin{ceqn}
    \[ x^{13} = ((((x^0)^2 \cdot x^1)^2 \cdot x^1)^2 \cdot x^0)^2 \cdot x^1 \] \\
    \[ 2^{13} = ((((2^0)^2 \cdot 2^1)^2 \cdot 2^1)^2 \cdot 2^0)^2 \cdot 2^1 \] 
@@ -314,13 +316,13 @@ Daraus lässt sich $ x^{13} $ bzw. $ 2^{13}$ wie folgt aufteilen: \\
 
 Es ergibt sich, dass \( 2^{13} \equiv 2 \mod 7\).\\
 
-Die schnelle modulare Exponentiation Kann jedoch auch in einfacher Weise realisiert werden \cite{langME}. Tatsächlich, kann \( x^{13}\) auch dargestellt werden, als 
+Die schnelle modulare Potenz kann jedoch auch in einfacher Weise realisiert werden \cite{langME}. Tatsächlich, kann \( x^{13}\) auch dargestellt werden, als 
 
 \begin{align*}
     x^{13} = x^{12} \cdot x \quad \text{und \( x^{12}\) weiterhin als} \quad x^{12} = (x^{6})^2.
 \end{align*}
 
-Ausgehend von dieser Beobachtung, ergibt sich die folgende Rekursionsformeln \cite{langME}:
+Ausgehend von dieser Beobachtung, ergibt sich die folgende Rekursionsformel \cite{langME}:
 
 \begin{ceqn}
 \begin{align*}
@@ -332,22 +334,24 @@ Ausgehend von dieser Beobachtung, ergibt sich die folgende Rekursionsformeln \ci
 \end{align*}
 \end{ceqn}
 
-In dieser Arbeit wurde für die Implementierung der modularen Exponentiation, die Idee der Rekursionsformeln verfolgt.
+In dieser Arbeit wurde für die Implementierung der modularen Potenz, die Idee der Rekursionsformel verfolgt.
 In dieser rekursive Implementierung wurde die Binärdarstellung des Exponenten k nicht explizit benötigt.\\
 
-Der Algorithmus startet mit Basisfällen, in dem es geprüft wird, ob die Zahlen x, k und p in den richtigen Bereichen liegen. 
+Der Algorithmus startet mit Basisfällen, in dem geprüft wird, ob die Zahlen x, k und p in den richtigen Bereichen liegen. 
 A wird am Anfang auf 1 gesetzt (A = 1). Wenn k gleich null ist, wird A = 1 zurückgegeben. 
-Wenn k größer null ist, wird in jedem Schritt wird geprüft, ob der Exponent k ungerade bzw. ob die aktuelle binäre Zahl eins ist. 
-Wenn ja, wird das Ergebnis A mit x multipliziert und der Modulo berechnet; ansonsten erfolgt zuerst eine
-Rechtsverschiebung (k wird halbiert) und danach wird x quadriert. Danach wird den Rest bestimmt, damit $x \in [0, p-1] $ bleibt.
-Diese Schritte werden durchgeführt, solange der Exponent größer 0 ist. Der Algortihmus wird in der Tabelle \ref{tab5} dargestellt.
+Wenn k größer null ist, wird in jedem Schritt geprüft, ob der Exponent k ungerade bzw. ob die aktuelle binäre Zahl eins ist. 
+Wenn ja, wird das Ergebnis A mit x multipliziert und das Modulo berechnet; ansonsten erfolgt zuerst eine
+Rechtsverschiebung (k wird halbiert) und danach wird x quadriert. Danach wird der Rest bestimmt, damit $x \in [0, p-1] $ bleibt.
+Diese Schritte werden durchgeführt, solange der Exponent größer 0 ist. Der Algorithmus wird in der Tabelle \ref{tab5} dargestellt.
 Also die Leistung dieser Methode hängt von der Leistung des Modulo-Algorithmus ab.
 
 \begin{table}[!ht]
 \centering
 	\begin{tabular}{l}
 		\toprule
-		\textbf{Algorithmus: Modulare Potenzierung}\\
+
+		\textbf{Algorithmus: Modulare Potenz}\\
+
 		\midrule
 		Input: p, x, $ k $ $\in$ $\mathbf{Z} $ \\
 		Output: $ x^k \mod $ p \\
@@ -365,31 +369,34 @@ Also die Leistung dieser Methode hängt von der Leistung des Modulo-Algorithmus 
 	    6. Return A. \\
 	   \bottomrule
 	\end{tabular}
-	\caption{Modulare Potenzierung aus der Klasse \textit{BasicTheoreticMethods.java}}
+
+	\caption{Modulare Potenz aus der Klasse \textit{BasicTheoreticMethods.java}
 	\label{tab5}
 \end{table}
 
 In den meisten wissenschaftlichen Artikeln, liegt $ k \in [0, p-1] $, aber in dieser Arbeit es wurde angenommen, dass k $ \in \mathbf{Z}$ liegt. 
 Betrachtet wurde also die Fälle, wo der Exponent k auch negative
-Werte haben kann, um soweit wie möglichst Sicherheitslücken  auszuschließen. \\
+Werte haben kann, um möglichst alle Sicherheitslücken  auszuschließen. \\
 
-In diesem Fall wird für die Berechnung der modularen Potenzierung, den Absolutwert des Exponenten genommen, aber
+
+In diesem Fall wird für die Berechnung der modularen
+Potenz, der Absolutwert des Exponenten genommen, aber
 vorher nimmt x den
-resultierenden Wert aus der Berechnung der modularen multiplikative Inverse von x und p.
+resultierenden Wert aus der Berechnung der modularen multiplikative Inverse von x und p an.
 
 
-\subsection{Modulare multiplikative  Inverse}
+\subsection{Modulare multiplikative Inverse}
 
-Die modulare Inverse ist eine weitere wichtige Methode der Kryptographie. Wenn a eine Restklasse aus $ \in \mathbf{Z_p} $ (geschrieben $[a]_p$) und p eine Primzahl ist, ist die
+Das modulare Inverse ist eine weitere wichtige Methode der Kryptographie. Wenn a eine Restklasse aus $\in \mathbf{Z_p} $  (geschrieben $[a]_p$) und p eine Primzahl ist, ist das
 modulare Inverse $ a^{-1} $ eine ganze Zahl, die die Beziehung 
 \begin{ceqn}
  \begin{align*}
      a \cdot a^{-1} \equiv 1 \mod p 
  \end{align*}
 \end{ceqn} erfüllt.
- \( a^{-1} \in \mathbf{Z^*_p}\), die Menge aller invertierbaren Restklassen von $ \mathbf{Z_p} $.
 
-Die modulare Inverse wird mit Hilfe des erweiterten euklidischen (EEA) bestimmt.
+
+Das modulare Inverse wird mit Hilfe des erweiterten euklidischen (EEA) bestimmt.
 Dort sind die ganzen Zahlen x und y zu finden, für die die folgende Gleichung erfüllt ist: 
 \begin{ceqn}
  \begin{align*}
@@ -401,16 +408,17 @@ Also muss der $ ggT (a, p) = 1 $ sein, da p prim ist. Wenn dies den Fall lässt 
 \begin{align*}
     \textbf{Extended Euklidischer Algortihmus}
 \end{align*}
-Der extended Euklidische Algorithmus basiert auf den euklidischen Algorithmus, der der ggT von zwei ganzen Zahlen durch wiederholte Anwendung des Divisionsalgorithmus ermittelt. Aber bei der Berechnung des ggT verfolgt wird auch den Wert von x. \\
+Der extended Euklidische Algorithmus basiert auf dem euklidischen Algorithmus, der den ggT von zwei ganzen Zahlen durch wiederholte Anwendung des Divisionsalgorithmus ermittelt. Aber bei der Berechnung des ggT wird auch der Wert von x verfolgt. \\
 
-Der erste Schritt des euklidischen Algorithmus besteht darin, die größere Ganzzahl durch die kleinere zu teilen. Dann wird Der Divisor wiederholt durch den Rest geteilt, bis der Rest 0 ist. Der ggT ist dann der letzte Rest ungleich Null in diesem Algorithmus. \\
-Allerdings die Voraussetzung für die Bestimmung der Inverse ist, dass $ ggT(a, p) = 1 $ sein muss. 
-Wenn dies den Fall ist, können durch Umkehren der Schritte im euklidischen Algorithmus die ganzen Zahlen x und y gefunden werden.
+Der erste Schritt des euklidischen Algorithmus besteht darin, die größere Ganzzahl durch die Kleinere zu teilen. Dann wird der Divisor wiederholt durch den Rest geteilt, bis der Rest 0 ist. Der ggT ist dann der letzte Rest ungleich Null in diesem Algorithmus. \\
+Allerdings die Voraussetzung für die Bestimmung der Inverse, dass $ ggT(a, p) = 1 $ sein muss. 
+Wenn dies der Fall ist, können durch Umkehren der Schritte im euklidischen Algorithmus die ganzen Zahlen x und y gefunden werden.
+
 Dies kann erreicht werden, indem die Zahlen als Variablen behandelt werden, bis den Ausdruck \\
 \(1 = x \cdot a + y \cdot p \) erhalten wird, der eine lineare Kombination unserer Anfangszahlen ist. \\
 Daraus es folgt \( x \cdot a \equiv 1 \mod p \). 
 
-Zum Beispiel, gesucht ist die Inverse von $[17]_{53}$. \\
+Zum Beispiel, gesucht wird das Inverse von $[17]_{53}$. \\
 EEA liefert:
 \begin{ceqn}
 \begin{align*}
@@ -427,15 +435,14 @@ Es ergibt sich, dass ggT(17, 53) = 1. Es folgt: \\
               1 \equiv 25 \cdot 17 \pmod 53
 \end{align*}
 \end{ceqn}
-d.h. die Inverse von $[17]_{53}$ ist $[25]_{53}$. \\
-
-Die modulare multiplikative Inverse lässt sich auch durch die modulare Exponentiation unter Verwendung des Satz von Euler berechnen. \\
+d.h. das Inverse von $[17]_{53}$ ist $[25]_{53}$. \\
 
 
-\textbf{Satz von Euler:}\quad
-Sei \(n \in \mathbb{N}\), die Menge der natürlichen Zahlen. Dann
-gilt für alle a \(\in \mathbb{N}\), die teilerfremd ( $ ggT(a, n) = 1 $)
-zu n sind also \cite{langMIE}: \\
+Das modulare multiplikative Inverse lässt sich auch durch die modulare Potenz unter Verwendung des Satz von Euler berechnen. \\
+\textbf{Satz von Euler:} \quad
+Sei \(n \in \mathbb{N}\), die Menge der natürlichen Zahlen. Dann gilt
+für alle a \(\in \mathbb{N}\), die teilerfremd ( $ ggT(a, n) = 1 $) zu n sind also \cite{langMIE}: \\
+
 
 \begin{ceqn}
 \begin{align*}
@@ -454,7 +461,7 @@ Nach dem Satz von Euler gilt für jedes \(a \in \mathbf{Z^*_n} \)\\
 \end{align*}
 \end{ceqn}
 
-Die Euler'sche $\varphi$-Funktion ist gleich der Anzahl der der zu n
+Die Euler'sche $\varphi$-Funktion ist gleich der Anzahl der zu n
 teilerfremden Zahlen zwischen 1 und n. Man schreibt \\
 
 \begin{ceqn}
@@ -469,7 +476,8 @@ Zum Beispiel für p = 7, eine Primzahl gilt: \\
 
 \(\varphi(4) = |\mathbf{Z*_4}| = |\{ [1]_4, [3]_4 \}| = 2\) \\
 
-Durch modulare Potenzierung lässt sich zwar die Inverse einer
+
+Durch modulare Potenzierung lässt sich zwar das Inverse einer
 Restklasse leicht bestimmen, aber sie ist im Vergleich mit der
 Berechnung mithilfe des erweiterten euklidischen Algorithmus etwas
 langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und
@@ -496,7 +504,7 @@ Wenn die Zahl p nicht prim ist, dann wird direkt geprüft, ob diese größer ein
 Da wir mit sehr großen Zahlen arbeiten, ist diese Implementierung jedoch nicht effizient. \\
 Eine effiziente Lösung wäre, anstatt auf alle Zahlen durchzulaufen, werden nun nur auf alle  Primzahlen, die kleiner oder gleich der Quadratwurzel von n sind, durchgelaufen. Diese Primzahlen können vom Anfang an zufällig bestimmt und gespeichert werden. 
 
-Mit Hilfe der modularen multiplikative Inverse lässt sich leicht die modulare Division zwischen 2 Zahlen bestimmen.
+
 
 \subsection{Modulare Division}
 
@@ -507,12 +515,12 @@ Die modulare Division lässt sich mathematisch definieren als:
 \end{align*}
 \end{ceqn}
 
-Bei der Bestimmung der modularen Division wird zuerst $ y^{-1}$, die modulare Inverse von y über p berechnet. Danach wird die modulare Multiplikation von $ x \cdot y^{-1} $ durchgeführt.  
+Bei der Bestimmung der modularen Division wird zuerst $ y^{-1}$, das modulare Inverse von y über p berechnet. Danach wird die modulare Multiplikation von $ x \cdot y^{-1} $ durchgeführt.  
 
 \section{Chinesischer Restsatz}
 
-Ein weitere Methode, die eine wichtige Rolle in der
-Entschlüsselung bzw.in der Generierung von Schlüsseln für die
+Eine weitere Methode, die eine wichtige Rolle in der
+Entschlüsselung bzw. in der Generierung von Schlüsseln für die
 Kryptographie spielt, ist der chinesische Restsatz.
 Der chinesische Restsatz (engl. Chinese Remainder Theorem: CRT) besagt, dass wenn 2 Zahlen p und q Koprime
 sind (also,wenn ggT(p,q) = 1), dann hat das Gleichungssystem:
@@ -525,7 +533,7 @@ sind (also,wenn ggT(p,q) = 1), dann hat das Gleichungssystem:
 \end{ceqn}
 eine eindeutige Lösung für \(x \mod p \cdot q \). 
 
-Also wenn p und q Koprime sind, es existiert 2 Zahlen $ m_1 $ und $ m_2 $, so dass $ m_1 $ $\cdot$ p + $ m_2 $ $\cdot $ q = 1 gilt. Um $ m_1 $ und  $ m_2 $ zu bestimmen, wird der EEA verwendet und daraus ergibt sich, dass
+Also wenn p und q Koprime sind, existieren 2 Zahlen $ m_1 $ und $ m_2 $, so dass $ m_1 $ $\cdot$ p + $ m_2 $ $\cdot $ q = 1 gilt. Um $ m_1 $ und  $ m_2 $ zu bestimmen, wird der EEA verwendet und daraus ergibt sich, dass
 
 \begin{ceqn}
    \begin{align*}
@@ -543,11 +551,11 @@ Für beliege Gleichungen:
 
 In der Tat ermöglicht dieser Satz, eine Nachricht zu entschlüsseln, in dem am Anfangs eine geheime Nachricht M in
 beliebige Hälften (hier in 2 Hälften $ m_1, m_2 $) aufgeteilt wird und dann das Modulo jede diese Nachricht berechnet, wenn die Faktorisierung des
-öffentlichen Schlüssels $ N = p \cdot q $ gekannt ist. Danach
-werden diese Nachrichten in einer Zahl x wieder kombiniert sein und ausschließlich wird der private Schlüssel berechnet.
+öffentlichen Schlüssels $ N = p \cdot q $ bekannt ist. Danach
+werden diese Nachrichten in einer Zahl x wieder kombiniert sein und anschließend wird der private Schlüssel berechnet.
 
 
-Gegeben sind zum Beispiel 2 Zahlen p = 5 und q = 7. Gesucht ist die Zahl x für die es gilt:
+Gegeben sind zum Beispiel zwei Zahlen p = 5 und q = 7. Gesucht ist die Zahl x für die gilt:
 \begin{ceqn}
 \begin{align*}
       x \equiv 2 \mod 5 \\
@@ -555,12 +563,12 @@ Gegeben sind zum Beispiel 2 Zahlen p = 5 und q = 7. Gesucht ist die Zahl x für 
 \end{align*}
 \end{ceqn}
 
-Berechnung des ggT (5,7) mittels des EEA ergibt 1 = 3 $\cdot $ 5 - 2 $\cdot $ 7, also es existiert 2 Zahlen $ m_1, m_2 $, mit $ m_1 =
+Berechnung des ggT (5,7) mittels des EEA ergibt 1 = 3 $\cdot $ 5 - 2 $\cdot $ 7, also es existieren 2 Zahlen $ m_1, m_2 $, mit $ m_1 =
 3$ und $ m_2 = -2 $. \\
 Dann ist 
 \(x = 2 \cdot -2 \cdot 7 + 3  \cdot 3 \cdot 5\) = \( -28 + 45  \equiv 17 \mod 35\). \\
 
-Für diese Arbeit wurde für die Implementierung die Gleichung \ref{crt} betrachtet. Zwei Array-Listen wurden genutzt, um alle Reste $ a_i $ und alle Modulo-Werten $ N_i $ zu speichern. K wird als die Größe der Liste genommen und der Algortihmus wird nur laufen, für Liste gleicher Länge. Die Tabelle \ref{tab6} stellt der entsprechenden Algorithmus dar. 
+Für diese Arbeit wurde für die Implementierung der Gleichung \ref{crt} betrachtet. Zwei Array-Listen wurden genutzt, um alle Reste $ a_i $ und alle Modulo-Werte $ N_i $ zu speichern. K wird als die Größe der Liste genommen und der Algorithmus wird nur laufen, für Listen gleicher Länge. Die Tabelle \ref{tab6} stellt den entsprechenden Algorithmus dar. 
 \begin{table}[!ht]
 \centering
 	\begin{tabular}{l}
