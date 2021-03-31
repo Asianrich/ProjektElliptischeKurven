@@ -84,6 +84,11 @@ public class Main {
 							read = sc.nextLine();
 							b = new BigInteger(read);
 						}
+						EllipticCurve curve = new EllipticCurve(a, b, p);
+						if(!curve.isNonSingular(a,b)){
+							System.out.println("Kurve ist nicht non-singular!");
+							break;
+						}
 						if (file != null && file.hasNext()) {
 							read = file.nextLine();
 							x = new BigInteger(read);
@@ -99,6 +104,11 @@ public class Main {
 							System.out.println("Geben Sie y des Erzeuger für DH ein:");
 							read = sc.nextLine();
 							y = new BigInteger(read);
+						}
+						Point erz = new AffinePoint(x, y);
+						if(!curve.isRoot(erz)){
+							System.out.println("Punkt ist kein Erzeuger!");
+							break;
 						}
 						if (file != null && file.hasNext()) {
 							read = file.nextLine();
@@ -127,8 +137,6 @@ public class Main {
 							read = sc.nextLine();
 							g = new BigInteger(read);
 						}
-						EllipticCurve curve = new EllipticCurve(a, b, p);
-						Point erz = new AffinePoint(x, y);
 						if(g.equals(BigInteger.ONE))
 							erz = new ProjectivePoint(x, y, BigInteger.ONE);
 						if(g.equals(BigInteger.TWO))
