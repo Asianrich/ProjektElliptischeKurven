@@ -301,11 +301,11 @@ Jedoch sagt dieser Test nicht aus, ob es sich tatsächlich um eine Primzahl hand
 Je mehr Versuche man macht, desto geringer wird die Fehlerwahrscheinlichkeit. \\
 Will man diese Fehlerwahrscheinlichkeit verringern, wird die Laufzeit des Programmes, sich deutlich erhöhen.  \\
 \\
-Bei der Programmierung gab es keine Schwierigkeit, da die Formeln schon angegeben war und der Abschlusskriterium.\\
-Nur war das generieren der Primzahl relativ lang bei 8192-Bitlänge. Wenn man in 2er-Potenzen hochgehen würde, so hatte sich die Laufzeit Exponentiell erhöht.\\
-Würde man jeden einzelnen Schritt debuggen, so hatte man bemerkt, das die Potenzrechnungen (bei hohen Zahlen) einige an Minuten gedauert haben.
-Dies kann dadurch liegen, das die Bibliothek für BigInteger schlecht für diskrete Mathematik ist oder der Rechner konnte nicht so schnell rechnen.
-Als man eine mögliche Zahl bekam, wurde dies an die oben genannte URL ausgetestet. Selbst die Seite hatte einige Minuten gebraucht, um die Zahl zu überprüfen.\\ 
+Bei der Programmierung gab es keine Schwierigkeiten, da die Formeln und das Abschlusskriterium schon angegeben waren.\\
+Nur dauerte das Generieren der Primzahl relativ lang bei 8192-Bitlänge. Wenn man in 2er-Potenzen hochgehen würde, so hat sich die Laufzeit exponentiell erhöht.\\
+Würde man jeden einzelnen Schritt debuggen, so hätte man bemerkt, das die Potenzrechnungen (bei hohen Zahlen) einige Minuten dauert.
+Dies kann daran liegen, dass die Java-Bibliothek BigInteger schlecht für diskrete Mathematik optimiert ist oder der Rechner nicht so schnell rechnen konnte.
+Als man eine mögliche Zahl bekam, wurde dies auf der oben genannten URL getestet. Selbst die Seite hatte einige Minuten gebraucht, um die Zahl zu überprüfen.\\ 
 \newpage
 \section{Was ist ein endlicher Körper (Galois-Feld)?}
 
@@ -363,8 +363,8 @@ Jetzt rechnen wir die Zahlen in $\mathbb{Z}$ zu $\mathbb{Z}_p$ mit p = 7.\\
     \caption{Zahlen in $\mathbb{Z}/\mathbb{Z}_7$}
 \end{table}
 
-Alle Zahlen in $\mathbb{Z}$ geben nun die Restwerte raus.\\
-Jetzt ist nun die Frage, ob man über diesen Körper Rechenoperationen durchführen können.
+Alle Zahlen in $\mathbb{Z}$ geben nun die Restwerte aus.\\
+Jetzt stellt sich nun die Frage, ob man über diesen Körper Rechenoperationen durchführen kann.
 Dazu müssen die Rechenoperationen definiert werden.
 
 \begin{table}[!ht]
@@ -400,13 +400,13 @@ Diese sind wie folgt definiert:
     \centering
         \begin{tabular}{l}
             \toprule
-            \textbf{Additive Inverse (Subtraktion) in der Endlichen Körper}\\
+            \textbf{Additive Inverse (Subtraktion) in Endlichen Körpern}\\
             \midrule
             Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$.\\
              Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p)\\
                         \bottomrule
         \end{tabular}
-        \caption{Additive Inverse (Subtraktion) in der Endlichen Körper\cite{sec1}}
+        \caption{Additive Inverse (Subtraktion) in Endlichen Körpern \cite{sec1}}
         \label{tab3}
     \end{table}
 
@@ -414,13 +414,13 @@ Diese sind wie folgt definiert:
         \centering
             \begin{tabular}{l}
                 \toprule
-                \textbf{Multiplikative Inverse (Division) in der Endlichen Körper}\\
+                \textbf{Multiplikative Inverse (Division) in Endlichen Körpern}\\
                 \midrule
-                Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$.\\
+                Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ das multiplikative Inverse von a in $\mathbb{Z}_p$.\\
                  Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)          \\
                  \bottomrule
             \end{tabular}
-            \caption{Multiplikative Inverse (Division) in der Endlichen Körper\cite{sec1}}
+            \caption{Multiplikative Inverse (Division) in Endlichen Körpern \cite{sec1}}
             \label{tab3}
         \end{table}
 \newpage
@@ -429,8 +429,8 @@ Nehmen wir als Beispiel die Primzahl 2.
 
 $ \mathbb{Z}_2 = {0,1} $
 
-Hier hat man lediglich nur 2 Elemente. Rechnet man beispielsweise bei Addition alle Möglichkeiten, sieht es so aus: $0 + 0;\ 0 + 1 = 1;\ 1 + 1 = 0$ 
-Um es einfacher und schöner zu gestalten erstellen wir eine Tabelle für Addition und Multiplikation.
+Hier hat man lediglich nur 2 Elemente. Berechnet man beispielsweise bei der Addition alle Möglichkeiten, sieht das so aus: $0 + 0;\ 0 + 1 = 1;\ 1 + 1 = 0$ 
+Um es einfacher und schöner zu gestalten, erstellen wir eine Tabelle für Addition und Multiplikation.
 
 
 \begin{table}[!ht]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
@@ -451,14 +451,13 @@ Um es einfacher und schöner zu gestalten erstellen wir eine Tabelle für Additi
 \newpage
 \subsection*{Algorithmus im Programm}
 
-Das Programm verläuft folgendermaßen. Zuerst erstellt man ein Objekt mit der gewählten Primzahl. Das Objekt besitzt alle möglichen Rechenoperationen in dem Umfeld.
-Führt man eine Rechnung, wird überprüft ob die Zahl im jeweiligen Menge ist. Nach der Rechnung wird das Ergebnis mit modulo Prim ausgerechnet und zurückgeschickt. 
+Das Programm verläuft folgendermaßen: Zuerst erstellt man ein Objekt mit der gewählten Primzahl. Das Objekt besitzt alle möglichen Rechenoperationen in dem Umfeld.
+Führt man eine Rechnung aus, so wird überprüft, ob die Zahl in der jeweiligen Menge enthalten ist. Nach der Rechnung wird das Ergebnis mit modulo Prim ausgerechnet und zurückgegeben. 
 
-Die Rechenoperationen werden von der Modulare Arithmetik bereitgestellt und im Grunde werden die Werte weitergegeben.
+Die Rechenoperationen werden von der modularen Arithmetik bereitgestellt und im Grunde werden die Werte weitergegeben.
 \\
 In der Programmierung gibt es keine Probleme, da die Modulare Arithmetik schon fertig implementiert wurde. 
-Lediglich musste überprüft werden, ob die angegebene Zahl eine Primzahl ist oder nicht. Da aber der Fermat-Test schon fertig war,
-konnte man einfach den Test aufrufen. 
+Lediglich musste überprüft werden, ob die angegebene Zahl eine Primzahl ist oder nicht. Da aber der Fermat-Test schon fertig war, konnte man den Test einfach aufrufen. 
 \\
 \newpage
 \section{Primzahlpotenz}
@@ -466,7 +465,7 @@ konnte man einfach den Test aufrufen.
 \subsection*{Irreduzibles Polynom}
 
 
-Bevor man die Verbindung zu endlichen Körper macht, muss man die irreduziblen Polynome verstehen.\\
+Bevor man die Verbindung zu endlichen Körpern macht, muss man die irreduziblen Polynome verstehen.\\
 Damit Polynome irreduzibel sind, müssen die Irreduziblitätskriterien erfüllt sein.\\
 
 \begin{table}[!ht]
