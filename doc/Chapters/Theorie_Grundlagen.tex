@@ -403,7 +403,7 @@ Dies kann erreicht werden, indem die Zahlen als Variablen behandelt werden, bis 
 \(1 = x \cdot a + y \cdot p \) erhalten wird, der eine lineare Kombination unserer Anfangszahlen ist. \\
 Daraus es folgt \( x \cdot a \equiv 1 \mod p \). 
 
-Zum Beispiel, gesucht ist die Inverse von $[17]_{53}$. \\
+Zum Beispiel, gesucht wird das Inverse von $[17]_{53}$. \\
 EEA liefert:
 \begin{ceqn}
 \begin{align*}
@@ -420,9 +420,9 @@ Es ergibt sich, dass ggT(17, 53) = 1. Es folgt: \\
               1 \equiv 25 \cdot 17 \pmod 53
 \end{align*}
 \end{ceqn}
-d.h. die Inverse von $[17]_{53}$ ist $[25]_{53}$. \\
+d.h. das Inverse von $[17]_{53}$ ist $[25]_{53}$. \\
 
-Die modulare multiplikative Inverse lässt sich auch durch die modulare Exponentiation unter Verwendung des Satz von Euler berechnen. \\
+Das modulare multiplikative Inverse lässt sich auch durch die modulare Potenz unter Verwendung des Satz von Euler berechnen. \\
 \textbf{Satz von Euler}
 Sei \(n \in \mathbb{N}\), die Menge der natürlichen Zahlen. Dann gilt
 für alle a \(\in \mathbb{N}\), die teilerfremd ( $ ggT(a, n) = 1 $) zu n sind also \cite{langMIE}: \\
@@ -444,7 +444,7 @@ Nach dem Satz von Euler gilt für jedes \(a \in \mathbf{Z^*_n} \)\\
 \end{align*}
 \end{ceqn}
 
-Die Euler'sche $\varphi$-Funktion ist gleich der Anzahl der der zu n
+Die Euler'sche $\varphi$-Funktion ist gleich der Anzahl der zu n
 teilerfremden Zahlen zwischen 1 und n. Man schreibt \\
 
 \begin{ceqn}
@@ -455,9 +455,9 @@ teilerfremden Zahlen zwischen 1 und n. Man schreibt \\
 
 Für Primzahlen gilt \(\varphi(p) = p - 1 \). \\
 
-Durch modulare Exponentiation lässt sich zwar die Inverse einer Restklasse leicht bestimmen, aber sie ist im Vergleich mit der Berechnung mithilfe des erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
+Durch modulare Potenzierung lässt sich zwar das Inverse einer Restklasse leicht bestimmen, aber sie ist im Vergleich mit der Berechnung mit dem erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
 
-Mit Hilfe der modularen multiplikative Inverse lässt sich leicht die modulare Division zwischen 2 Zahlen bestimmen.
+Mit Hilfe des modularen multiplikativen Inverses lässt sich leicht die modulare Division zwischen 2 Zahlen bestimmen.
 
 
 \subsection{Modulare Division}
