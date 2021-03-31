@@ -300,7 +300,13 @@ Der Fermat-Test läuft um einiges schneller als die Probedivision.\\
 Jedoch sagt dieser Test nicht aus, ob es sich tatsächlich um eine Primzahl handelt.\\
 Je mehr Versuche man macht, desto geringer wird die Fehlerwahrscheinlichkeit. \\
 Will man diese Fehlerwahrscheinlichkeit verringern, wird die Laufzeit des Programmes, sich deutlich erhöhen.  \\
-
+\\
+Bei der Programmierung gab es keine Schwierigkeit, da die Formeln schon angegeben war und der Abschlusskriterium.\\
+Nur war das generieren der Primzahl relativ lang bei 8192-Bitlänge. Wenn man in 2er-Potenzen hochgehen würde, so hatte sich die Laufzeit Exponentiell erhöht.\\
+Würde man jeden einzelnen Schritt debuggen, so hatte man bemerkt, das die Potenzrechnungen (bei hohen Zahlen) einige an Minuten gedauert haben.
+Dies kann dadurch liegen, das die Bibliothek für BigInteger schlecht für diskrete Mathematik ist oder der Rechner konnte nicht so schnell rechnen.
+Als man eine mögliche Zahl bekam, wurde dies an die oben genannte URL ausgetestet. Selbst die Seite hatte einige Minuten gebraucht, um die Zahl zu überprüfen.\\ 
+\newpage
 \section{Was ist ein endlicher Körper (Galois-Feld)?}
 
 Ein endlicher Körper oder Galois-Körper ist ein algebraisches System, welches eine endliche Menge mit definierten Addition und Multiplikation.\\
@@ -329,8 +335,38 @@ Der Unterschied zwischen x-Beliebige Zyklische Gruppen und einem Endlichen Körp
 Die Anzahl an Elementen in einem endlichen Körper nennt man Ordnung des Endlichen Körper. Die Ordnung des Endlichen Körper kann nur als Primpotenz dargestellt werden.\\
 
 Allgemein: Die endlichen Körper $\mathbb{F}_{p^n}$ beinhalten p-Elemente und n. Diese werden durch die Ganzzahlen ${0,1,2,....,p-1}$ repräsentiert. 
+\\
 
-Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert:
+Wie ist das nun zu verstehen? Schauen wir den normalen Zyklischen Ring $ \mathbb{Z}$ an.
+
+\begin{table}[!ht]
+    \begin{tabular}{lllllll}
+    ... & -6 & -5 & -4 & -3 & -2 & 1  \\
+    0  & 1  & 2  & 3  & 4  & 5  & 6  \\
+    7  & 8  & 9  & 10 & 11 & 12 & 13 \\
+    14 & 15 & 16 & 17 & 18 & 19 & ...
+
+    \end{tabular}
+    \caption{Zahlen in $\mathbb{Z}$}
+\end{table}
+
+Jetzt rechnen wir die Zahlen in $\mathbb{Z}$ zu $\mathbb{Z}_p$ mit p = 7.\\
+
+\begin{table}[!ht]
+    \begin{tabular}{lllllll}
+    ...  & 1  & 2  & 3  & 4  & 5  & 6  \\
+    0  & 1  & 2  & 3  & 4  & 5  & 6  \\
+    0  & 1  & 2  & 3  & 4  & 5  & 6 \\
+    0  & 1  & 2  & 3  & 4  & 5  & ...
+
+    \end{tabular}
+    \caption{Zahlen in $\mathbb{Z}/\mathbb{Z}_7$}
+\end{table}
+
+Alle Zahlen in $\mathbb{Z}$ geben nun die Restwerte raus.\\
+Jetzt ist nun die Frage, ob man über diesen Körper Rechenoperationen durchführen können.
+Dazu müssen die Rechenoperationen definiert werden.
+
 \begin{table}[!ht]
     \centering
         \begin{tabular}{l}
@@ -340,7 +376,7 @@ Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert
             Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a+b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist.\\
            \bottomrule
         \end{tabular}
-        \caption{Addition in der Endlichen Körper}
+        \caption{Addition in der Endlichen Körper\cite{sec1}}
         \label{tab3}
     \end{table}
 
@@ -353,17 +389,42 @@ Im Zusammenhang mit den Grundrechenoperationen wird es folgendermaßen definiert
                 Wenn $ a, b \in \mathbb{Z}_p $, dann gilt $ a \cdot b =r$ in $ \mathbb{Z}_p $, wobei $r \in [0, p-1]$ ist.\\
                \bottomrule
             \end{tabular}
-            \caption{Multiplikation in der Endlichen Körper}
+            \caption{Multiplikation in der Endlichen Körper\cite{sec1}}
             \label{tab3}
         \end{table}
 
 Subtraktion und Division sind inverse Operationen. Diese Rechenarten sind jedoch nicht anders, wie man normal die Zahlen in $\mathbb{R}$, $\mathbb{Q}$.
 
 Diese sind wie folgt definiert:
+\begin{table}[!ht]
+    \centering
+        \begin{tabular}{l}
+            \toprule
+            \textbf{Additive Inverse (Subtraktion) in der Endlichen Körper}\\
+            \midrule
+            Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$.\\
+             Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p)\\
+                        \bottomrule
+        \end{tabular}
+        \caption{Additive Inverse (Subtraktion) in der Endlichen Körper\cite{sec1}}
+        \label{tab3}
+    \end{table}
 
-Additive Inverse (Subtraktion): Wenn $a \in \mathbb{Z}_p$, dann ist (-a) die additive Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a + x \equiv 0$ (mod p)
-Multiplikative Inverse (Division): Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$. Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)
-
+    \begin{table}[!ht]
+        \centering
+            \begin{tabular}{l}
+                \toprule
+                \textbf{Multiplikative Inverse (Division) in der Endlichen Körper}\\
+                \midrule
+                Wenn $a \in \mathbb{Z}_p, a \neq 0 $,  dann ist $a^{-1}$ die multiplikative Inverse von a in $\mathbb{Z}_p$.\\
+                 Dies ist auch die einzige Lösung zur Gleichung : $a \cdot x \equiv 1$ (mod p)          \\
+                 \bottomrule
+            \end{tabular}
+            \caption{Multiplikative Inverse (Division) in der Endlichen Körper\cite{sec1}}
+            \label{tab3}
+        \end{table}
+\newpage
+\subsection*{Beispiel}
 Nehmen wir als Beispiel die Primzahl 2.
 
 $ \mathbb{Z}_2 = {0,1} $
@@ -372,14 +433,14 @@ Hier hat man lediglich nur 2 Elemente. Rechnet man beispielsweise bei Addition a
 Um es einfacher und schöner zu gestalten erstellen wir eine Tabelle für Addition und Multiplikation.
 
 
-\begin{table}[h]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
+\begin{table}[!ht]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
     \begin{tabular}{l|l|lll|l|ll}
     + & 0 & 1 &  & + & 0 & 1 &  \\ \cline{1-3} \cline{5-7}
     0 & 0 & 1 &  & 0 & 0 & 0 &  \\ \cline{1-3} \cline{5-7}
     1 & 1 & 2 &  & 1 & 0 & 1 & 
     \end{tabular}
 \end{table}
-\begin{table}[h]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
+\begin{table}[!ht]\caption{Addition und Multiplikation in $ \mathbb{Z}_2 = {0,1} $}
     \begin{tabular}{l|l|l|lll|l|l|ll}
     + & 0 & 1 & 2 &  & $\cdot$ & 0 & 1 & 2 &  \\ \cline{1-4} \cline{6-9}
     0 & 0 & 1 & 2 &  & 0 & 0 & 0 & 0 &  \\ \cline{1-4} \cline{6-9}
@@ -387,14 +448,18 @@ Um es einfacher und schöner zu gestalten erstellen wir eine Tabelle für Additi
     2 & 2 & 0 & 1 &  & 2 & 0 & 2 & 1 & 
     \end{tabular}
 \end{table}
-
+\newpage
 \subsection*{Algorithmus im Programm}
 
 Das Programm verläuft folgendermaßen. Zuerst erstellt man ein Objekt mit der gewählten Primzahl. Das Objekt besitzt alle möglichen Rechenoperationen in dem Umfeld.
 Führt man eine Rechnung, wird überprüft ob die Zahl im jeweiligen Menge ist. Nach der Rechnung wird das Ergebnis mit modulo Prim ausgerechnet und zurückgeschickt. 
 
 Die Rechenoperationen werden von der Modulare Arithmetik bereitgestellt und im Grunde werden die Werte weitergegeben.
-
+\\
+In der Programmierung gibt es keine Probleme, da die Modulare Arithmetik schon fertig implementiert wurde. 
+Lediglich musste überprüft werden, ob die angegebene Zahl eine Primzahl ist oder nicht. Da aber der Fermat-Test schon fertig war,
+konnte man einfach den Test aufrufen. 
+\\
 \newpage
 \section{Primzahlpotenz}
 
@@ -471,7 +536,44 @@ Macht man eine Tabelle für diese Elemente, kommt folgendes dabei heraus:
     x+1 & x+1 & x   & 1   & 0   &  & x+1 & 0 & x+1 & 1   & x   & 
     \end{tabular}
 \end{table}
+\subsection*{Beispiel}
 
+Wir betrachten  $\mathbb{Z}_{2^3}[x]$:\\
+
+\begin{table}[!ht]
+    \begin{tabular}{lllll}
+    0             & 1         & $x$       & $x+1$       & $x^2$       \\
+    $x^2+1$       & $x^2+x$   & $x^2+x+1$ & $x^3$       & $x^3+1$     \\
+    $x^3+x$       & $x^3+x+1$ & $x^3+x^2$ & $x^3+x^2+1$ & $x^3+x^2+x$ \\
+    $x^3+x^2+x+1$ & $x^4$     & $x^4+1$   & $x^4+x$     & $x^4+x+1$   \\
+    ...           &           &           &             &            
+    \end{tabular}
+    \caption{Mögliche Polynome über $\mathbb{Z}_2 [x]$}
+    \end{table}
+Nehmen wir als irreduzibles Polynom $ x^3 + x + 1$, dann gibt es folgende Tabelle raus:\\
+\begin{table}[!ht]
+    \begin{tabular}{lllll}
+    0       & 1       & $x$       & $x+1$   & $x^2$   \\
+    $x^2+1$ & $x^2+x$ & $x^2+x+1$ & $x+1$   & $x$     \\
+    1       & 0       & $x^2+x+1$ & $x^2+x$ & $x^2+1$ \\
+    $x^2$   & $x^2+x$ & $x^2+x+1$ & $x^2$   & $x^2+1$ \\
+    ...     &         &           &         &        
+    \end{tabular}
+    \caption{$\mathbb{Z}_{2^3}[x]$}
+    \end{table}
+
+
+    Additions Beispiel:\\
+    \\
+    $ (x^4+x+1) + (x^4+x^3+x) = (x^3+1)\ mod (x^3 + x + 1) = x $\\
+    \\
+
+    Multiplikations Beispiel:\\
+    \\
+    $
+    (x^2+1) \cdot (x^2+x+1) = (x^4+x^3+x+1) \ mod (x^3 + x + 1) = x^2 + x\\
+    $
+    \\
 \subsection*{Algorithmus im Programm}
 
 Im Prinzip arbeitet das Programm, wie normal bei einer Primzahl. Jedoch wird es mit Polynomen arbeiten, welche in einer ArrayList<BigInteger> abgespeichert werden.\\
