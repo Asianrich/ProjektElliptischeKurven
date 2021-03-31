@@ -9,41 +9,63 @@ Die affine Darstellung ist die gebräuchlichste Art und Weise einen Punkt und ei
 In diesem Fall gibt es keine einheitliche Darstellung der Unendlichkeit und man muss prüfen, ob die Koordinaten auf der Kurve \[y^2 = x^3 + Ax + B\] liegen.
 \subsection{Projektive Darstellung}
 Bei der projektiven Darstellung kommt die z - Koordinate hinzu, sodass aus der zwei-dimensionalen eine drei-dimensionale Kurve entsteht. Die Umrechnung eines affinen Punktes in einen projektiven Punkt ist dabei einfach durch das Hinzufügen von z = 1 durchzuführen. Bei der umgekehrten Richtung muss man die x und y Koordinaten durch z teilen, woraus folgt, dass alle Punkte mit z = 0 nicht auf der Kurve liegen und unendlich sind. Zur Erinnerung, die Formel der Kurve ändert sich von \(y^2 = x^3 + Ax + B\) zu \[y^2z = x^3 + Axz^2 + Bz^3\]\\
-Eine Punktaddition benötigt zwölf Multiplikationen und zwei Quadrierungen, während eine Punktverdopplung nur sieben Multiplikationen und fünf Quadrierungen braucht.
+Eine Punktaddition benötigt zwölf Multiplikationen und zwei Quadrierungen, während eine Punktverdopplung nur sieben Multiplikationen und fünf Quadrierungen braucht \cite{Washington2003}.
 \\
 \subsection{Jacobi Darstellung}
-Um einen noch größeren Speedup zu erreichen, kann man Jakobi Koordinaten verwenden, da diese besonders effizient beim Verdoppeln sind. Hier ist die Darstellung (x,y,z) bei der Kurvenform \[y^2 = x^3 + Axz^4 + Bz^6\] gewählt. Zum Konvertieren nach affin muss man folgende Rechnung \((x/z^2, y/z^3)\) anwenden. Der Punkt unendlich ist mit (1,1,0) definiert. Natürlich werden alle anderen Punkte, die nicht auf der Kurve liegen auch als unendlich behandelt. 
+Um einen noch größeren Speedup zu erreichen, kann man Jakobi Koordinaten verwenden, da diese besonders effizient beim Verdoppeln sind. Hier ist die Darstellung (x,y,z) bei der Kurvenform \[y^2 = x^3 + Axz^4 + Bz^6\] gewählt. Zum Konvertieren nach affin muss man folgende Rechnung \((x/z^2, y/z^3)\) anwenden. Der Punkt unendlich ist mit (1,1,0) definiert. Natürlich werden alle anderen Punkte, die nicht auf der Kurve liegen auch als unendlich behandelt \cite{Washington2003}.
 
 \subsection{k-fache Punktmultiplikation}
-Wenn ein Punkt mit k multipliziert wird, unterscheidet man, dass bei \(k > 0\) \[P + P + ... + P = kP\] und bei \(k < 0\) \[ (-P) + (-P) + ... + (-P) = kP\] berechnet wird. Durch wiederholtes Verdoppeln erreicht man bei großen \(k\) die beste Performance und da die elliptischen Kurven auf endlichen Feldern basieren, muss man sich auch keine Gedanken um immer größere Koordinaten machen, da diese immer \( mod p\) gerechnet werden.
+Wenn ein Punkt mit k multipliziert wird, unterscheidet man, dass bei \(k > 0\) \[P + P + ... + P = kP\] und bei \(k < 0\) \[ (-P) + (-P) + ... + (-P) = kP\] berechnet wird. Durch wiederholtes Verdoppeln erreicht man bei großen \(k\) die beste Performance und da die elliptischen Kurven auf endlichen Feldern basieren, muss man sich auch keine Gedanken um immer größere Koordinaten machen, da diese immer \( mod p\) gerechnet werden \cite{Washington2003}. Der Algorithmus sieht wie folgt aus:
+
+\begin{table}[!ht]
+\centering
+	\begin{tabular}{l}
+		\toprule
+		\textbf{Algorithmus: k-fache Punktmultiplikation}\\
+		\midrule
+		Sei k eine positive natürliche Zahl und P ein beliebiger Punkt auf der elliptischen Kurve\\ e. Dann wird \(kP\) wie folgt berechnet:\\
+		1. \(a = k , B = \infty , C = P\)\\
+		2. wenn a gerade, dann \(a = a/2 , B = B , C = 2C\)\\
+		3. wenn a ungerade, dann \(a = a - 1 , B = B + C , C = C\)\\
+		4. wenn \( a \neq 0\), gehe zu 2.\\
+		5. return B\\
+	   \bottomrule
+	\end{tabular}
+	\caption{Algorithmus: k-fache Punktmultiplikation \cite{Washington2003}}
+	\label{tab6}
+\end{table}
+
 
 \subsection{Negation}
-Die Negation wird durch einen Vorzeichenwechsel durchgeführt bei der y-Koordinate. Da die Zahl dann negativ ist, muss noch das positive Gegenstück im endlichen Zahlenraum gefunden werden, was durch die einfache Addition der Zahl p geht. Vorausgesetzt ist hierbei eine affine Darstellung. Kommt man von einer anderen Darstellung muss man zuerst zur affinen Darstellung, dann negieren und abschließend in die ursprüngliche Darstellung umrechnen.
+Die Negation wird durch einen Vorzeichenwechsel durchgeführt bei der y-Koordinate \cite{Washington2003}. Da die Zahl dann negativ ist, muss noch das positive Gegenstück im endlichen Zahlenraum gefunden werden, was durch die einfache Addition der Zahl p geht. Vorausgesetzt ist hierbei eine affine Darstellung. Kommt man von einer anderen Darstellung muss man zuerst zur affinen Darstellung, dann negieren und abschließend in die ursprüngliche Darstellung umrechnen.
 
 \section{Punktaddition}
 \subsection{affin}
 Die Addition zweier Punkte bedeutet, dass man eine Gerade durch die Punkte zieht und diese Gerade schneidet die Kurve in einem dritten Punkt, dieser ist das Ergebnis.\\
-Bei zwei unterschiedlichen Punkten, wovon einer nicht im unendlichen Bereich liegt, wird die Steigung durch den Differenzquotienten berechnet: \[m = x_1-x_2 / y_1 - y_2\]
+Bei zwei unterschiedlichen Punkten, wovon einer nicht im unendlichen Bereich liegt, wird die Steigung durch den Differenzquotienten berechnet: \[m = \frac{x_1-x_2}{y_1 - y_2}\]
 Nun braucht man nur noch einzusetzen \[x = m^2 -x1 - x2\] \[y = m(x-x_1)-y_1\] und erhält den neuen Punkt.\\
-Ansonsten gilt \(P_1 + \infty = P_1\) , wobei \(\infty\) ein Punkt außerhalb der Kurve ist.\\
-Diese Addition ist für den Rechner bei großen Zahlen sehr aufwendig, da man dividieren muss und das die anspruchsvollste Rechenoperation ist. Man benötigt zwei Multiplikationen, eine Quadrierung und eine Division.
+Wenn \(P_1 = P_2\) ist, dann hat man eine Senkrechte durch \(P_1\), die die Kurve an einer Stelle \(P_3\) schneiden muss. Diesen Punkt erhält man durch folgende Formeln:\\
+
+Ansonsten gilt \(P_1 + \infty = P_1\) , wobei \(\infty\) ein Punkt außerhalb der Kurve ist \cite{Washington2003}.\\
+Die Addition ist für den Rechner bei großen Zahlen sehr aufwendig, da man dividieren muss und das die anspruchsvollste Rechenoperation ist. Man benötigt zwei Multiplikationen, eine Quadrierung und eine Division \cite{Washington2003}.
 \subsection{projektiv}
-Bei \(P1 \neq P2\) sieht die Addition wie folgt aus:
+Bei \(P_1 \neq \pm P_2\) sieht die Addition wie folgt aus:
 \[u = y_2z_1 - y_1z_2\] \[v = x_2z_1 - x_1z_2\] \[w = u^2z_1z_2 - v^3 -2v^2x_1z_2\] \[x_3 = 2uw\] \[y_3 = t(4v -w)-8y_1^2u^2\] \[z_3 = 8u^3\]
 \subsection{jakobi}
 Bei zwei unterschiedlichen Punkten wird wie folgt addiert:
 \[r = x1z_2^2\] \[s = x_2z_1^2\] \[t = y1z_2^3\] \[v = s - r\] \[w = u - t\] \[x_3 = -v^3 - 2rv^2 + 2^2\] \[y_3 = -tv^3 + (rv^2-x_3)*w_1\] \[z_3 = vz_1z_2\]
 Dadurch ergeben sich zwölf Multiplikationen und vier Quadrierungen.\\
-Ein weiterer Vorteil dieser Darstellung ist die Kompatibilität zu affinen Punkten. Hier benötigt man für die Addition von einem Jacobi Punkt und einem affinen Punkt nur acht Multiplikationen und drei Quadrierungen.
+Ein weiterer Vorteil dieser Darstellung ist die Kompatibilität zu affinen Punkten. Hier benötigt man für die Addition von einem Jacobi Punkt und einem affinen Punkt nur acht Multiplikationen und drei Quadrierungen \cite{Washington2003}.
 
 
 \section{Punktverdopplung}
 \subsection{affin}
-Wenn man den gleichen Punkt mit sich selbst addiert, dann muss wie immer bei der Addition die Steigung berechnet werden. \[m = 3x^2+A / 2y\]
-woraus sich wiederum die x Koordinate \[m^2-2x\] und y Koordinate berechnet wird \[y = m(x - x_0)+y\]\\
+Falls \(P_1 = P_2\) ist, dann erhält man eine Senkrechte durch \(P_1\), die die Kurve an einer Stelle \(P_3\) mit einer Steigung \[m = \frac{3x^2+A}{2y}\] schneiden muss.\\
+Daraus wird wiederum die x Koordinate \[m^2-2x\] und y Koordinate berechnet \[y = m(x - x_0)+y\]\\ Einerseits bekommt man in dieser Darstellung den Bruch nicht aufgehoben und daher ist sie nicht effizient berechenbar, aber andererseits ist es die für den Menschen anschaulichste Notation. Aus diesem Grund konvertieren wir die meisten Punkte zur Ausgabe in diese Darstellungsform, nachdem wir über eine der zwei folgenden Arten die Punktverdopplung durchgeführt haben.
 \subsection{projektiv}
-Wenn man zwei gleiche Punkte addiert, ändert sich die gerade genannte Formel zu:
-\[t = Az_1^2 + 3x_1^2\] \[u = y_1z_1\] \[v = ux_1y_1\] \[w = t^2 - 8v\] \[x_3 = 2uw\] \[y_3 = t(4v-w)- 8y_1^2u^2\] \[z_3 = 8u^3\] mit dem Sonderfall von \(P1 = -P2\) folgt \(P1 + P2 = \infty\).
+Wenn man zwei gleiche Punkte addiert, ändert sich die oben genannte Formel zu:
+\[t = Az_1^2 + 3x_1^2\] \[u = y_1z_1\] \[v = ux_1y_1\] \[w = t^2 - 8v\] \[x_3 = 2uw\] \[y_3 = t(4v-w)- 8y_1^2u^2\] \[z_3 = 8u^3\] mit dem Sonderfall von \(P1 = -P2\) folgt \(P1 + P2 = \infty\). Eine Punktverdopplung benötigt nun nur noch sieben Multiplikationen und fünf Quadrierungen.
 \subsection{jakobi}
-Wenn man nun aber gleiche Punkte addiert, erkennt man direkt im Vergleich die Einfachheit der Formel:
-\[v = 4x_1y_1^2\] \[w = 3x_1^2 + Az_1^4\] \[x_3 = -2v + w^2\] \[y_3 = -8y_1^4 + (v-x_3)w_1\] \[z_3 = 2y_1z_1\]. Wodurch man die Operationen auf drei Multiplikationen und sechs Quadrierungen reduziert. Das ist besonders schnell berechenbar für einen Computer.\\
+Verdoppelt man einen Punkt, erkennt man direkt im Vergleich die Einfachheit der Formel:
+\[v = 4x_1y_1^2\] \[w = 3x_1^2 + Az_1^4\] \[x_3 = -2v + w^2\] \[y_3 = -8y_1^4 + (v-x_3)w_1\] \[z_3 = 2y_1z_1\]. Wodurch man die Operationen auf drei Multiplikationen und sechs Quadrierungen reduzieren kann. Das ist besonders schnell berechenbar für einen Computer \cite{Washington2003}.\\
+Wenn man nun noch den Fall betrachtet, dass \(A = -3\) ist, wird \[w = 3(x_1^2 - z_1^4 = 3(x_1 + z_1^2)(x_1 - z_1^2)\] mit nur einer Multiplikation und einer Quadrierung, statt mit drei Quadrierungen berechnet. Daher haben viele Kurven in NIST Listen auch den Faktor \(A = -3\).
