@@ -37,7 +37,8 @@ public class JacobianPoint implements Point {
             BigInteger v = ff.multiply(ff.multiply(BigInteger.valueOf(4), this.getX()), ff.pow(this.getY(), BigInteger.TWO));
             BigInteger w;
             if(e.getA().equals(BigInteger.valueOf(-3))){
-                w = ff.multiply(BigInteger.valueOf(3), ff.subtract(ff.pow(this.getX(), BigInteger.TWO),ff.pow(this.getZ(), BigInteger.valueOf(4))));
+                BigInteger z12 = ff.pow(this.getZ(), BigInteger.TWO);
+                w = ff.multiply(BigInteger.valueOf(3), ff.multiply(ff.add(this.getX(), z12), ff.subtract(this.getX(), z12)));
             } else {
                 w = ff.add(ff.multiply(BigInteger.valueOf(3), ff.pow(this.getX(), BigInteger.TWO)), ff.multiply(e.getA(), ff.pow(this.getZ(), BigInteger.valueOf(4))));
             }
