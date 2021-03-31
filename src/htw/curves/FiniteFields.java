@@ -113,67 +113,58 @@ public class FiniteFields implements Fields {
 
     @Override
     public BigInteger add(BigInteger sum1, BigInteger sum2) {
-        BigInteger temp1 = sum1, temp2 = sum2;
-        if(polynom.size() > 0){
-            temp1 = polynomize(temp1);
-            temp2 = polynomize(temp2);
-        }
-
-        return math.modAddition(temp1,temp2,prim);
+        return math.modAddition(sum1,sum2,prim);
     }
 
     @Override
-    public BigInteger subtract(BigInteger sum1, BigInteger sum2) {
-        BigInteger temp1 = sum1, temp2 = sum2;
-        if(polynom.size() > 0){
-            temp1 = polynomize(temp1);
-            temp2 = polynomize(temp2);
-        }
-        return math.modSubtraction(temp1, temp2, prim);
+    public BigInteger subtract(BigInteger subtrahend, BigInteger minuend) {
+        return math.modSubtraction(subtrahend, minuend, prim);
     }
 
     @Override
-    public BigInteger multiply(BigInteger sum1, BigInteger sum2) {
-        BigInteger temp1 = sum1, temp2 = sum2;
-        if(polynom.size() > 0){
-            temp1 = polynomize(temp1);
-            temp2 = polynomize(temp2);
-        }
-        return math.modMultiplication(temp1, temp2, prim);
+    public BigInteger multiply(BigInteger fact1, BigInteger fact2) {
+        return math.modMultiplication(fact1, fact2, prim);
     }
 
     @Override
-    public BigInteger divide(BigInteger sum1, BigInteger sum2) {
-        BigInteger temp1 = sum1, temp2 = sum2;
-        if(polynom.size() > 0){
-            temp1 = polynomize(temp1);
-            temp2 = polynomize(temp2);
-        }
-        return math.modDivision(temp1,temp2,prim);
+    public BigInteger divide(BigInteger divisor, BigInteger dividend) {
+        return math.modDivision(divisor,dividend,prim);
     }
 
     @Override
-    public BigInteger pow(BigInteger sum1, BigInteger sum2) {
-        BigInteger temp1 = sum1, temp2 = sum2;
-        if(polynom.size() > 0){
-            temp1 = polynomize(temp1);
-            temp2 = polynomize(temp2);
-        }
-        return math.modExponentiation(temp1, temp2, prim);
+    public BigInteger pow(BigInteger num, BigInteger exponent) {
+        return math.modExponentiation(num, exponent, prim);
     }
 
-/*
-    public int[] irreduciblePolynom(int number){
-        int[] array;
-        switch(number) {
-            case 0: 
-                break;
-
-            default:
-                break;
-        }
+    @Override
+    public ArrayList<BigInteger> squareRoot(ArrayList<BigInteger> number) throws Exception {
+        return null;
     }
-*/
+
+    @Override
+    public ArrayList<BigInteger> add(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BigInteger> subtract(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BigInteger> multiply(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BigInteger> divide(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BigInteger> pow(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2) {
+        return null;
+    }
 
     private boolean checkPrime(BigInteger prim, int trials){
         BigInteger rndNumber;

@@ -1,8 +1,5 @@
 package htw.tests;
-        import htw.curves.AffinePoint;
-        import htw.curves.EllipticCurve;
-        import htw.curves.Point;
-        import htw.curves.ProjectivePoint;
+        import htw.curves.*;
         import org.junit.jupiter.api.Assertions;
         import org.junit.jupiter.api.Test;
 
@@ -32,6 +29,11 @@ public class EllipticCurveTests {
     ProjectivePoint p8 = new ProjectivePoint(BigInteger.valueOf(1), BigInteger.valueOf(4), BigInteger.ONE);
 
     EllipticCurve curve2 = new EllipticCurve(BigInteger.valueOf(2), BigInteger.valueOf(2), BigInteger.valueOf(17));
+
+    // #### JACOBIAN ####
+    JacobianPoint p13 = new JacobianPoint(BigInteger.valueOf(4), BigInteger.valueOf(3), BigInteger.ONE);
+    JacobianPoint p14 = new JacobianPoint(BigInteger.valueOf(5), BigInteger.valueOf(6), BigInteger.ONE);
+
 
     // ##### AFFFINE ####
 
@@ -175,5 +177,48 @@ public class EllipticCurveTests {
     @Test
     public void testRoot() {
         assertTrue(curve2.findRoot().equals(new AffinePoint(BigInteger.valueOf(0), BigInteger.valueOf(6))));
+    }
+
+    @Test
+    public void testkMulJacobian1() {
+        Point erg = p13.kMul(BigInteger.valueOf(1001), curve);
+        assertTrue(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testkMulJacobian2() {
+        Point erg = p13.kMul(BigInteger.valueOf(10001), curve);
+        assertTrue(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testkMulJacobian3() {
+        Point erg = p14.kMul(BigInteger.valueOf(1001), curve);
+        assertTrue(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testkMulJacobian2f() {
+        Point erg = p13.kMul(BigInteger.valueOf(10000), curve);
+        assertFalse(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testkMulJacobian3f() {
+        Point erg = p14.kMul(BigInteger.valueOf(1000), curve);
+        assertFalse(curve.onCurve(erg));
+    }
+
+    @Test
+    public void testkMuljacobian4() {
+        Point erg = p14.kMul(BigInteger.valueOf(10001), curve);
+        assertTrue(curve.onCurve(erg));
+    }
+
+    @Test
+    public void find(){
+        Point erg = curve.findRoot();
+        assertTrue(curve.isNonSingular(curve.getA(), curve.getB()));
+        assertTrue(curve.onCurve(erg));
     }
 }

@@ -1,6 +1,7 @@
 package htw.curves;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 public interface Fields {
 
@@ -11,4 +12,13 @@ public interface Fields {
     BigInteger multiply(BigInteger sum1, BigInteger sum2);
     BigInteger divide(BigInteger sum1, BigInteger sum2);
     BigInteger pow(BigInteger sum1, BigInteger sum2);
+
+
+    ArrayList<BigInteger> squareRoot(ArrayList<BigInteger> number) throws Exception;
+    ArrayList<BigInteger> add(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2);
+    ArrayList<BigInteger> subtract(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2);
+    ArrayList<BigInteger> multiply(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2);
+    ArrayList<BigInteger> divide(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2);
+    ArrayList<BigInteger> pow(ArrayList<BigInteger> sum1, ArrayList<BigInteger> sum2);
+
 }

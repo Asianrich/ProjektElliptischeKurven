@@ -105,7 +105,7 @@ public class AffinePoint implements Point {
                 }
             }
         } else
-            return this.toProjective().add(p,e);
+            return this.add(p.toAffine(e),e);
     }
 
     /**
@@ -227,11 +227,28 @@ public class AffinePoint implements Point {
     }
 
     /**
+     *
+     * @param e
+     * @return
+     */
+    @Override
+    public Point toJacobian(EllipticCurves e) {
+        return new JacobianPoint(this.getX(), this.getY(), BigInteger.ONE);
+    }
+
+    /**
      * z = 1 und man hat projektive Punkte
      * @return
      */
-    public Point toProjective(){
-        ProjectivePoint tmp = new ProjectivePoint(this.getX(), this.getY(), BigInteger.ONE);
-        return tmp;
+    public Point toProjective(EllipticCurves e){
+        return new ProjectivePoint(this.getX(), this.getY(), BigInteger.ONE);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void print(){
+        System.out.println(this.x + "|" + this.y);
     }
 }
