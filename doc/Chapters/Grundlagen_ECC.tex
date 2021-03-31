@@ -48,10 +48,10 @@ Außerdem basieren Kryptosysteme mit öffentlichem Schlüssel auf der Lösung be
 
 Das Hauptproblem besteht darin, dass die Schlüsselgröße ausreichend groß sein muss, um die Sicherheitsanforderungen auf hohem Niveau zu erfüllen, was zu einer geringeren Geschwindigkeit und einem höheren Bandbreitenverbrauch führt.\\
 
-Dies ist nicht den Fall, wenn elliptische Kurven (EC) für das Public Key Verfahren eingesetzt sind, da ECC im Vergleich zu RSA für den Benutzer eine gleichwertige Sicherheit bei kleineren Schlüsselgrößen bietet und für Angreifer schwerer exponentieller Zeitherausforderung, um in das System einzudringen \cite{GaMoDa}.\\
+Dies ist nicht den Fall, wenn elliptische Kurven (EC) für das Public Key Verfahren eingesetzt sind, da ECC im Vergleich zu RSA für den Benutzer eine gleichwertige Sicherheit bei kleineren Schlüsselgrößen bietet und für Angreifer schwere exponentielle Zeitherausforderung, um in das System einzudringen \cite{GaMoDa}.\\
 
-Laut einigen Forschern kann ECC mit einem 164-Bit-Schlüssel ein Sicherheitsniveau erreichen, für dessen Erreichung andere Systeme einen 1.024-Bit-Schlüssel benötigen\cite{khan}. Es stellte sich heraus, dass ECC das effizienteste Kryptosystem mit öffentlichem Schlüssel ist \cite{naRaj}.
-Der Grund dafür ist, dass nach Miller und Koblitz das Diskreter-Logarithmus-Problem für elliptische Kurven schwerer sei als das klassische Diskreter-Logarithmus-Problem ist und zudem auch schnellere Laufzeiten ermögliche.\\
+Laut einigen Forschern kann ECC mit einem 164-Bit-Schlüssel ein Sicherheitsniveau erreichen, für dessen Erreichung andere Systeme einen 1.024-Bit-Schlüssel benötigen \cite{khan}. Es stellte sich heraus, dass ECC das effizienteste Kryptosystem mit öffentlichem Schlüssel ist \cite{naRaj}.
+Der Grund dafür ist, dass nach Miller und Koblitz das Diskreter-Logarithmus-Problem für elliptische Kurven schwerer sei, als das klassische Diskreter-Logarithmus-Problem ist und zudem auch schnellere Laufzeiten ermögliche.\\
 Bevor das Diskreter-Logarithmus-Problem vorgestellt wird, ist es wichtig zu definieren, was unter einer elliptischen Kurven zu verstehen ist. 
 
 Im Allgemeinen ist eine elliptische Kurve eine projektive, algebraische Kurve \textbf{C(K)}, auf der sich ein bestimmter Punkt O befindet, der als Punkt unendlich oder Nullpunkt bezeichnet wird \cite{GaMoDa}.\\
@@ -69,7 +69,7 @@ $ (x, y) $ $ \in $ \( K \)  der Weierstraß-Gleichung:
 
 \end{ceqn}
 
-Elliptische Kurven in Form von Gleichungen können in \textbf{singuläre} und \textbf{nicht-singuläre} Gruppen unterteilt werden. In der ECC werden nicht-singuläre Kurven bevorzugt, damit eine Kurve frei von Spitzen oder Selbstüberschneidungen sein kann\cite{razad}.\\
+Elliptische Kurven in Form von Gleichungen können in \textbf{singuläre} und \textbf{nicht-singuläre} Gruppen unterteilt werden. In der ECC werden nicht-singuläre Kurven bevorzugt, damit eine Kurve frei von Spitzen oder Selbstüberschneidungen ist \cite{razad}.\\
 
 Eine elliptische Kurve wird als \textbf{nicht-singulär} bezeichnet,
 wenn sie keinen Punkt $ P = (x, y) $ enthält, an dem ein
@@ -83,7 +83,7 @@ Ergebnis der Anwendung der Gruppenoperation auf zwei
 Gruppenelemente nicht von ihrer Reihenfolge abhängt. Also wenn \(a \cdot b = b \cdot a\) \quad \(\forall a, b \in \textit{G}\), wobei \(\glqq \cdot \grqq{}\) eine Verknüpfung auf $\textit{G}$.\\
 
 Ein \textbf{Körper} ist eine Menge \textit{K} mit zwei
-Verknüpfungen \((\glqq + \grqq{},\glqq \cdot \grqq)\), sodass es gilt:
+Verknüpfungen \((\glqq + \grqq{},\glqq \cdot \grqq)\), sodass gilt:
 \begin{enumerate}
     \item \((\textit{K}, +)\) ist eine abelsche Gruppe. Das neutrale
     Element wird mit 0 und das inverse von \(a \in \textit{K}\)  mit -a bezeichnet, 
@@ -109,9 +109,9 @@ Die \textbf{Charakteristik} eines Körpers $ \mathbf{K} $ ist die kleinste posit
  
 Dies ist beispielsweise für die Körper der rationalen Zahlen $ \mathbb{Q} $, der reelen Zahlen $ \mathbb{R} $ und der komplexen Zahlen $\mathbb{C} $ der Fall. Für jeden endlichen Körper ist die Charakteristik immer eine Primzahl \cite{damer}.
 
-$ \mathbf{K} $ kann ein beliebiger Körper, also etwa $ \mathbb{R} $, $ \mathbb{Q} $, $ \mathbb{C} $ oder ein endlicher Körper $ \mathbb{F} $ sein \cite{werner}. Die obige Gleichung entspricht die Definition einer elliptischen Kurve über reelen Zahlen.\\
+$ \mathbf{K} $ kann ein beliebiger Körper, also etwa $ \mathbb{R} $, $ \mathbb{Q} $, $ \mathbb{C} $ oder ein endlicher Körper $ \mathbb{F} $ sein \cite{werner}. Die obige Gleichung entspricht der Definition einer elliptischen Kurve über reelen Zahlen.\\
 
-Obwohl eine elliptische Kurve über den reellen Zahlen ein guter Ansatz ist, um die Eigenschaften einer elliptischen Kurve zu verstehen, erfordert sie eine höhere Rechenzeit, um verschiedene Operationen auszuführen. Sie ist manchmal aufgrund von Rundungsfehlern ungenau. Kryptographie-Schemata erfordern jedoch eine schnelle und präzise Arithmetik \cite{razad}. Folglich werden in kryptografischen Anwendungen zwei Arten von elliptischen Kurven verwendet:
+Obwohl eine elliptische Kurve über die reellen Zahlen ein guter Ansatz ist, um die Eigenschaften einer elliptischen Kurve zu verstehen, erfordert sie eine höhere Rechenzeit, um verschiedene Operationen auszuführen. Sie ist manchmal aufgrund von Rundungsfehlern ungenau. Kryptographie-Schemata erfordern jedoch eine schnelle und präzise Arithmetik \cite{razad}. Folglich werden in kryptografischen Anwendungen zwei Arten von elliptischen Kurven verwendet:
 	\begin{itemize}
 	    \item Primzahlen über einem Feld $ \mathbf{Z_p} $, wobei p eine Primzahl und p > 3 ist. Alle Variablen und Koeffizienten werden aus einer Menge von ganzen Zahlen von 0 bis p - 1 entnommen und Berechnungen werden über Modulo p durchgeführt \cite{werner}.
         \item 	Binäre Kurve über dem Galois-Feld $ 2^m $, auch bekannt als $ GF(2^m) $, wobei alle Variablen und Koeffizienten in $ GF $ sind und Berechnungen über $ GF(2^m) $ durchgeführt werden.
@@ -121,7 +121,7 @@ Da Primkurven analog zur Binärkurve keine erweiterte Bit-Fidding-Operation habe
 
 
 
-In dieser Arbeit wurde die Implementierung von elliptischen Kurven über endliche Körper mit $ \mathbf{K} $ = $ \mathbf{Z_p} $ berücksichtigt. Dazu wird mehr im Kapitel 4 erläutert.
+In dieser Arbeit wurde die Implementierung von elliptischen Kurven über endliche Körper mit $ \mathbf{K} $ = $ \mathbf{Z_p} $ berücksichtigt. Dazu wird in Kapitel 4 mehr erläutert.
 Eine elliptische Kurve über dem endlichen Feld $ \mathbf{Z_p} $ enthält alle Punkte $ (x, y) $ in der $ \mathbf{Z_p} $ $ \times $ $ \mathbf{Z_p} $ Matrix, die die folgende elliptische Kurvengleichung erfüllt: 
 
 \begin{ceqn}
@@ -134,7 +134,7 @@ Eine elliptische Kurve über dem endlichen Feld $ \mathbf{Z_p} $ enthält alle P
 \end{ceqn}
 
 Dabei sind x und y Zahlen in $ \mathbf{Z_p} $  und ähnlich wie im realen Fall ist $ \Delta \neq $ 0.
-Alle Punkte $ (x, y) $, die die obige Gleichung  erfüllen, liegen auch auf der elliptischen Kurve. Der öffentliche Schlüssel ist ein Punkt der Kurve und der private Schlüssel ist eine Zufallszahl. Das Hinzufügen von Punkten auf der elliptischen Kurve ist jedoch kein einfacher Prozess, sondern an ein auf polynomzeit zu lösen Problem gebunden \cite{mo2014}: Das diskrete Logarithmusproblem. 
+Alle Punkte $ (x, y) $, die die obige Gleichung  erfüllen, liegen auch auf der elliptischen Kurve. Der öffentliche Schlüssel ist ein Punkt auf der Kurve und der private Schlüssel ist eine Zufallszahl. Das Hinzufügen von Punkten auf der elliptischen Kurve ist jedoch kein einfacher Prozess, sondern an ein in Polynomialzeit zu lösendes Problem gebunden \cite{mo2014}: Das diskrete Logarithmusproblem. 
 
 
 \section{Diskretes Logarithmusproblem }
@@ -145,7 +145,7 @@ Eine \textbf{zyklische Gruppe} ist eine Gruppe, deren Elemente
 als Potenz eines ihrer Elemente dargestellt werden können. Also wenn es ein \(a \in \textit{G}\) gibt mit \(\langle a \rangle = G\).\\ 
 
 Nehmen wir nun an, dass (G, $ \times $ ) eine multiplikative zyklische Gruppe mit Domainparametern g, h und n ist.   
-Das \textbf{diskrete Logarithmusproblem} ist explizit definiert, als das Problem der Bestimmung einer eindeutigen Ganzzahl $ x $, die zufällig aus dem Intervall [1, p - 1] ausgewählt wird, so dass es gilt:
+Das \textbf{diskrete Logarithmusproblem} ist explizit definiert, als das Problem der Bestimmung einer eindeutigen Ganzzahl $ x $, die zufällig aus dem Intervall [1, p - 1] ausgewählt wird, so dass gilt:
 \begin{ceqn}
 
 \begin{align*}
@@ -176,7 +176,7 @@ Aus diesem Grund ist ECC in der Lage, ein ähnliches Sicherheitsniveau wie RSA b
 Damit ein auf $ \mathbf{F_p} $ basierendes diskretes Logarithmus-System effizient ist, sollten schnelle Algorithmen zur Berechnung der Gruppenoperation bekannt sein. Aus Sicherheitsgründen sollte das Problem des diskreten Logarithmus in $ \mathbf{Z_p} $ unlösbar sein \cite{Hankerson}. \\
 Es gibt viele Algorithmen zur Lösung von \textbf{ECDLP}, aber der erfolgreichste ist die Kombination von Pollards Rho- und Pohlig-Hellman-Angriffen mit vollständig exponentieller Laufzeit (\cite{mo2014};\cite{Hankerson}). 
 Angriffe resultieren normalerweise aus den Schwächen bei der Auswahl der elliptischen Kurve und des endlichen Feldes (siehe Kapitel 4 und 5), aber die meisten Angriffe können durch korrekte Auswahl der Parameter der elliptischen Kurve vereitelt werden \cite{mo2014}.
-Daher sollten diese öffentlichen Parameter sicher ausgewählt werden, um alle erkannten Angriffe zu vermeiden \cite{aliKa}. Der nächste Abschnitt beschäftigt sich näher mit diesen Parametern. 
+Daher sollten diese öffentlichen Parameter sicher ausgewählt werden, um alle bekannten Angriffe zu vermeiden \cite{aliKa}. Der nächste Abschnitt beschäftigt sich näher mit diesen Parametern. 
 
 \section{Domänenparameter für elliptischen Kurven}
 
