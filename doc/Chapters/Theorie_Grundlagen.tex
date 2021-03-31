@@ -393,9 +393,9 @@ Also muss der $ ggT (a, p) = 1 $ sein, da p prim ist. Wenn dies den Fall lässt 
 \begin{align*}
     \textbf{Erweiterter Euklidischer Algortihmus}
 \end{align*}
-Der erweiterte Euklidische Algorithmus basiert auf dem euklidischen Algorithmus, der den ggT von zwei ganzen Zahlen durch wiederholte Anwendung des Divisionsalgorithmus ermittelt. Aber bei der Berechnung des ggT wird auch der Wert von x verfolgt. Im Vergleich zu anderen Algorithmen, die als Ausgabe sowohl den Wert des ggT als auch die Werte von x und y haben, gibt der für diese Arbeit implementierte Algorithmus \ref{tab8} nur den Wert vom ggT zurück. \\
+Der erweiterte euklidische Algorithmus basiert auf dem euklidischen Algorithmus, der den ggT von zwei ganzen Zahlen durch wiederholte Anwendung des Divisionsalgorithmus ermittelt. Aber bei der Berechnung des ggT wird auch der Wert von x verfolgt. Im Vergleich zu anderen Algorithmen, die als Ausgabe sowohl den Wert des ggT als auch die Werte von x und y haben, gibt der für diese Arbeit implementierte Algorithmus \ref{tab8} nur das Ergebnis vom ggT zurück. \\
 
-In diesem Algorithmus wird die Funktion \textit{gcdExtended} rekursiv aufgerufen, um den ggT (a, p) zu berechnen. Solange der Wert von p größer null ist, werden die Ergebnisse aus dem rekursiven Aufruf vom \( ggT (p \mod a, a) \) bestimmt und die Werte von a und p dementsprechend aktualisiert. Danach werden die Koeffizienten x und y berechnet und den ggT zurückgegeben.
+In diesem Algorithmus wird die Funktion \textit{gcdExtended} rekursiv aufgerufen, um den ggT (a, p) zu berechnen. Solange der Wert von p größer null ist, werden die Ergebnisse aus dem rekursiven Aufruf vom \( ggT (p \mod a, a) \) bestimmt und die Werte von a und p dementsprechend aktualisiert. Danach werden die Koeffizienten x und y berechnet und der ggT zurückgegeben.
 
 \begin{table}[!ht]
 \centering
@@ -403,7 +403,7 @@ In diesem Algorithmus wird die Funktion \textit{gcdExtended} rekursiv aufgerufen
 		\toprule
 		\textbf{Algorithmus: EEA}\\
 		\midrule
-		Input: Positive BigInteger a, p  mit a $ \geq p$ \\
+		Input: positive BigInteger a, p  mit a $ \geq p$ \\
 		Output: d = ggT(a, p), für die es gilt: \(d = ax + py\) \\
 		                                           \\
 		                                           
@@ -428,20 +428,20 @@ Wenn dies der Fall ist, können durch Umkehren der Schritte im euklidischen Algo
 
 Dies kann erreicht werden, indem die Zahlen als Variablen behandelt werden, bis den Ausdruck \\
 \[1 = x \cdot a + y \cdot p \] erhalten wird, der eine lineare Kombination unserer Anfangszahlen ist. 
-Daraus es folgt \( x \cdot a \equiv 1 \mod p \) und x ist dann das multiplikative Inverse von a. Die Tabelle \ref{tab8} veranschaulicht den Algorithmus zur Berechnung des modularen multiplikativen Inverses. \\
+Daraus folgt \( x \cdot a \equiv 1 \mod p \) und x ist dann das multiplikative Inverse von a. Die Tabelle \ref{tab8} veranschaulicht den Algorithmus zur Berechnung des modularen multiplikativen Inversen. \\
 
 \begin{table}[!ht]
 \centering
 	\begin{tabular}{l}
 		\toprule
-		\textbf{Algorithmus: Modulares Inverse}\\
+		\textbf{Algorithmus: Modulares Inverses}\\
 		\midrule
 		Input: \(a \in \mathbf{Z_p}\) , p eine Primzahl \\
 		Output: \(a \cdot a^{-1} \mod  p\) \\
 		                                           \\
 		                                           
 		1. \( x = 0, y = 1, x_1 = 1, y_1 = 0, m = p \);\\
-		2. Prüfe ob a ein Inverse hat;\\
+		2. Prüfe ob a ein Inverses hat;\\
 		3. If a = 1 then x = 1;\\
 		4. while (p > 0) \\
 		 \quad 4.1\quad q = a/p; t = a; a = p; \\
@@ -456,7 +456,7 @@ Daraus es folgt \( x \cdot a \equiv 1 \mod p \) und x ist dann das multiplikativ
 	    6. Return x. \\
 	   \bottomrule
 	\end{tabular}
-		   	\caption{Modulares multiplikatives Inverse aus der Klasse \textit{BasicTheoreticMethods.java}}
+		   	\caption{Modulares multiplikatives Inverses aus der Klasse \textit{BasicTheoreticMethods.java}}
 	\label{tab8}
 \end{table}
 
@@ -495,7 +495,7 @@ reduzierten Menge der Reste modulo n bezeichnet \cite{damer}. \\
 
 Durch modulare Potenzierung lässt sich zwar das Inverse einer Restklasse
 leicht bestimmen, aber sie ist im Vergleich mit der Berechnung mit dem
-erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
+erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die  Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
 \\
 
 \textbf{Bestimmung der Euler'sche Funktion für eine natürliche Zahl n } \\
@@ -521,17 +521,15 @@ teilerfremden Zahlen zwischen 1 und n. Man schreibt \\
 Für Primzahlen gilt \(\varphi(p) = p - 1 \). \\
 
 Zur Bestimmung der Anzahl der positiven ganzen Zahlen \(\varphi(n)\)  $ \leq n $, die relativ prim zu n sind, wurde in dieser Arbeit eine naive
-Implementierung durchgeführt.\\
-Der Algortihmus startet mit der Initialisierung des Ergebnis
-\(\varphi(n)\) = n. Es wird angenommen, dass sowohl \(\varphi(0)\) als auch \(\varphi(1)\) gleich eins sind. Dann laufen wir iterativ über alle Zahlen durch, die kleiner oder gleich der Quadratwurzel von n
-sind. Es wird für jede Zahl p überprüft, ob diese
-Zahl n teilt. Wenn dies den Fall ist, werden alle Vielfachen der
+Implementierung gewählt.\\
+Der Algortihmus startet mit der Initialisierung des Ergebnisses 
+\(\varphi(n)\) = n. Es wird angenommen, dass sowohl \(\varphi(0)\) als auch \(\varphi(1)\) gleich eins sind. Dann laufen wir iterativ über alle Zahlen durch, die kleiner oder gleich der Quadratwurzel von n sind. Es wird für jede Zahl p überprüft, ob diese
+Zahl n teilt. Wenn dies der Fall ist, werden alle Vielfachen der
 jeweiligen Zahl entfernt, indem diese wiederholt mit n geteilt
 werden. \\
-Der Grund dafür ist, dass der ggT von Primfaktoren und Ihre Vielfache ungleich eins ist.
-In jeder Iteration wird zusätzlich das Ergebnis um n/p
-reduziert, um die Euler'sche \(\varphi(n)\)-Funktion zu erhalten.
-Wenn die Zahl p nicht prim ist, dann wird direkt geprüft, ob diese größer eins ist. Wenn ja dann wird das Ergebnis dementsprechend um n/p reduziert. Die Tabelle \ref{tab7} stellt den Algorithmus für die Berechnung der \(\varphi(n)\)-Funktion dar.
+Der Grund dafür ist, dass der ggT von Primfaktoren und ihre Vielfachen ungleich eins sind.
+In jeder Iteration wird zusätzlich das Ergebnis um \(n/p\) reduziert, um die Euler'sche \(\varphi(n)\)-Funktion zu erhalten.
+Wenn die Zahl p nicht prim ist, dann wird direkt geprüft, ob diese größer eins ist. Wenn ja, dann wird das Ergebnis dementsprechend um \(n/p\) reduziert. Die Tabelle \ref{tab7} stellt den Algorithmus für die Berechnung der \(\varphi(n)\)-Funktion dar.\\
 
 \begin{table}[!ht]
 \centering
@@ -558,8 +556,8 @@ Wenn die Zahl p nicht prim ist, dann wird direkt geprüft, ob diese größer ein
 \end{table}
 
 
-Da wir mit sehr großen Zahlen arbeiten, ist diese Implementierung jedoch nicht effizient. \\
-Eine effiziente Lösung wäre, anstatt auf alle Zahlen durchzulaufen, nur auf alle  Primzahlen, die kleiner oder gleich der Quadratwurzel von n sind, durchzulaufen. Diese Primzahlen können vom Anfang an zufällig z.B. mitHilfe des Fermat-Tests bestimmt und gespeichert werden. Im Kapitel 4 wird auf die Idee des Fermat-Test-Algorithmus näher eingegangen. \\
+Da wir mit sehr großen Zahlen arbeiten, ist diese Implementierung jedoch nicht effizient genug. \\
+Eine effizientere Lösung wäre, anstatt über alle Zahlen durchzulaufen, nur über alle  Primzahlen, die kleiner oder gleich der Quadratwurzel von n sind, durchzulaufen. Diese Primzahlen können von Anfang an zufällig z.B. mit Hilfe des Fermat-Testes bestimmt und gespeichert werden. Im Kapitel 4 wird auf die Idee des Fermat-Test-Algorithmus näher eingegangen. \\
 
 Zum Beispiel für p = 7, eine Primzahl gilt: \\
 \\
@@ -580,7 +578,7 @@ Die modulare Division lässt sich mathematisch definieren als:
 \end{align*}
 \end{ceqn}
 
-Bei der Bestimmung der modularen Division wird zuerst $ y^{-1}$, das modulare Inverse von y über p berechnet. Danach wird die modulare Multiplikation von $ x \cdot y^{-1} $ durchgeführt. Diese Operation ist definiert bzw. erfolgt, nur wenn das modulare Inverse von y existiert. 
+Bei der Bestimmung der modularen Division wird zuerst $ y^{-1}$, das modulare Inverse von y über p berechnet. Danach wird die modulare Multiplikation von $ x \cdot y^{-1} $ durchgeführt. Diese Operation ist definiert bzw. erfolgt nur, wenn das modulare Inverse von y existiert. 
 \\
 Gegeben sei zum Beispiel x = 8, y = 3, p = 5. \\
 \\
@@ -673,19 +671,19 @@ durchgeführt werden \cite{menezes:1997}.
 \section{Polynomarithmetik}
 
 \subsection{Allgemein}
-Nun folgt die Rechnungen in das Unbekannte. Hiermit ist gemeint, das wir zu jeder Rechnung bis jetzt alle Werte hatten.\\
+Nun folgt die Rechnungen mit dem Unbekannten. Hiermit ist gemeint, das wir bis jetzt zu jeder Rechnung alle Werte hatten.\\
 \\
 $
 ( a_1 \cdot r^n + a_2 \cdot r^{n-1} + ... + a_{n-1} \cdot r + a_n \cdot r^0)\ mod\ m
 $
 \\
 \\
-Hierbei könnte man r für eine beliebige Zahl im $ r \in \{0,1,..., m-1\} $ auswählen. Bei dieser Stelle wissen wir aber nicht was genau r ist
-und wollen r durch das Symbol x , bzw. einem Polynom ersetzen. Auf diese Weise landen wir in die Polynomarithmetik.\\
+Hierbei könnte man r für eine beliebige Zahl im $ r \in \{0,1,..., m-1\} $ auswählen. An dieser Stelle wissen wir aber nicht was genau r ist
+und wollen r durch das Symbol x, mit bzw. einem Polynom ersetzen. Auf diese Weise landen wir in die Polynomarithmetik.\\
 \\
-Natürlich darf man die Schreibformen nicht vernachlässigen, da man sonst durcheinander kommt.
+Natürlich darf man die korrekten Schreibformen nicht vernachlässigen, da man sonst durcheinander kommt.
 Bei den Polynomen gibt es Potenzen $ x^0=1, x^1 = x, x^2, x^3,... $. Jede Potenz hat seinen eigenen Koeffizienten.\\
-Man reiht die Polynome meistens mit fallender Potenzen ($2x^2 + x +1$) oder aufsteigender Potenz ($1 + x + 2x^2$). \\
+Man sortiert die Polynome meistens mit fallender Potenzen ($2x^2 + x +1$) oder aufsteigender Potenz ($1 + x + 2x^2$). \\
 \\Daraus ergibt sich die allgemeine Formel:
 \\
 $
@@ -696,7 +694,7 @@ Wenn $a_i > m $ oder $ a_i < 0 $ sind, werden diese durch mod m einzeln berechne
 \\Beispiel:\\
 \\
 $ (4x^4  -5x^3 + 24x^2 + 5x +10) mod 13 = 4x^4 +8 x^3 + 11x^2 + 5x +10$\\\\
-Mit diesen Gedanken geht man rüber zu den Grundrechenoperationen Addition und Multiplikation\\
+Mit diesen Gedanken geht man zu den Grundrechenoperationen wie die Addition und Multiplikation über.\\
 \newpage
 \subsection*{Addition}
 \begin{table}[!ht]
