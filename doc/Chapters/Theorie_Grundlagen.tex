@@ -38,11 +38,14 @@ Dies bedeutet, dass r und x den gleichen Rest haben, wenn sie durch p geteilt we
 
 
 
-In dieser Arbeit bildet  die Klasse \textit{BasicTheoreticMethod.java}, das Grundgerüst der Implementierung von elliptischen Kurven über das Primfeld $\mathbf{ Z_p} $. 
+In dieser Arbeit bildet  die Klasse \textit{BasicTheoreticMethod.java}, das Grundgerüst der
+Implementierung von elliptischen Kurven über das Primfeld $\mathbf{
+Z_p} $. 
+
 In dieser Klasse wurden folgende Funktionen implementiert:
 \begin{itemize}
-    \item \textit{modCalculation}, die den Rest aus der Division zweier ganzen Zahlen bestimmt; 
-    \item \textit{isKongruent}, die prüft ob zweier Zahlen den selben Rest nach der Division;
+    \item \textit{modCalculation} 
+    \item \textit{isKongruent}
     \item \textit{modAddition}
     \item \textit{modSubtraction}
     \item \textit{modMultiplikation}
@@ -56,7 +59,9 @@ In dieser Klasse wurden folgende Funktionen implementiert:
 \end{itemize}
 
 Diese Klasse enthält unter anderen zahlentheoretische Methoden, die eine wichtige Bedeutung für die Kryptographie haben.
+
 Die erste wichtige Methode ist die Methode der Berechnung von Modulo: $\textbf{ X $\pmod P $} $
+
 
 \subsection{Berechnung von X mod Y}
 
@@ -344,7 +349,9 @@ Also die Leistung dieser Methode hängt von der Leistung des Modulo-Algorithmus 
 \centering
 	\begin{tabular}{l}
 		\toprule
+
 		\textbf{Algorithmus: Modulare Potenz}\\
+
 		\midrule
 		Input: p, x, $ k $ $\in$ $\mathbf{Z} $ \\
 		Output: $ x^k \mod $ p \\
@@ -362,13 +369,15 @@ Also die Leistung dieser Methode hängt von der Leistung des Modulo-Algorithmus 
 	    6. Return A. \\
 	   \bottomrule
 	\end{tabular}
-	\caption{Modulare Potenz aus der Klasse \textit{BasicTheoreticMethods.java}}
+
+	\caption{Modulare Potenz aus der Klasse \textit{BasicTheoreticMethods.java}
 	\label{tab5}
 \end{table}
 
 In den meisten wissenschaftlichen Artikeln, liegt $ k \in [0, p-1] $, aber in dieser Arbeit es wurde angenommen, dass k $ \in \mathbf{Z}$ liegt. 
 Betrachtet wurde also die Fälle, wo der Exponent k auch negative
 Werte haben kann, um möglichst alle Sicherheitslücken  auszuschließen. \\
+
 
 In diesem Fall wird für die Berechnung der modularen
 Potenz, der Absolutwert des Exponenten genommen, aber
@@ -386,9 +395,15 @@ modulare Inverse $ a^{-1} $ eine ganze Zahl, die die Beziehung
  \end{align*}
 \end{ceqn} erfüllt.
 
+
 Das modulare Inverse wird mit Hilfe des erweiterten euklidischen (EEA) bestimmt.
-Dort sind die ganzen Zahlen x und y zu finden, für die die folgende Gleichung erfüllt ist: \\
-$ ggT (a, p) = 1 = ax + py $. \\
+Dort sind die ganzen Zahlen x und y zu finden, für die die folgende Gleichung erfüllt ist: 
+\begin{ceqn}
+ \begin{align*}
+      ggT (a, p) = 1 = ax + py  \\
+ \end{align*}
+\end{ceqn}
+
 Also muss der $ ggT (a, p) = 1 $ sein, da p prim ist. Wenn dies den Fall lässt sich feststellen, dass a und p \textbf{Koprime} sind.
 \begin{align*}
     \textbf{Extended Euklidischer Algortihmus}
@@ -422,10 +437,12 @@ Es ergibt sich, dass ggT(17, 53) = 1. Es folgt: \\
 \end{ceqn}
 d.h. das Inverse von $[17]_{53}$ ist $[25]_{53}$. \\
 
+
 Das modulare multiplikative Inverse lässt sich auch durch die modulare Potenz unter Verwendung des Satz von Euler berechnen. \\
-\textbf{Satz von Euler}
+\textbf{Satz von Euler:} \quad
 Sei \(n \in \mathbb{N}\), die Menge der natürlichen Zahlen. Dann gilt
 für alle a \(\in \mathbb{N}\), die teilerfremd ( $ ggT(a, n) = 1 $) zu n sind also \cite{langMIE}: \\
+
 
 \begin{ceqn}
 \begin{align*}
@@ -454,10 +471,39 @@ teilerfremden Zahlen zwischen 1 und n. Man schreibt \\
 \end{ceqn}
 
 Für Primzahlen gilt \(\varphi(p) = p - 1 \). \\
+Zum Beispiel für p = 7, eine Primzahl gilt: \\
+\(\varphi(n) = |\{ 1, 2, 3, 4, 5, 6 \}| = 6 = 7 - 1 = p - 1\) \\
 
-Durch modulare Potenzierung lässt sich zwar das Inverse einer Restklasse leicht bestimmen, aber sie ist im Vergleich mit der Berechnung mit dem erweiterten euklidischen Algorithmus etwas langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt sein \cite{langMIE}.
+\(\varphi(4) = |\mathbf{Z*_4}| = |\{ [1]_4, [3]_4 \}| = 2\) \\
 
-Mit Hilfe des modularen multiplikativen Inverses lässt sich leicht die modulare Division zwischen 2 Zahlen bestimmen.
+
+Durch modulare Potenzierung lässt sich zwar das Inverse einer
+Restklasse leicht bestimmen, aber sie ist im Vergleich mit der
+Berechnung mithilfe des erweiterten euklidischen Algorithmus etwas
+langsamer. Außerdem muss der Wert der Variable \(\varphi(n)\) und
+damit die Kenntnis der Primfaktorzerlegung von n vorher bestimmt
+sein \cite{langMIE}. \\
+
+\textbf{Bestimmung der Euler'sche Funktion für eine natürliche Zahl n } \\
+
+Zur Bestimmung der Anzahl der positiven ganzen Zahlen \(\varphi(n)\)  $ \leq n $, die relativ prim zu n sind, wurde in dieser Arbeit eine naive
+Implementierung durchgeführt.\\
+Der Algortihmus startet mit der Initialisierung des Ergebnis
+\(\varphi(n)\) = n. Dann laufen wir iterativ über alle Zahlen durch, die kleiner oder gleich der Quadratwurzel von n
+sind. Es wird für jede Zahl p überprüft, ob diese
+Zahl n teilt. Wenn dies den Fall ist, werden alle Vielfachen der
+jeweiligen Zahl entfernt, indem diese wiederholt mit n geteilt
+werden. Der Grund dafür ist, dass der ggT von Primfaktoren und Ihre Vielfache ungleich eins ist.
+In jeder Iteration wird zusätzlich das Ergebnis um n / p
+reduziert, um die Euler'sche \(\varphi(n)\)-Funktion zu erhalten.
+Wenn die Zahl p nicht prim ist, dann wird direkt geprüft, ob diese größer eins ist. Wenn ja dann wird das Ergebnis dementsprechend um n / p reduziert. Die Tabelle TODO stellt den Algorithmus für die Berechnung der \(\varphi(n)\)-Funktion dar.
+
+
+
+
+Da wir mit sehr großen Zahlen arbeiten, ist diese Implementierung jedoch nicht effizient. \\
+Eine effiziente Lösung wäre, anstatt auf alle Zahlen durchzulaufen, werden nun nur auf alle  Primzahlen, die kleiner oder gleich der Quadratwurzel von n sind, durchgelaufen. Diese Primzahlen können vom Anfang an zufällig bestimmt und gespeichert werden. 
+
 
 
 \subsection{Modulare Division}
@@ -552,7 +598,3 @@ Die Gleichung aus \ref{crt} wird als Gauß-Algorithmus bezeichnet.
 Die Berechnungen können in $\mathcal{O}(\log{}n^2)$ Bitoperationen
 durchgeführt werden \cite{menezes:1997}. 
  
-
-
-
-\section{Polynomarithmetik}
